@@ -26,3 +26,7 @@ python3 -m http.server 8000
 ## Data
 
 Forecasts and geocoding come from [Open-Meteo](https://open-meteo.com/). Reverse geocoding for "my location" comes from BigDataCloud's free client endpoint.
+
+## Also in this repo: iPhone 18 concept launch page
+
+`iphone-18/index.html` is a self-contained concept landing page for an iPhone 18 lineup launch, built with Tailwind (CDN), Inter and Font Awesome. It has a CSS-only 3D device with a live color switcher, interactive feature demos (aperture and zoom), lineup cards, a specs table and a pre-order modal with live pricing. It's unofficial and not affiliated with Apple.

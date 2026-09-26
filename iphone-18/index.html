@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="iPhone 18 Pro Max and the iPhone 18 lineup: A20 Pro, a variable-aperture camera system and a titanium unibody. Concept launch page.">
+  <meta name="theme-color" content="#000000">
+  <title>iPhone 18 Pro Max · Concept Launch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', 'Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            obsidian: { 950: '#000000', 900: '#0a0a0c', 800: '#111114', 700: '#1a1a1f' },
+          },
+          letterSpacing: { tightest: '-0.045em' },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --accent: #7c83ff;
+      --accent-soft: rgba(124, 131, 255, 0.35);
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    html { background: #000; }
+    body {
+      background: #000;
+      color: #f5f5f7;
+      font-feature-settings: "ss01", "cv11";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--accent-soft); color: #fff; }
+
+    /* ---------- Shared surfaces ---------- */
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.02));
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .hairline { border-color: rgba(255,255,255,0.08); }
+
+    .text-metal {
+      background: linear-gradient(180deg, #ffffff 0%, #d4d6dc 45%, #85888f 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .text-accent {
+      background: linear-gradient(95deg, #ffffff 0%, var(--accent) 60%, #ffffff 120%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      transition: background 0.8s var(--ease);
+      animation: shimmer 8s linear infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+
+    .accent-dot { background: var(--accent); box-shadow: 0 0 12px var(--accent); transition: background .6s, box-shadow .6s; }
+
+    /* ---------- Buttons ---------- */
+    .btn-primary {
+      position: relative;
+      background: #f5f5f7; color: #000;
+      transition: transform .25s var(--ease), box-shadow .35s var(--ease), background .25s;
+      box-shadow: 0 0 0 0 var(--accent-soft);
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 40px -8px var(--accent-soft), 0 0 0 4px rgba(255,255,255,0.06); background: #fff; }
+    .btn-primary:active { transform: translateY(0) scale(.98); }
+    .btn-ghost { transition: background .25s, border-color .25s, transform .25s var(--ease); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+    .btn-ghost:active { transform: scale(.98); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
+
+    /* ---------- Navigation ---------- */
+    #nav { transition: background .4s, border-color .4s; }
+    #nav.is-scrolled { background: rgba(10,10,12,0.72); border-color: rgba(255,255,255,0.08); }
+    .nav-link { position: relative; color: rgba(245,245,247,0.72); transition: color .2s; }
+    .nav-link:hover, .nav-link.is-active { color: #fff; }
+    .nav-link::after {
+      content: ""; position: absolute; left: 50%; bottom: -6px; width: 0; height: 2px; border-radius: 2px;
+      background: var(--accent); transform: translateX(-50%); transition: width .3s var(--ease), background .6s;
+    }
+    .nav-link.is-active::after { width: 18px; }
+    #mobileMenu { transition: opacity .3s var(--ease), transform .3s var(--ease); }
+    #mobileMenu[data-open="false"] { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+
+    /* ---------- Reveal on scroll ---------- */
+    .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+    .js .reveal.is-visible { opacity: 1; transform: none; }
+    .reveal[data-delay="1"] { transition-delay: .08s; }
+    .reveal[data-delay="2"] { transition-delay: .16s; }
+    .reveal[data-delay="3"] { transition-delay: .24s; }
+    .reveal[data-delay="4"] { transition-delay: .32s; }
+
+    /* ---------- Background ambience ---------- */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+    }
+    .noise::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .05; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ---------- Device (pure CSS iPhone) ---------- */
+    .device {
+      --frame: #3a3a3d; --frame-hi: #6b6b70; --frame-lo: #141416;
+      --back: #1d1d1f; --back-hi: #2c2c30; --logo: rgba(255,255,255,0.16);
+      --glow: #7c83ff; --rx: 0deg; --ry: 0deg;
+      container-type: inline-size;
+      position: relative;
+      width: var(--w, 280px);
+      aspect-ratio: 9 / 19.5;
+      perspective: 1800px;
+    }
+    .device__body {
+      position: absolute; inset: 0;
+      transform-style: preserve-3d;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+      transition: transform .9s var(--ease);
+    }
+    .device.is-tracking .device__body { transition: transform .15s linear; }
+    .device.is-flipped .device__body { transform: rotateX(var(--rx)) rotateY(calc(180deg + var(--ry))); }
+
+    .device__face {
+      position: absolute; inset: 0;
+      border-radius: 17cqw;
+      padding: 1.5cqw;
+      -webkit-backface-visibility: hidden; backface-visibility: hidden;
+      background:
+        linear-gradient(135deg, var(--frame-hi) 0%, var(--frame) 22%, var(--frame-lo) 50%, var(--frame) 78%, var(--frame-hi) 100%);
+      box-shadow:
+        0 0 0 0.35cqw rgba(0,0,0,0.55),
+        0 30cqw 60cqw -20cqw rgba(0,0,0,0.9),
+        inset 0 0 0 0.3cqw rgba(255,255,255,0.18);
+      transition: background .8s var(--ease);
+    }
+    .device__face--front { transform: rotateY(180deg); }
+
+    .device__back {
+      position: relative; width: 100%; height: 100%;
+      border-radius: 15.5cqw; overflow: hidden;
+      background:
+        radial-gradient(120% 60% at 20% 0%, var(--back-hi) 0%, transparent 60%),
+        linear-gradient(160deg, var(--back-hi) 0%, var(--back) 45%, var(--back) 100%);
+      box-shadow: inset 0 0 0 0.25cqw rgba(255,255,255,0.06), inset 0 -20cqw 40cqw -20cqw rgba(0,0,0,0.35);
+      transition: background .8s var(--ease);
+    }
+    .device__sheen {
+      position: absolute; inset: -40%; pointer-events: none;
+      background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.12) 48%, rgba(255,255,255,0.02) 55%, transparent 62%);
+      transform: translateX(var(--sheen, 0%));
+      transition: transform .15s linear;
+    }
+    .device__logo {
+      position: absolute; left: 50%; top: 52%;
+      transform: translate(-50%, -50%);
+      font-size: 17cqw; color: var(--logo);
+      text-shadow: 0 0.3cqw 0.3cqw rgba(0,0,0,0.12), 0 -0.2cqw 0.2cqw rgba(255,255,255,0.08);
+      transition: color .8s;
+    }
+
+    /* Side buttons */
+    .device__btn {
+      position: absolute; width: 1.1cqw; border-radius: 1cqw;
+      background: linear-gradient(90deg, var(--frame-lo), var(--frame-hi), var(--frame));
+      transition: background .8s;
+    }
+    .device__btn--action { left: -1.05cqw; top: 22%; height: 7%; }
+    .device__btn--volup  { left: -1.05cqw; top: 32%; height: 11%; }
+    .device__btn--voldn  { left: -1.05cqw; top: 45%; height: 11%; }
+    .device__btn--power  { right: -1.05cqw; top: 30%; height: 16%; }
+    .device__btn--camctl { right: -1.05cqw; top: 62%; height: 9%; }
+
+    /* Camera: Pro plateau */
+    .cam { position: absolute; }
+    .cam--pro {
+      top: 3cqw; left: 3cqw; right: 3cqw; height: 45cqw;
+      border-radius: 13cqw;
+      background: linear-gradient(170deg, var(--frame-hi) 0%, var(--frame) 30%, var(--frame-lo) 100%);
+      box-shadow: 0 2cqw 5cqw rgba(0,0,0,0.35), inset 0 0.4cqw 0.4cqw rgba(255,255,255,0.18), inset 0 -0.6cqw 1cqw rgba(0,0,0,0.3);
+      transition: background .8s;
+    }
+    .cam--std {
+      top: 4cqw; left: 4cqw; width: 27cqw; height: 48cqw;
+      border-radius: 14cqw;
+      background: linear-gradient(170deg, rgba(255,255,255,0.18), rgba(0,0,0,0.12));
+      box-shadow: inset 0 0 0 0.35cqw rgba(255,255,255,0.12), 0 1.5cqw 3cqw rgba(0,0,0,0.25);
+    }
+    .lens {
+      position: absolute; width: 18cqw; aspect-ratio: 1; border-radius: 50%;
+      background:
+        radial-gradient(circle at 36% 34%, rgba(255,255,255,0.55) 0 4%, transparent 9%),
+        radial-gradient(circle at 60% 64%, rgba(140,160,255,0.35) 0 5%, transparent 12%),
+        radial-gradient(circle, #05070c 0 26%, #1a2238 27% 38%, #04060a 39% 55%, #2b2d33 56% 64%, #0c0d10 65% 100%);
+      box-shadow: 0 0 0 1.3cqw var(--frame), 0 0 0 1.7cqw rgba(255,255,255,0.1), 0 2cqw 3cqw rgba(0,0,0,0.55);
+      transition: box-shadow .8s;
+    }
+    .cam--pro .l1 { top: 4.5cqw; left: 6cqw; }
+    .cam--pro .l2 { top: 24cqw;  left: 6cqw; }
+    .cam--pro .l3 { top: 14.25cqw; left: 26.5cqw; }
+    .cam--std .l1 { top: 4.5cqw;  left: 4.5cqw; }
+    .cam--std .l2 { top: 25.5cqw; left: 4.5cqw; }
+    .flash {
+      position: absolute; width: 6.5cqw; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle, #fff6dc 0 30%, #d8cfb5 50%, #8c8674 100%);
+      box-shadow: 0 0 0 0.6cqw rgba(0,0,0,0.25);
+    }
+    .cam--pro .flash { top: 8cqw; right: 12cqw; }
+    .flash--std { top: 9cqw; left: 34cqw; }
+    .lidar {
+      position: absolute; top: 30cqw; right: 12cqw; width: 6.5cqw; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle, #111 0 40%, #2a2a2e 60%, #0a0a0a 100%);
+      box-shadow: 0 0 0 0.6cqw rgba(0,0,0,0.3);
+    }
+    .mic { position: absolute; top: 20cqw; right: 14cqw; width: 2cqw; aspect-ratio: 1; border-radius: 50%; background: #0b0b0c; }
+
+    /* Front screen */
+    .device__screen {
+      position: relative; width: 100%; height: 100%; border-radius: 15.5cqw; overflow: hidden;
+      background:
+        radial-gradient(90% 55% at 50% 100%, var(--glow) 0%, transparent 70%),
+        radial-gradient(70% 45% at 0% 20%, color-mix(in srgb, var(--glow) 55%, #000) 0%, transparent 70%),
+        linear-gradient(180deg, #050507 0%, #0b0b12 100%);
+      box-shadow: inset 0 0 0 1.8cqw #000;
+      transition: background .8s;
+      color: #fff;
+    }
+    .island { position: absolute; top: 3.6cqw; left: 50%; width: 30cqw; height: 8.8cqw; transform: translateX(-50%); background: #000; border-radius: 10cqw; }
+    .island::after { content: ""; position: absolute; right: 4cqw; top: 50%; width: 3cqw; height: 3cqw; transform: translateY(-50%); border-radius: 50%; background: radial-gradient(circle at 35% 35%, #2c3450, #06070b 70%); }
+    .status { position: absolute; top: 5.2cqw; left: 9cqw; right: 8cqw; display: flex; justify-content: space-between; font-size: 4.2cqw; font-weight: 600; }
+    .status i { margin-left: 1.2cqw; font-size: 3.6cqw; }
+    .lock-date { position: absolute; top: 24cqw; width: 100%; text-align: center; font-size: 5cqw; font-weight: 500; opacity: .85; }
+    .lock-time { position: absolute; top: 29cqw; width: 100%; text-align: center; font-size: 25cqw; font-weight: 700; letter-spacing: -0.04em; line-height: 1; background: linear-gradient(180deg, #fff, rgba(255,255,255,.7)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .widgets { position: absolute; top: 64cqw; left: 10cqw; right: 10cqw; display: grid; grid-template-columns: 1fr 1fr; gap: 3cqw; }
+    .widget { border-radius: 6cqw; padding: 3.5cqw; background: rgba(255,255,255,0.12); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-size: 3.6cqw; }
+    .widget b { display: block; font-size: 8cqw; font-weight: 600; line-height: 1.1; }
+    .lock-actions { position: absolute; bottom: 12cqw; left: 12cqw; right: 12cqw; display: flex; justify-content: space-between; }
+    .lock-actions span { width: 12cqw; height: 12cqw; border-radius: 50%; background: rgba(255,255,255,0.14); display: grid; place-items: center; font-size: 4.6cqw; }
+    .home-bar { position: absolute; bottom: 3.5cqw; left: 50%; width: 36cqw; height: 1.4cqw; transform: translateX(-50%); border-radius: 2cqw; background: rgba(255,255,255,0.85); }
+
+    /* Ambient glow */
+    .ambient {
+      position: absolute; inset: 8% -10%;
+      background: radial-gradient(closest-side, var(--glow), transparent 72%);
+      filter: blur(60px); opacity: .7;
+      transition: background .9s var(--ease);
+      animation: breathe 6s ease-in-out infinite;
+    }
+    .ambient--ring {
+      inset: 22% 4%;
+      background: conic-gradient(from 0deg, transparent, var(--glow), transparent 30%, transparent 55%, var(--glow), transparent 85%);
+      filter: blur(40px); opacity: .35;
+      animation: spin 18s linear infinite;
+    }
+    @keyframes breathe { 0%,100% { opacity: .55; transform: scale(.96); } 50% { opacity: .85; transform: scale(1.04); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .floaty { animation: floaty 7s ease-in-out infinite; }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .floor-shadow { width: 60%; height: 22px; margin: 0 auto; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.9), transparent); filter: blur(6px); }
+    .floor-reflect { width: 70%; height: 60px; margin: -10px auto 0; background: radial-gradient(closest-side, var(--glow), transparent); opacity: .25; filter: blur(22px); transition: background .8s; }
+
+    /* ---------- Swatches ---------- */
+    .swatch {
+      position: relative; width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sw-hi), var(--sw) 55%, var(--sw-lo));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18), 0 4px 12px rgba(0,0,0,0.5);
+      transition: transform .25s var(--ease);
+    }
+    .swatch::before {
+      content: ""; position: absolute; inset: -5px; border-radius: 50%;
+      border: 1.5px solid transparent; transition: border-color .25s, inset .25s var(--ease);
+    }
+    .swatch:hover { transform: scale(1.08); }
+    .swatch[aria-checked="true"]::before { border-color: rgba(255,255,255,0.9); }
+    .swatch--sm { width: 16px; height: 16px; }
+    .swatch--sm::before { inset: -3px; border-width: 1px; }
+    .swatch-label { transition: opacity .25s, transform .25s var(--ease), filter .25s; }
+    .swatch-label.is-swapping { opacity: 0; transform: translateY(6px); filter: blur(4px); }
+
+    /* ---------- Spotlight cards ---------- */
+    .spot { position: relative; isolation: isolate; overflow: hidden; transition: transform .45s var(--ease), border-color .35s; }
+    .spot::before {
+      content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .4s;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%);
+    }
+    .spot:hover { border-color: rgba(255,255,255,0.16); }
+    .spot:hover::before { opacity: 1; }
+    .lift:hover, .js .reveal.is-visible.lift:hover { transform: translateY(-4px); }
+    .js .reveal.is-visible.spot { transition: opacity .9s var(--ease), transform .45s var(--ease), border-color .35s; }
+
+    /* ---------- Feature visuals ---------- */
+    .trace { stroke-dasharray: 6 10; animation: flow 1.6s linear infinite; }
+    .trace.slow { animation-duration: 2.6s; }
+    @keyframes flow { to { stroke-dashoffset: -32; } }
+    .chip-pulse { animation: chipPulse 2.8s ease-in-out infinite; transform-origin: center; }
+    @keyframes chipPulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+
+    input[type="range"].slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--accent) var(--fill, 50%), rgba(255,255,255,0.12) var(--fill, 50%)); outline-offset: 6px; }
+    input[type="range"].slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.5), 0 0 0 4px rgba(255,255,255,.12); cursor: grab; transition: transform .2s; }
+    input[type="range"].slider::-webkit-slider-thumb:active { transform: scale(1.15); cursor: grabbing; }
+    input[type="range"].slider::-moz-range-thumb { width: 22px; height: 22px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.5), 0 0 0 4px rgba(255,255,255,.12); cursor: grab; }
+
+    #dofScene .bokeh { transition: filter .2s linear; }
+    #zoomScene { transition: transform .9s var(--ease); transform-origin: 50% 44%; }
+    .zoom-btn[aria-pressed="true"] { background: #f5f5f7; color: #000; }
+
+    .heat { background: linear-gradient(90deg, #1e3a8a, #0ea5e9, #22c55e, #eab308, #ef4444); background-size: 300% 100%; animation: heatflow 6s ease-in-out infinite alternate; }
+    @keyframes heatflow { from { background-position: 100% 50%; } to { background-position: 0% 50%; } }
+    .brushed {
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 3px),
+        linear-gradient(135deg, #8d8a84, #d9d4cb 30%, #7c7870 55%, #c8c2b7 80%, #6f6b64);
+    }
+    .battery-fill { width: 0%; transition: width 2.2s var(--ease); background: linear-gradient(90deg, #22c55e, #86efac); box-shadow: 0 0 20px rgba(34,197,94,.5); }
+    .is-visible .battery-fill { width: 100%; }
+
+    /* ---------- Lineup ---------- */
+    .lineup-card .device { transition: transform .6s var(--ease); }
+    .lineup-card:hover .device { transform: translateY(-8px) rotate(-2deg); }
+    .lineup-card .card-glow { position: absolute; left: 50%; top: 30%; width: 70%; height: 40%; transform: translate(-50%, -50%); background: radial-gradient(closest-side, var(--glow), transparent); filter: blur(40px); opacity: .35; transition: opacity .5s, background .6s; pointer-events: none; }
+    .lineup-card:hover .card-glow { opacity: .6; }
+
+    /* ---------- Specs table ---------- */
+    .specs-table th, .specs-table td { padding: 16px 18px; text-align: left; vertical-align: top; }
+    .specs-table tbody tr { border-top: 1px solid rgba(255,255,255,0.07); transition: background .2s; }
+    .specs-table tbody tr:hover { background: rgba(255,255,255,0.025); }
+    .specs-table .sticky-col { position: sticky; left: 0; background: #0a0a0c; z-index: 1; }
+    .specs-table .col-hl { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+
+    /* ---------- Modal ---------- */
+    #orderModal { transition: visibility 0s linear .4s; visibility: hidden; }
+    #orderModal.is-open { visibility: visible; transition-delay: 0s; }
+    #orderModal .modal-backdrop { opacity: 0; transition: opacity .4s var(--ease); }
+    #orderModal.is-open .modal-backdrop { opacity: 1; }
+    #orderModal .modal-panel { opacity: 0; transform: translateY(24px) scale(.97); transition: opacity .4s var(--ease), transform .45s var(--ease); }
+    #orderModal.is-open .modal-panel { opacity: 1; transform: none; }
+    .modal-scroll { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.2) transparent; }
+
+    .opt { position: relative; display: block; cursor: pointer; }
+    .opt input { position: absolute; opacity: 0; pointer-events: none; }
+    .opt__box {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 14px 16px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);
+      transition: border-color .2s, background .2s, box-shadow .2s, transform .2s var(--ease);
+    }
+    .opt__box--stack { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .opt:hover .opt__box { border-color: rgba(255,255,255,0.22); }
+    .opt input:checked + .opt__box { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); box-shadow: 0 0 0 1px var(--accent) inset; }
+    .opt input:focus-visible + .opt__box { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .opt:active .opt__box { transform: scale(.985); }
+
+    .switch { position: relative; width: 46px; height: 28px; border-radius: 999px; background: rgba(255,255,255,0.14); transition: background .25s; flex-shrink: 0; }
+    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.4); transition: transform .25s var(--ease); }
+    input:checked + .switch { background: #34c759; }
+    input:checked + .switch::after { transform: translateX(18px); }
+    input:focus-visible + .switch { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .check-draw circle { stroke-dasharray: 160; stroke-dashoffset: 160; animation: draw .7s var(--ease) forwards; }
+    .check-draw path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: draw .45s .45s var(--ease) forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    .spinner { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(0,0,0,.2); border-top-color: #000; animation: spin .7s linear infinite; }
+
+    #toast { transition: opacity .35s var(--ease), transform .35s var(--ease); }
+    #toast[data-show="false"] { opacity: 0; transform: translate(-50%, 16px); pointer-events: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body class="font-sans">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black">Skip to content</a>
+
+  <!-- ======================= NAVIGATION ======================= -->
+  <header id="nav" class="fixed inset-x-0 top-0 z-50 border-b border-transparent backdrop-blur-xl" style="-webkit-backdrop-filter: blur(20px) saturate(160%);">
+    <nav class="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8" aria-label="Primary">
+      <a href="#overview" class="flex items-center gap-2 text-white" aria-label="iPhone 18 home">
+        <i class="fa-brands fa-apple text-[22px] leading-none" aria-hidden="true"></i>
+        <span class="hidden text-[15px] font-semibold tracking-tight sm:inline">iPhone 18</span>
+      </a>
+
+      <ul class="hidden items-center gap-9 text-[13px] font-medium md:flex">
+        <li><a class="nav-link is-active" href="#overview" data-section="overview">Overview</a></li>
+        <li><a class="nav-link" href="#pro-max" data-section="pro-max">Pro Max</a></li>
+        <li><a class="nav-link" href="#lineup" data-section="lineup">Lineup</a></li>
+        <li><a class="nav-link" href="#specs" data-section="specs">Specs</a></li>
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <button type="button" class="btn-primary rounded-full px-4 py-1.5 text-[13px] font-semibold" data-preorder data-model="promax">
+          Pre-order Now
+        </button>
+        <button id="menuBtn" type="button" class="btn-ghost grid h-9 w-9 place-items-center rounded-full border hairline md:hidden" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
+          <i class="fa-solid fa-bars text-sm" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div id="mobileMenu" data-open="false" class="glass absolute inset-x-3 top-[60px] rounded-2xl p-2 md:hidden">
+      <a class="block rounded-xl px-4 py-3 text-[15px] hover:bg-white/5" href="#overview">Overview</a>
+      <a class="block rounded-xl px-4 py-3 text-[15px] hover:bg-white/5" href="#pro-max">Pro Max</a>
+      <a class="block rounded-xl px-4 py-3 text-[15px] hover:bg-white/5" href="#lineup">Lineup</a>
+      <a class="block rounded-xl px-4 py-3 text-[15px] hover:bg-white/5" href="#specs">Specs</a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ======================= HERO ======================= -->
+    <section id="overview" class="noise relative isolate overflow-hidden pt-28 sm:pt-32 lg:min-h-screen lg:pt-24 scroll-mt-14">
+      <div class="grid-bg pointer-events-none absolute inset-0 -z-10"></div>
+      <div class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[520px] w-[900px] -translate-x-1/2 rounded-full opacity-30 blur-3xl" style="background: radial-gradient(closest-side, var(--accent), transparent); transition: background .8s;"></div>
+
+      <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:min-h-[calc(100vh-6rem)] lg:grid-cols-[1.05fr_1fr] lg:gap-6">
+        <!-- Copy -->
+        <div class="relative z-10 text-center lg:text-left">
+          <div class="reveal inline-flex items-center gap-2 rounded-full border hairline bg-white/[0.04] px-3 py-1 text-xs font-medium text-white/80">
+            <span class="accent-dot h-1.5 w-1.5 rounded-full"></span>
+            New · Pre-orders open now
+          </div>
+
+          <h1 class="reveal mt-6 text-[44px] font-semibold leading-[1.02] tracking-tightest sm:text-6xl lg:text-7xl xl:text-[84px]" data-delay="1">
+            <span class="text-metal">iPhone 18</span><br>
+            <span class="text-accent">Pro Max</span>
+          </h1>
+
+          <p class="reveal mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/60 sm:text-xl lg:mx-0" data-delay="2">
+            Intelligence, forged in titanium. The <span class="text-white">A20 Pro</span> with a next‑generation Neural Engine,
+            a <span class="text-white">variable‑aperture</span> camera system and the longest battery life ever in an iPhone.
+          </p>
+
+          <div class="reveal mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start" data-delay="3">
+            <button type="button" class="btn-primary w-full rounded-full px-7 py-3.5 text-[15px] font-semibold sm:w-auto" data-preorder data-model="promax" data-from-hero>
+              Pre-order Now
+            </button>
+            <a href="#lineup" class="btn-ghost group inline-flex w-full items-center justify-center gap-2 rounded-full border hairline px-7 py-3.5 text-[15px] font-medium text-white/90 sm:w-auto">
+              Explore the lineup
+              <i class="fa-solid fa-arrow-right text-xs transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
+            </a>
+          </div>
+
+          <p class="reveal mt-5 text-sm text-white/45" data-delay="4">
+            From <span class="text-white/80">$1,199</span> or <span class="text-white/80">$49.96/mo.</span> for 24 mo.
+          </p>
+        </div>
+
+        <!-- Device stage -->
+        <div class="reveal relative z-10 flex flex-col items-center pb-10 lg:pb-0" data-delay="2">
+          <div id="heroStage" class="relative flex w-full select-none justify-center py-4" style="touch-action: pan-y;">
+            <div id="heroGlowWrap" class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="width: min(90vw, 440px); aspect-ratio: 9 / 16; --glow: #7c83ff;" aria-hidden="true">
+              <div class="ambient"></div>
+              <div class="ambient ambient--ring"></div>
+            </div>
+            <div class="floaty">
+              <div id="heroDevice" class="device" style="--w: clamp(200px, calc((100svh - 400px) / 2.17), min(58vw, 290px));" role="img" aria-label="iPhone 18 Pro Max in Space Black"></div>
+              <div class="floor-shadow mt-4"></div>
+              <div id="heroReflect" class="floor-reflect"></div>
+            </div>
+
+          </div>
+
+          <!-- Color switcher -->
+          <div class="glass mt-2 flex flex-col items-center gap-3 rounded-3xl px-6 py-4">
+            <div id="heroSwatches" class="flex items-center gap-4" role="radiogroup" aria-label="Finish"></div>
+            <p class="text-sm text-white/55">
+              <span id="heroColorName" class="swatch-label inline-block font-medium text-white">Space Black</span>
+              <span class="text-white/35">·</span>
+              <span id="heroColorMaterial" class="swatch-label inline-block">Titanium</span>
+            </p>
+            <button id="flipBtn" type="button" class="btn-ghost inline-flex items-center gap-2 rounded-full border hairline px-3.5 py-1.5 text-xs font-medium text-white/80">
+              <i class="fa-solid fa-rotate text-[11px]" aria-hidden="true"></i>
+              <span>View front</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat strip -->
+      <div class="mx-auto mt-6 max-w-7xl px-5 pb-20 sm:px-8 lg:mt-0">
+        <dl class="reveal glass grid grid-cols-2 divide-white/5 overflow-hidden rounded-3xl md:grid-cols-4 md:divide-x">
+          <div class="p-6 text-center">
+            <dt class="text-xs uppercase tracking-[0.18em] text-white/40">Chip</dt>
+            <dd class="mt-2 text-2xl font-semibold tracking-tight text-metal sm:text-3xl">A20 Pro</dd>
+          </div>
+          <div class="p-6 text-center">
+            <dt class="text-xs uppercase tracking-[0.18em] text-white/40">Optical zoom</dt>
+            <dd class="mt-2 text-2xl font-semibold tracking-tight text-metal sm:text-3xl"><span data-count="8">0</span>×</dd>
+          </div>
+          <div class="p-6 text-center">
+            <dt class="text-xs uppercase tracking-[0.18em] text-white/40">Video playback</dt>
+            <dd class="mt-2 text-2xl font-semibold tracking-tight text-metal sm:text-3xl">Up to <span data-count="39">0</span>h</dd>
+          </div>
+          <div class="p-6 text-center">
+            <dt class="text-xs uppercase tracking-[0.18em] text-white/40">Aperture</dt>
+            <dd class="mt-2 text-2xl font-semibold tracking-tight text-metal sm:text-3xl">ƒ/1.4–4.0</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ======================= FEATURES / PRO MAX ======================= -->
+    <section id="pro-max" class="relative scroll-mt-14 border-t hairline py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="max-w-3xl">
+          <p class="reveal text-sm font-semibold uppercase tracking-[0.2em]" style="color: var(--accent); transition: color .6s;">Pro Max</p>
+          <h2 class="reveal mt-4 text-4xl font-semibold leading-[1.05] tracking-tightest sm:text-6xl" data-delay="1">
+            <span class="text-metal">Every part, rethought.</span><br>
+            <span class="text-white/40">Every detail, engineered.</span>
+          </h2>
+        </div>
+
+        <div class="mt-14 grid grid-cols-1 gap-4 md:grid-flow-dense md:grid-cols-2 lg:grid-cols-3">
+
+          <!-- A20 Pro -->
+          <article class="spot lift reveal glass rounded-[28px] p-7 sm:p-9 md:col-span-2">
+            <div class="grid items-center gap-8 sm:grid-cols-[1fr_auto]">
+              <div>
+                <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] text-white/80"><i class="fa-solid fa-microchip" aria-hidden="true"></i></div>
+                <h3 class="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl">A20 Pro.<br><span class="text-white/45">Built for Apple Intelligence.</span></h3>
+                <p class="mt-4 max-w-md text-white/55">Our first 2‑nanometer chip. A redesigned 32‑core Neural Engine runs larger on‑device models privately, while a new GPU brings hardware ray tracing to desktop‑class games.</p>
+                <dl class="mt-7 grid grid-cols-3 gap-4">
+                  <div><dt class="text-xs text-white/40">CPU</dt><dd class="text-2xl font-semibold"><span data-count="30">0</span>%<span class="block text-xs font-normal text-white/40">faster</span></dd></div>
+                  <div><dt class="text-xs text-white/40">GPU</dt><dd class="text-2xl font-semibold"><span data-count="40">0</span>%<span class="block text-xs font-normal text-white/40">faster</span></dd></div>
+                  <div><dt class="text-xs text-white/40">Neural Engine</dt><dd class="text-2xl font-semibold"><span data-count="2">0</span>×<span class="block text-xs font-normal text-white/40">throughput</span></dd></div>
+                </dl>
+              </div>
+              <div class="mx-auto w-52 sm:w-60" aria-hidden="true">
+                <svg viewBox="0 0 240 240" class="w-full">
+                  <defs>
+                    <linearGradient id="chipG" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0" stop-color="#3a3a40"/><stop offset=".5" stop-color="#1a1a1e"/><stop offset="1" stop-color="#2d2d33"/>
+                    </linearGradient>
+                    <linearGradient id="chipEdge" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".5" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".35"/>
+                    </linearGradient>
+                  </defs>
+                  <g stroke-width="1.5" fill="none" opacity=".75" style="stroke: var(--accent); transition: stroke .6s;">
+                    <path class="trace" d="M120 10 V50"/><path class="trace slow" d="M90 10 V50"/><path class="trace" d="M150 10 V50"/>
+                    <path class="trace slow" d="M120 190 V230"/><path class="trace" d="M90 190 V230"/><path class="trace slow" d="M150 190 V230"/>
+                    <path class="trace" d="M10 120 H50"/><path class="trace slow" d="M10 90 H50"/><path class="trace" d="M10 150 H50"/>
+                    <path class="trace slow" d="M190 120 H230"/><path class="trace" d="M190 90 H230"/><path class="trace slow" d="M190 150 H230"/>
+                  </g>
+                  <rect x="50" y="50" width="140" height="140" rx="22" fill="url(#chipG)" stroke="url(#chipEdge)" stroke-width="1.5"/>
+                  <rect class="chip-pulse" x="62" y="62" width="116" height="116" rx="14" fill="none" stroke-opacity=".5" style="stroke: var(--accent);"/>
+                  <text x="120" y="130" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="26" font-weight="700" letter-spacing="-1">A20</text>
+                  <text x="120" y="152" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="12" font-weight="600" letter-spacing="3" opacity=".6">PRO</text>
+                </svg>
+              </div>
+            </div>
+          </article>
+
+          <!-- Variable aperture -->
+          <article class="spot lift reveal glass flex flex-col rounded-[28px] p-7 sm:p-9 lg:row-span-2" data-delay="1">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] text-white/80"><i class="fa-solid fa-camera" aria-hidden="true"></i></div>
+            <h3 class="mt-5 text-2xl font-semibold tracking-tight sm:text-3xl">Variable aperture.<br><span class="text-white/45">Real depth, optically.</span></h3>
+            <p class="mt-3 text-white/55">A mechanical 6‑blade iris on the 48MP Fusion camera. Drag to shape depth of field.</p>
+
+            <div class="relative mt-6 aspect-[4/5] w-full overflow-hidden rounded-2xl border hairline" id="dofScene">
+              <svg viewBox="0 0 320 400" class="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <defs>
+                  <linearGradient id="dofBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1030"/><stop offset="1" stop-color="#050308"/></linearGradient>
+                  <radialGradient id="petal" cx=".5" cy=".3" r=".8"><stop offset="0" stop-color="#ffd1e8"/><stop offset="1" stop-color="#e0559b"/></radialGradient>
+                </defs>
+                <rect width="320" height="400" fill="url(#dofBg)"/>
+                <g class="bokeh" id="bokeh">
+                  <circle cx="40" cy="60" r="26" fill="#f59e0b" opacity=".7"/>
+                  <circle cx="270" cy="80" r="34" fill="#60a5fa" opacity=".6"/>
+                  <circle cx="200" cy="30" r="18" fill="#f472b6" opacity=".7"/>
+                  <circle cx="110" cy="110" r="14" fill="#fde68a" opacity=".6"/>
+                  <circle cx="290" cy="210" r="22" fill="#a78bfa" opacity=".6"/>
+                  <circle cx="30" cy="220" r="30" fill="#34d399" opacity=".45"/>
+                  <circle cx="160" cy="70" r="10" fill="#fff" opacity=".6"/>
+                  <circle cx="240" cy="150" r="12" fill="#fb7185" opacity=".6"/>
+                  <circle cx="70" cy="160" r="9" fill="#fff" opacity=".5"/>
+                  <rect x="0" y="300" width="320" height="100" fill="#0e2016" opacity=".9"/>
+                </g>
+                <!-- Subject: flower -->
+                <g>
+                  <path d="M160 400 C158 340 166 300 160 250" stroke="#3f8a4f" stroke-width="6" fill="none" stroke-linecap="round"/>
+                  <path d="M160 330 C130 320 118 300 120 285 C140 290 156 305 160 330Z" fill="#4ea862"/>
+                  <path d="M161 310 C190 298 204 280 202 266 C182 272 166 288 161 310Z" fill="#4ea862"/>
+                  <g transform="translate(160 215)">
+                    <ellipse rx="20" ry="42" fill="url(#petal)" transform="rotate(0) translate(0 -30)"/>
+                    <ellipse rx="20" ry="42" fill="url(#petal)" transform="rotate(60) translate(0 -30)"/>
+                    <ellipse rx="20" ry="42" fill="url(#petal)" transform="rotate(120) translate(0 -30)"/>
+                    <ellipse rx="20" ry="42" fill="url(#petal)" transform="rotate(180) translate(0 -30)"/>
+                    <ellipse rx="20" ry="42" fill="url(#petal)" transform="rotate(240) translate(0 -30)"/>
+                    <ellipse rx="20" ry="42" fill="url(#petal)" transform="rotate(300) translate(0 -30)"/>
+                    <circle r="18" fill="#fcd34d"/><circle r="10" fill="#f59e0b"/>
+                  </g>
+                </g>
+              </svg>
+
+              <div class="absolute right-3 top-3 grid h-16 w-16 place-items-center rounded-full bg-black/40 backdrop-blur-md">
+                <svg viewBox="0 0 64 64" class="h-14 w-14" aria-hidden="true">
+                  <circle cx="32" cy="32" r="28" fill="#111" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+                  <polygon id="irisPoly" fill="#0b0f1a" stroke-width="1.2" style="stroke: var(--accent);"/>
+                </svg>
+              </div>
+              <div class="absolute bottom-3 left-3 rounded-full bg-black/50 px-3 py-1 font-mono text-sm backdrop-blur-md" id="fLabel">ƒ/2.0</div>
+            </div>
+
+            <label for="apertureRange" class="mt-6 flex items-center justify-between text-xs text-white/45">
+              <span>ƒ/1.4 · Shallow</span><span>ƒ/4.0 · Deep</span>
+            </label>
+            <input id="apertureRange" class="slider mt-3" type="range" min="14" max="40" step="1" value="20" aria-label="Aperture f-number" aria-valuetext="f/2.0">
+          </article>
+
+          <!-- Zoom -->
+          <article class="spot lift reveal glass rounded-[28px] p-7 sm:p-9 md:col-span-2" data-delay="1">
+            <div class="grid gap-7 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+              <div>
+                <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] text-white/80"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i></div>
+                <h3 class="mt-5 text-2xl font-semibold tracking-tight sm:text-3xl">8× optical‑quality zoom.<br><span class="text-white/45">Tetraprism, reimagined.</span></h3>
+                <p class="mt-3 text-white/55">Five focal lengths from 13 mm to 200 mm, all captured at 48 megapixels. Tap to zoom in on the Moon.</p>
+                <div class="mt-6 inline-flex flex-wrap gap-1.5 rounded-full border hairline bg-white/[0.03] p-1.5" role="group" aria-label="Zoom level">
+                  <button type="button" class="zoom-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-white/10" data-zoom="0.5" aria-pressed="false">.5×</button>
+                  <button type="button" class="zoom-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-white/10" data-zoom="1" aria-pressed="true">1×</button>
+                  <button type="button" class="zoom-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-white/10" data-zoom="2" aria-pressed="false">2×</button>
+                  <button type="button" class="zoom-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-white/10" data-zoom="4" aria-pressed="false">4×</button>
+                  <button type="button" class="zoom-btn rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-white/10" data-zoom="8" aria-pressed="false">8×</button>
+                </div>
+              </div>
+              <div class="relative aspect-[16/10] overflow-hidden rounded-2xl border hairline bg-black">
+                <svg id="zoomScene" viewBox="0 0 400 250" class="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050816"/><stop offset=".7" stop-color="#1b1f4b"/><stop offset="1" stop-color="#3b2a5a"/></linearGradient>
+                    <radialGradient id="moonG" cx=".4" cy=".4" r=".7"><stop offset="0" stop-color="#fffdf2"/><stop offset=".7" stop-color="#d9d4c3"/><stop offset="1" stop-color="#a9a391"/></radialGradient>
+                    <radialGradient id="moonHalo"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+                  </defs>
+                  <rect width="400" height="250" fill="url(#sky)"/>
+                  <g fill="#fff">
+                    <circle cx="30" cy="20" r=".8"/><circle cx="80" cy="50" r=".6"/><circle cx="130" cy="15" r="1"/><circle cx="260" cy="30" r=".7"/>
+                    <circle cx="320" cy="60" r="1"/><circle cx="370" cy="18" r=".6"/><circle cx="345" cy="95" r=".6"/><circle cx="55" cy="95" r=".7"/>
+                    <circle cx="240" cy="80" r=".5"/><circle cx="160" cy="60" r=".5"/><circle cx="190" cy="25" r=".7"/>
+                  </g>
+                  <circle cx="200" cy="110" r="22" fill="url(#moonHalo)"/>
+                  <g>
+                    <circle cx="200" cy="110" r="7" fill="url(#moonG)"/>
+                    <circle cx="198" cy="107.5" r="1.4" fill="#b5ae9a" opacity=".8"/>
+                    <circle cx="202.6" cy="111.2" r="1" fill="#b5ae9a" opacity=".7"/>
+                    <circle cx="197.4" cy="112.6" r=".7" fill="#a59f8c" opacity=".8"/>
+                    <circle cx="203.2" cy="106.6" r=".5" fill="#a59f8c" opacity=".7"/>
+                    <circle cx="200.6" cy="114.6" r=".45" fill="#a59f8c" opacity=".7"/>
+                    <circle cx="195.4" cy="109.4" r=".35" fill="#a59f8c" opacity=".7"/>
+                  </g>
+                  <path d="M0 250 L0 190 L50 150 L90 178 L140 130 L185 172 L230 140 L280 180 L330 145 L400 185 L400 250Z" fill="#141733"/>
+                  <path d="M0 250 L0 210 L60 185 L120 205 L170 180 L240 210 L300 190 L360 210 L400 200 L400 250Z" fill="#0a0c1d"/>
+                </svg>
+                <div class="absolute bottom-3 left-3 flex items-center gap-2 rounded-full bg-black/50 px-3 py-1 text-sm backdrop-blur-md">
+                  <span id="zoomLabel" class="font-semibold">1×</span><span class="text-white/50" id="zoomMm">24 mm</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Titanium -->
+          <article class="spot lift reveal glass rounded-[28px] p-7 sm:p-9" data-delay="1">
+            <div class="brushed relative h-36 overflow-hidden rounded-2xl border hairline" aria-hidden="true">
+              <div class="absolute inset-0" style="background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.35) 45%, transparent 60%); animation: shimmer 6s linear infinite; background-size: 200% 100%;"></div>
+              <div class="absolute bottom-3 left-4 text-xs font-semibold uppercase tracking-[0.25em] text-black/55">Grade 5 · Ti‑6Al‑4V</div>
+            </div>
+            <h3 class="mt-6 text-2xl font-semibold tracking-tight">Aerodynamic titanium.</h3>
+            <p class="mt-2 text-white/55">A forged titanium unibody with contoured edges — stronger, lighter and <span class="text-white">19% more rigid</span> than before.</p>
+          </article>
+
+          <!-- Thermal -->
+          <article class="spot lift reveal glass rounded-[28px] p-7 sm:p-9" data-delay="2">
+            <div class="relative h-36 overflow-hidden rounded-2xl border hairline bg-black" aria-hidden="true">
+              <div class="heat absolute inset-0 opacity-70"></div>
+              <div class="absolute inset-0" style="background: repeating-linear-gradient(0deg, rgba(0,0,0,.35) 0 2px, transparent 2px 10px);"></div>
+              <div class="absolute inset-x-4 bottom-3 flex items-end justify-between">
+                <span class="text-xs font-semibold uppercase tracking-[0.25em] text-white/80">Vapor chamber</span>
+                <span class="text-3xl font-semibold">−<span data-count="22">0</span>%</span>
+              </div>
+            </div>
+            <h3 class="mt-6 text-2xl font-semibold tracking-tight">Cooler under pressure.</h3>
+            <p class="mt-2 text-white/55">A laser‑welded vapor chamber spreads heat across the frame for up to 22% lower peak temperatures in sustained workloads.</p>
+          </article>
+
+          <!-- Battery -->
+          <article class="spot lift reveal glass rounded-[28px] p-7 sm:p-9" data-delay="3">
+            <div class="flex h-36 flex-col justify-center rounded-2xl border hairline bg-black/40 px-5" aria-hidden="true">
+              <div class="flex items-center gap-1.5">
+                <div class="relative h-12 flex-1 overflow-hidden rounded-xl border-2 border-white/25 p-1">
+                  <div class="battery-fill h-full rounded-lg"></div>
+                </div>
+                <div class="h-4 w-1.5 rounded-r bg-white/25"></div>
+              </div>
+              <div class="mt-3 flex justify-between text-xs text-white/45"><span>All day</span><span>And then some</span></div>
+            </div>
+            <h3 class="mt-6 text-2xl font-semibold tracking-tight">Up to <span data-count="39">0</span> hours.</h3>
+            <p class="mt-2 text-white/55">A higher‑density battery and the efficiency of A20 Pro deliver the longest video playback ever in an iPhone.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= LINEUP ======================= -->
+    <section id="lineup" class="relative scroll-mt-14 border-t hairline py-24 sm:py-32">
+      <div class="pointer-events-none absolute inset-x-0 top-0 h-[500px]" style="background: radial-gradient(60% 60% at 50% 0%, rgba(255,255,255,0.05), transparent);"></div>
+      <div class="relative mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <p class="reveal text-sm font-semibold uppercase tracking-[0.2em] text-white/45">The lineup</p>
+            <h2 class="reveal mt-4 text-4xl font-semibold leading-[1.05] tracking-tightest sm:text-6xl" data-delay="1"><span class="text-metal">Which iPhone is</span><br><span class="text-white/40">right for you?</span></h2>
+          </div>
+          <a href="#specs" class="reveal btn-ghost inline-flex items-center gap-2 rounded-full border hairline px-5 py-2.5 text-sm font-medium" data-delay="2">
+            Compare all models <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <div id="lineupGrid" class="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"></div>
+      </div>
+    </section>
+
+    <!-- ======================= SPECS ======================= -->
+    <section id="specs" class="relative scroll-mt-14 border-t hairline py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <p class="reveal text-sm font-semibold uppercase tracking-[0.2em] text-white/45">Tech specs</p>
+        <h2 class="reveal mt-4 text-4xl font-semibold leading-[1.05] tracking-tightest sm:text-6xl" data-delay="1"><span class="text-metal">Side by side.</span></h2>
+        <p class="reveal mt-4 max-w-xl text-white/55" data-delay="2">Every model, every detail. Scroll horizontally on smaller screens.</p>
+
+        <div class="reveal glass mt-12 overflow-hidden rounded-[28px]" data-delay="2">
+          <div class="overflow-x-auto">
+            <table class="specs-table w-full min-w-[820px] text-sm">
+              <caption class="sr-only">iPhone 18 lineup technical specifications</caption>
+              <thead id="specsHead"></thead>
+              <tbody id="specsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= FINAL CTA ======================= -->
+    <section class="relative isolate overflow-hidden border-t hairline py-28 text-center">
+      <div class="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-25 blur-3xl" style="background: radial-gradient(closest-side, var(--accent), transparent); transition: background .8s;"></div>
+      <div class="mx-auto max-w-3xl px-5">
+        <i class="fa-brands fa-apple reveal text-4xl text-white/80" aria-hidden="true"></i>
+        <h2 class="reveal mt-6 text-4xl font-semibold tracking-tightest sm:text-6xl" data-delay="1"><span class="text-metal">The future fits</span><br><span class="text-accent">in your hand.</span></h2>
+        <p class="reveal mt-5 text-lg text-white/55" data-delay="2">Pre-order today. Free delivery, and trade in your current iPhone for credit toward a new one.</p>
+        <div class="reveal mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" data-delay="3">
+          <button type="button" class="btn-primary rounded-full px-8 py-3.5 text-[15px] font-semibold" data-preorder data-model="promax">Pre-order iPhone 18 Pro Max</button>
+          <button type="button" class="btn-ghost rounded-full border hairline px-8 py-3.5 text-[15px] font-medium" data-preorder data-model="18">Pre-order iPhone 18</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================= FOOTER ======================= -->
+  <footer class="border-t hairline bg-obsidian-900/60">
+    <div class="mx-auto max-w-7xl px-5 py-12 text-xs leading-relaxed text-white/40 sm:px-8">
+      <p>Performance, battery and thermal figures are illustrative and compare iPhone 18 Pro Max with the previous generation. Prices are shown in USD, excluding tax. Monthly pricing assumes 0% APR over 24 months.</p>
+      <p class="mt-3">This is an unofficial concept page built for design demonstration. It is not affiliated with, or endorsed by, Apple Inc. Apple, iPhone and the Apple logo are trademarks of Apple Inc.</p>
+      <div class="mt-8 flex flex-col justify-between gap-4 border-t hairline pt-6 sm:flex-row">
+        <p>© <span id="year"></span> Concept design. All rights reserved.</p>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2">
+          <li><a class="hover:text-white/80" href="#overview">Overview</a></li>
+          <li><a class="hover:text-white/80" href="#pro-max">Pro Max</a></li>
+          <li><a class="hover:text-white/80" href="#lineup">Lineup</a></li>
+          <li><a class="hover:text-white/80" href="#specs">Specs</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================= PRE-ORDER MODAL ======================= -->
+  <div id="orderModal" class="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-6" aria-hidden="true">
+    <div class="modal-backdrop absolute inset-0 bg-black/70 backdrop-blur-md" data-close></div>
+
+    <div class="modal-panel relative flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-t-[28px] border hairline bg-obsidian-900/95 shadow-2xl sm:rounded-[28px]" role="dialog" aria-modal="true" aria-labelledby="orderTitle" style="-webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);">
+      <header class="flex items-center justify-between border-b hairline px-6 py-4">
+        <div class="flex items-center gap-3">
+          <i class="fa-brands fa-apple text-lg" aria-hidden="true"></i>
+          <h2 id="orderTitle" class="text-base font-semibold tracking-tight">Pre-order</h2>
+        </div>
+        <button type="button" class="btn-ghost grid h-9 w-9 place-items-center rounded-full border hairline" data-close aria-label="Close pre-order">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <!-- Step 1: Configure -->
+      <form id="stepConfigure" class="modal-scroll grid min-h-0 flex-1 overflow-y-auto md:grid-cols-[1fr_340px]" novalidate>
+        <div class="space-y-8 p-6 sm:p-8">
+          <div class="flex items-center gap-6">
+            <div class="relative shrink-0">
+              <div class="absolute inset-0 -z-0 rounded-full opacity-50 blur-2xl" id="modalGlow" style="background: radial-gradient(closest-side, var(--accent), transparent);"></div>
+              <div id="modalDevice" class="device relative" style="--w: 84px;" aria-hidden="true"></div>
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-[0.18em] text-white/40">Your configuration</p>
+              <p id="modalHeadline" class="mt-1 text-2xl font-semibold tracking-tight">iPhone 18 Pro Max</p>
+              <p id="modalSubline" class="mt-1 text-sm text-white/50">256GB · Space Black</p>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend class="text-sm font-semibold">Model. <span class="font-normal text-white/45">Which is best for you?</span></legend>
+            <div id="modelOptions" class="mt-3 grid gap-2.5 sm:grid-cols-2"></div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="text-sm font-semibold">Finish. <span id="finishName" class="font-normal text-white/45">Space Black</span></legend>
+            <div id="colorOptions" class="mt-4 flex flex-wrap gap-4 pl-1" role="radiogroup" aria-label="Finish"></div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="text-sm font-semibold">Storage. <span class="font-normal text-white/45">How much space do you need?</span></legend>
+            <div id="storageOptions" class="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4"></div>
+          </fieldset>
+
+          <fieldset class="space-y-2.5">
+            <legend class="text-sm font-semibold">Extras.</legend>
+            <label class="opt mt-3">
+              <input type="checkbox" id="careToggle">
+              <span class="opt__box">
+                <span class="flex items-start gap-3">
+                  <i class="fa-brands fa-apple mt-0.5 text-[#ff453a]" aria-hidden="true"></i>
+                  <span>
+                    <span class="block text-sm font-medium">AppleCare+ (2 years)</span>
+                    <span class="block text-xs text-white/45">Unlimited accidental damage repairs · Express replacement</span>
+                  </span>
+                </span>
+                <span class="flex items-center gap-3">
+                  <span id="carePrice" class="text-sm text-white/70">+$199</span>
+                </span>
+              </span>
+            </label>
+            <div class="opt__box">
+              <span>
+                <span class="block text-sm font-medium">Quantity</span>
+                <span class="block text-xs text-white/45">Limit 4 per customer</span>
+              </span>
+              <span class="flex items-center gap-1 rounded-full border hairline p-1">
+                <button type="button" id="qtyMinus" class="grid h-8 w-8 place-items-center rounded-full hover:bg-white/10 disabled:opacity-30" aria-label="Decrease quantity"><i class="fa-solid fa-minus text-xs" aria-hidden="true"></i></button>
+                <output id="qtyValue" class="w-6 text-center text-sm font-semibold" aria-live="polite">1</output>
+                <button type="button" id="qtyPlus" class="grid h-8 w-8 place-items-center rounded-full hover:bg-white/10 disabled:opacity-30" aria-label="Increase quantity"><i class="fa-solid fa-plus text-xs" aria-hidden="true"></i></button>
+              </span>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- Summary -->
+        <aside class="border-t hairline bg-white/[0.02] p-6 sm:p-8 md:border-l md:border-t-0">
+          <div class="md:sticky md:top-0">
+            <h3 class="text-sm font-semibold">Summary</h3>
+            <dl id="summaryLines" class="mt-4 space-y-3 text-sm"></dl>
+            <div class="mt-5 border-t hairline pt-5">
+              <div class="flex items-baseline justify-between">
+                <span class="text-sm text-white/60">Total</span>
+                <span id="totalPrice" class="text-3xl font-semibold tracking-tight" aria-live="polite">$1,199</span>
+              </div>
+              <p class="mt-1 text-right text-xs text-white/45">or <span id="monthlyPrice" class="text-white/70">$49.96</span>/mo. for 24 mo.</p>
+            </div>
+            <ul class="mt-6 space-y-2.5 text-xs text-white/55">
+              <li class="flex gap-2.5"><i class="fa-solid fa-truck-fast mt-0.5 w-4 text-white/40" aria-hidden="true"></i> Free delivery on launch day</li>
+              <li class="flex gap-2.5"><i class="fa-solid fa-rotate-left mt-0.5 w-4 text-white/40" aria-hidden="true"></i> 14-day free returns</li>
+              <li class="flex gap-2.5"><i class="fa-solid fa-lock mt-0.5 w-4 text-white/40" aria-hidden="true"></i> Estimated tax calculated at checkout</li>
+            </ul>
+            <button id="placeOrder" type="submit" class="btn-primary mt-7 flex w-full items-center justify-center gap-2 rounded-2xl py-3.5 text-[15px] font-semibold">
+              <span>Place pre-order</span>
+            </button>
+          </div>
+        </aside>
+      </form>
+
+      <!-- Step 2: Confirmation -->
+      <div id="stepConfirm" class="modal-scroll hidden min-h-0 flex-1 overflow-y-auto p-6 text-center sm:p-10" aria-live="polite">
+        <svg class="check-draw mx-auto h-20 w-20" viewBox="0 0 56 56" aria-hidden="true">
+          <circle cx="28" cy="28" r="25" fill="none" stroke="#34c759" stroke-width="3"/>
+          <path d="M17 29 l7 7 l15 -16" fill="none" stroke="#34c759" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="mt-6 text-3xl font-semibold tracking-tight">You're all set.</h3>
+        <p class="mt-2 text-white/55">Your pre-order has been placed. We'll email you when it ships.</p>
+
+        <div class="glass mx-auto mt-8 max-w-md rounded-2xl p-6 text-left">
+          <div class="flex items-center gap-4">
+            <div id="confirmDevice" class="device shrink-0" style="--w: 56px;" aria-hidden="true"></div>
+            <div>
+              <p class="text-xs uppercase tracking-[0.18em] text-white/40">Order <span id="orderNumber" class="font-mono normal-case tracking-normal text-white/70">W0000000000</span></p>
+              <p id="confirmTitle" class="mt-1 font-semibold">iPhone 18 Pro Max</p>
+              <p id="confirmDetail" class="text-sm text-white/50">256GB · Space Black</p>
+            </div>
+          </div>
+          <dl class="mt-5 space-y-2 border-t hairline pt-5 text-sm">
+            <div class="flex justify-between"><dt class="text-white/50">Quantity</dt><dd id="confirmQty">1</dd></div>
+            <div class="flex justify-between"><dt class="text-white/50">AppleCare+</dt><dd id="confirmCare">Not included</dd></div>
+            <div class="flex justify-between"><dt class="text-white/50">Estimated delivery</dt><dd id="confirmDelivery">—</dd></div>
+            <div class="flex justify-between border-t hairline pt-3 text-base font-semibold"><dt>Total</dt><dd id="confirmTotal">$0</dd></div>
+          </dl>
+        </div>
+
+        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <button type="button" id="orderAnother" class="btn-ghost rounded-full border hairline px-6 py-3 text-sm font-medium">Configure another</button>
+          <button type="button" class="btn-primary rounded-full px-8 py-3 text-sm font-semibold" data-close>Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" data-show="false" role="status" aria-live="polite" class="glass fixed bottom-6 left-1/2 z-[120] flex -translate-x-1/2 items-center gap-3 rounded-full px-5 py-3 text-sm shadow-2xl">
+    <i class="fa-solid fa-circle-check text-[#34c759]" aria-hidden="true"></i>
+    <span id="toastText">Pre-order placed</span>
+  </div>
+
+  <script>
+  (() => {
+    'use strict';
+
+    /* ===================== Data ===================== */
+    const PRO_COLORS = [
+      { name: 'Space Black',      frame: '#3a3a3d', hi: '#6e6e74', lo: '#121214', back: '#1c1c1f', backHi: '#2e2e33', logo: 'rgba(255,255,255,0.16)', glow: '#7c83ff' },
+      { name: 'Natural Titanium', frame: '#b3ab9d', hi: '#ebe4d7', lo: '#6c6558', back: '#c5bdaf', backHi: '#ddd6ca', logo: 'rgba(0,0,0,0.14)',       glow: '#d8b98a' },
+      { name: 'Deep Blue',        frame: '#2c3a52', hi: '#63779a', lo: '#121a28', back: '#243249', backHi: '#35486b', logo: 'rgba(255,255,255,0.16)', glow: '#3b82f6' },
+      { name: 'Cosmic Silver',    frame: '#c7c9cd', hi: '#f6f7f8', lo: '#86898f', back: '#dcdee2', backHi: '#f1f2f4', logo: 'rgba(0,0,0,0.12)',       glow: '#c6d4ea' },
+    ];
+    const STD_COLORS = [
+      { name: 'Midnight',    frame: '#2a2d33', hi: '#585c66', lo: '#111317', back: '#22252b', backHi: '#31353d', logo: 'rgba(255,255,255,0.16)', glow: '#6366f1' },
+      { name: 'Sky Blue',    frame: '#9fbfe0', hi: '#dbe9f7', lo: '#6a8fb5', back: '#b3cee9', backHi: '#d0e2f4', logo: 'rgba(0,0,0,0.12)',       glow: '#60a5fa' },
+      { name: 'Sage',        frame: '#a8b99c', hi: '#dae5d2', lo: '#718367', back: '#bac9a8', backHi: '#d2dcc4', logo: 'rgba(0,0,0,0.12)',       glow: '#86efac' },
+      { name: 'Blush',       frame: '#deb5b5', hi: '#f7e1e1', lo: '#ad8383', back: '#ebc8c8', backHi: '#f6dcdc', logo: 'rgba(0,0,0,0.1)',        glow: '#f9a8d4' },
+      { name: 'Cloud White', frame: '#e3e1dc', hi: '#fcfbf9', lo: '#aaa7a0', back: '#efede8', backHi: '#faf9f6', logo: 'rgba(0,0,0,0.1)',        glow: '#e5e7eb' },
+    ];
+
+    const MODELS = [
+      {
+        id: '18', name: 'iPhone 18', tagline: 'Brilliant. In every way.', tier: 'std', price: 799,
+        display: '6.3″', displayTech: 'Super Retina XDR · ProMotion up to 120Hz',
+        chip: 'A20', chipDetail: '6‑core CPU · 5‑core GPU · 16‑core Neural Engine',
+        camera: 'Dual 48MP', cameraDetail: '48MP Fusion · 48MP Ultra Wide',
+        aperture: 'ƒ/1.6 fixed', zoom: 'Up to 2× optical‑quality', front: '24MP Center Stage',
+        battery: 'Up to 30 hrs', cooling: 'Graphite thermal spreader', material: 'Aluminum · Ceramic Shield 2', weight: '177 g',
+        storage: [256, 512], colors: STD_COLORS, care: 149,
+      },
+      {
+        id: '18plus', name: 'iPhone 18 Plus', tagline: 'Big screen. Bigger battery.', tier: 'std', price: 899,
+        display: '6.9″', displayTech: 'Super Retina XDR · ProMotion up to 120Hz',
+        chip: 'A20', chipDetail: '6‑core CPU · 5‑core GPU · 16‑core Neural Engine',
+        camera: 'Dual 48MP', cameraDetail: '48MP Fusion · 48MP Ultra Wide',
+        aperture: 'ƒ/1.6 fixed', zoom: 'Up to 2× optical‑quality', front: '24MP Center Stage',
+        battery: 'Up to 34 hrs', cooling: 'Graphite thermal spreader', material: 'Aluminum · Ceramic Shield 2', weight: '203 g',
+        storage: [256, 512], colors: STD_COLORS, care: 179,
+      },
+      {
+        id: 'pro', name: 'iPhone 18 Pro', tagline: 'Pro, perfected.', tier: 'pro', price: 1099,
+        display: '6.3″', displayTech: 'Super Retina XDR · ProMotion 1–120Hz · Always‑On',
+        chip: 'A20 Pro', chipDetail: '6‑core CPU · 6‑core GPU · 32‑core Neural Engine',
+        camera: 'Triple 48MP', cameraDetail: '48MP Fusion · 48MP Ultra Wide · 48MP Telephoto',
+        aperture: 'ƒ/1.4–ƒ/4.0 variable', zoom: 'Up to 8× optical‑quality', front: '24MP Center Stage',
+        battery: 'Up to 33 hrs', cooling: 'Vapor chamber', material: 'Titanium unibody · Ceramic Shield 2', weight: '199 g',
+        storage: [256, 512, 1024], colors: PRO_COLORS, care: 199,
+      },
+      {
+        id: 'promax', name: 'iPhone 18 Pro Max', tagline: 'The ultimate iPhone.', tier: 'pro', price: 1199, isNew: true,
+        display: '6.9″', displayTech: 'Super Retina XDR · ProMotion 1–120Hz · Always‑On',
+        chip: 'A20 Pro', chipDetail: '6‑core CPU · 6‑core GPU · 32‑core Neural Engine',
+        camera: 'Triple 48MP', cameraDetail: '48MP Fusion · 48MP Ultra Wide · 48MP Telephoto',
+        aperture: 'ƒ/1.4–ƒ/4.0 variable', zoom: 'Up to 8× optical‑quality', front: '24MP Center Stage',
+        battery: 'Up to 39 hrs', cooling: 'Vapor chamber', material: 'Titanium unibody · Ceramic Shield 2', weight: '227 g',
+        storage: [256, 512, 1024, 2048], colors: PRO_COLORS, care: 199,
+      },
+    ];
+    const STORAGE_DELTA = { 256: 0, 512: 200, 1024: 400, 2048: 800 };
+    const MAX_QTY = 4;
+
+    /* ===================== Helpers ===================== */
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+    const usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtPrice = (n) => (Number.isInteger(n) ? usd0 : usd2).format(n);
+    const storageLabel = (gb) => (gb >= 1024 ? `${gb / 1024}TB` : `${gb}GB`);
+    const getModel = (id) => MODELS.find((m) => m.id === id) || MODELS[3];
+    const findColor = (model, name) => model.colors.find((c) => c.name === name) || model.colors[0];
+    const hexToRgba = (hex, a) => {
+      const n = parseInt(hex.slice(1), 16);
+      return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
+    };
+
+    function deviceMarkup(tier, withFront = false) {
+      const camera = tier === 'pro'
+        ? `<div class="cam cam--pro"><span class="lens l1"></span><span class="lens l2"></span><span class="lens l3"></span><span class="flash"></span><span class="mic"></span><span class="lidar"></span></div>`
+        : `<div class="cam cam--std"><span class="lens l1"></span><span class="lens l2"></span></div><span class="flash flash--std"></span>`;
+      const today = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(new Date());
+      const front = withFront ? `
+        <div class="device__face device__face--front">
+          <div class="device__screen">
+            <div class="island"></div>
+            <div class="status"><span>9:41</span><span><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></span></div>
+            <div class="lock-date">${today}</div>
+            <div class="lock-time">9:41</div>
+            <div class="widgets">
+              <div class="widget"><i class="fa-solid fa-cloud-sun"></i><b>72°</b>Cupertino</div>
+              <div class="widget"><i class="fa-solid fa-battery-three-quarters"></i><b>100%</b>All day</div>
+            </div>
+            <div class="lock-actions"><span><i class="fa-solid fa-flashlight"></i></span><span><i class="fa-solid fa-camera"></i></span></div>
+            <div class="home-bar"></div>
+          </div>
+        </div>` : '';
+      return `
+        <div class="device__body">
+          <span class="device__btn device__btn--action"></span>
+          <span class="device__btn device__btn--volup"></span>
+          <span class="device__btn device__btn--voldn"></span>
+          <span class="device__btn device__btn--power"></span>
+          <span class="device__btn device__btn--camctl"></span>
+          <div class="device__face device__face--back">
+            <div class="device__back">
+              ${camera}
+              <i class="fa-brands fa-apple device__logo"></i>
+              <span class="device__sheen"></span>
+            </div>
+          </div>
+          ${front}
+        </div>`;
+    }
+
+    function paintDevice(el, c) {
+      el.style.setProperty('--frame', c.frame);
+      el.style.setProperty('--frame-hi', c.hi);
+      el.style.setProperty('--frame-lo', c.lo);
+      el.style.setProperty('--back', c.back);
+      el.style.setProperty('--back-hi', c.backHi);
+      el.style.setProperty('--logo', c.logo);
+      el.style.setProperty('--glow', c.glow);
+    }
+
+    function setAccent(hex) {
+      const root = document.documentElement.style;
+      root.setProperty('--accent', hex);
+      root.setProperty('--accent-soft', hexToRgba(hex, 0.35));
+    }
+
+    function swatchStyle(c) {
+      return `--sw:${c.frame};--sw-hi:${c.hi};--sw-lo:${c.lo};`;
+    }
+
+    // Roving radio group for swatch buttons (arrow keys + home/end)
+    function wireRadioGroup(group, onSelect) {
+      group.addEventListener('keydown', (e) => {
+        const items = $$('[role="radio"]', group);
+        const i = items.indexOf(document.activeElement);
+        if (i < 0) return;
+        let next = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = items[(i + 1) % items.length];
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = items[(i - 1 + items.length) % items.length];
+        else if (e.key === 'Home') next = items[0];
+        else if (e.key === 'End') next = items[items.length - 1];
+        if (next) { e.preventDefault(); next.focus(); onSelect(next); }
+      });
+      group.addEventListener('click', (e) => {
+        const btn = e.target.closest('[role="radio"]');
+        if (btn) onSelect(btn);
+      });
+    }
+
+    function markChecked(group, btn) {
+      $$('[role="radio"]', group).forEach((b) => {
+        const on = b === btn;
+        b.setAttribute('aria-checked', String(on));
+        b.tabIndex = on ? 0 : -1;
+      });
+    }
+
+    function swapText(el, text) {
+      if (el.textContent === text) return;
+      if (reduceMotion) { el.textContent = text; return; }
+      el.classList.add('is-swapping');
+      setTimeout(() => { el.textContent = text; el.classList.remove('is-swapping'); }, 180);
+    }
+
+    /* ===================== Navigation ===================== */
+    const nav = $('#nav');
+    const menuBtn = $('#menuBtn');
+    const mobileMenu = $('#mobileMenu');
+
+    const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    function setMenu(open) {
+      mobileMenu.dataset.open = String(open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menuBtn.querySelector('i').className = `fa-solid ${open ? 'fa-xmark' : 'fa-bars'} text-sm`;
+    }
+    menuBtn.addEventListener('click', () => setMenu(mobileMenu.dataset.open !== 'true'));
+    $$('a', mobileMenu).forEach((a) => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('click', (e) => {
+      if (mobileMenu.dataset.open === 'true' && !nav.contains(e.target)) setMenu(false);
+    });
+
+    const navLinks = $$('.nav-link');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((l) => {
+          const active = l.dataset.section === entry.target.id;
+          l.classList.toggle('is-active', active);
+          if (active) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['overview', 'pro-max', 'lineup', 'specs'].forEach((id) => sectionObserver.observe(document.getElementById(id)));
+
+    /* ===================== Hero device & colour switcher ===================== */
+    const heroDevice = $('#heroDevice');
+    const heroGlow = $('#heroGlowWrap');
+    const heroReflect = $('#heroReflect');
+    const heroSwatches = $('#heroSwatches');
+    const heroColorName = $('#heroColorName');
+    const heroColorMaterial = $('#heroColorMaterial');
+    const flipBtn = $('#flipBtn');
+    let heroColor = PRO_COLORS[0];
+
+    heroDevice.innerHTML = deviceMarkup('pro', true);
+
+    heroSwatches.innerHTML = PRO_COLORS.map((c, i) => `
+      <button type="button" role="radio" class="swatch" style="${swatchStyle(c)}"
+        aria-checked="${i === 0}" tabindex="${i === 0 ? 0 : -1}" aria-label="${c.name}" data-color="${c.name}" title="${c.name}"></button>
+    `).join('');
+
+    function setHeroColor(c) {
+      heroColor = c;
+      paintDevice(heroDevice, c);
+      heroGlow.style.setProperty('--glow', c.glow);
+      heroReflect.style.setProperty('--glow', c.glow);
+      setAccent(c.glow);
+      swapText(heroColorName, c.name);
+      swapText(heroColorMaterial, c.name === 'Natural Titanium' ? 'Raw titanium' : 'Titanium');
+      heroDevice.setAttribute('aria-label', `iPhone 18 Pro Max in ${c.name}`);
+      if (heroDevice.classList.contains('is-flipped')) toggleFlip(false);
+    }
+
+    wireRadioGroup(heroSwatches, (btn) => {
+      markChecked(heroSwatches, btn);
+      setHeroColor(PRO_COLORS.find((c) => c.name === btn.dataset.color));
+    });
+
+    function toggleFlip(force) {
+      const flipped = heroDevice.classList.toggle('is-flipped', force);
+      flipBtn.querySelector('span').textContent = flipped ? 'View back' : 'View front';
+    }
+    flipBtn.addEventListener('click', () => toggleFlip());
+
+    setHeroColor(PRO_COLORS[0]);
+
+    // 3D tilt following the pointer (mouse / pen only so touch scrolling stays natural)
+    const stage = $('#heroStage');
+    if (!reduceMotion) {
+      stage.addEventListener('pointermove', (e) => {
+        if (e.pointerType === 'touch') return;
+        const r = stage.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        heroDevice.classList.add('is-tracking');
+        heroDevice.style.setProperty('--ry', `${(x * 28).toFixed(2)}deg`);
+        heroDevice.style.setProperty('--rx', `${(-y * 16).toFixed(2)}deg`);
+        heroDevice.style.setProperty('--sheen', `${(-x * 30).toFixed(2)}%`);
+      });
+      stage.addEventListener('pointerleave', () => {
+        heroDevice.classList.remove('is-tracking');
+        heroDevice.style.setProperty('--ry', '0deg');
+        heroDevice.style.setProperty('--rx', '0deg');
+        heroDevice.style.setProperty('--sheen', '0%');
+      });
+    }
+
+    /* ===================== Aperture demo ===================== */
+    const apertureRange = $('#apertureRange');
+    const bokeh = $('#bokeh');
+    const irisPoly = $('#irisPoly');
+    const fLabel = $('#fLabel');
+
+    function updateAperture() {
+      const v = Number(apertureRange.value);
+      const f = v / 10;
+      const t = (4.0 - f) / 2.6;                // 1 = widest (f/1.4), 0 = narrowest (f/4.0)
+      const blur = 0.3 + t * 9;
+      bokeh.style.filter = `blur(${blur.toFixed(2)}px) brightness(${(0.85 + t * 0.35).toFixed(2)})`;
+      const radius = 6 + t * 18;
+      const twist = (1 - t) * 40;
+      const pts = Array.from({ length: 6 }, (_, i) => {
+        const a = ((i * 60 + twist) * Math.PI) / 180;
+        return `${(32 + radius * Math.cos(a)).toFixed(2)},${(32 + radius * Math.sin(a)).toFixed(2)}`;
+      }).join(' ');
+      irisPoly.setAttribute('points', pts);
+      const label = `ƒ/${f.toFixed(1)}`;
+      fLabel.textContent = label;
+      apertureRange.setAttribute('aria-valuetext', label.replace('ƒ', 'f'));
+      const pct = ((v - 14) / (40 - 14)) * 100;
+      apertureRange.style.setProperty('--fill', `${pct}%`);
+    }
+    apertureRange.addEventListener('input', updateAperture);
+    updateAperture();
+
+    /* ===================== Zoom demo ===================== */
+    const ZOOM = { 0.5: { s: 1, mm: '13 mm' }, 1: { s: 1.5, mm: '24 mm' }, 2: { s: 3, mm: '48 mm' }, 4: { s: 6, mm: '100 mm' }, 8: { s: 12, mm: '200 mm' } };
+    const zoomScene = $('#zoomScene');
+    $$('.zoom-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const z = btn.dataset.zoom;
+        $$('.zoom-btn').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        zoomScene.style.transform = `scale(${ZOOM[z].s})`;
+        $('#zoomLabel').textContent = `${z === '0.5' ? '.5' : z}×`;
+        $('#zoomMm').textContent = ZOOM[z].mm;
+      });
+    });
+    zoomScene.style.transform = `scale(${ZOOM[1].s})`;
+
+    /* ===================== Lineup cards ===================== */
+    const lineupGrid = $('#lineupGrid');
+    const lineIcon = (icon, label, value) => `
+      <li class="flex items-start gap-3">
+        <i class="fa-solid ${icon} mt-1 w-4 text-center text-white/35" aria-hidden="true"></i>
+        <span><span class="block text-white/85">${value}</span><span class="block text-xs text-white/40">${label}</span></span>
+      </li>`;
+
+    lineupGrid.innerHTML = MODELS.map((m, idx) => `
+      <article class="lineup-card spot lift reveal glass relative flex flex-col rounded-[28px] p-6 ${m.isNew ? 'ring-1 ring-white/15' : ''}" data-delay="${idx + 1}" data-model="${m.id}">
+        ${m.isNew ? '<span class="absolute right-5 top-5 rounded-full px-2.5 py-1 text-[11px] font-semibold" style="background: color-mix(in srgb, var(--accent) 22%, transparent); color: #fff;">New</span>' : ''}
+        <div class="relative flex h-64 items-center justify-center">
+          <div class="card-glow" style="--glow:${m.colors[0].glow}"></div>
+          <div class="device" style="--w: ${m.display === '6.9″' ? 116 : 104}px;" aria-hidden="true">${deviceMarkup(m.tier)}</div>
+        </div>
+        <div class="mt-2 flex items-center justify-center gap-2.5" role="radiogroup" aria-label="${m.name} finishes">
+          ${m.colors.map((c, i) => `<button type="button" role="radio" class="swatch swatch--sm" style="${swatchStyle(c)}" aria-checked="${i === 0}" tabindex="${i === 0 ? 0 : -1}" aria-label="${c.name}" title="${c.name}" data-color="${c.name}"></button>`).join('')}
+        </div>
+        <p class="mt-2 text-center text-xs text-white/40" data-colorname>${m.colors[0].name}</p>
+
+        <h3 class="mt-5 text-2xl font-semibold tracking-tight">${m.name}</h3>
+        <p class="mt-1 text-sm text-white/50">${m.tagline}</p>
+
+        <ul class="mt-6 space-y-4 border-t hairline pt-6 text-sm">
+          ${lineIcon('fa-mobile-screen', m.displayTech.split(' · ')[0], `${m.display} display`)}
+          ${lineIcon('fa-microchip', m.chipDetail.split(' · ').slice(-1)[0], `${m.chip} chip`)}
+          ${lineIcon('fa-camera', m.zoom, `${m.camera} camera`)}
+          ${lineIcon('fa-battery-full', 'Video playback', m.battery)}
+        </ul>
+
+        <div class="mt-auto pt-7">
+          <p class="text-sm text-white/50">From <span class="text-lg font-semibold text-white">${fmtPrice(m.price)}</span></p>
+          <p class="text-xs text-white/35">or ${usd2.format(m.price / 24)}/mo. for 24 mo.</p>
+          <button type="button" class="${m.isNew ? 'btn-primary' : 'btn-ghost border hairline'} mt-5 w-full rounded-full py-3 text-sm font-semibold" data-preorder data-model="${m.id}">
+            Select
+          </button>
+        </div>
+      </article>
+    `).join('');
+
+    $$('.lineup-card').forEach((card) => {
+      const m = getModel(card.dataset.model);
+      const device = $('.device', card);
+      const glow = $('.card-glow', card);
+      const group = $('[role="radiogroup"]', card);
+      const label = $('[data-colorname]', card);
+      const selectBtn = $('[data-preorder]', card);
+      paintDevice(device, m.colors[0]);
+      selectBtn.dataset.color = m.colors[0].name;
+      wireRadioGroup(group, (btn) => {
+        markChecked(group, btn);
+        const c = findColor(m, btn.dataset.color);
+        paintDevice(device, c);
+        glow.style.setProperty('--glow', c.glow);
+        swapText(label, c.name);
+        selectBtn.dataset.color = c.name;
+      });
+    });
+
+    /* ===================== Specs table ===================== */
+    const SPEC_ROWS = [
+      ['Display', (m) => m.display],
+      ['Display technology', (m) => m.displayTech],
+      ['Chip', (m) => m.chip],
+      ['Chip architecture', (m) => m.chipDetail],
+      ['Camera system', (m) => `${m.camera}<span class="block text-white/40">${m.cameraDetail}</span>`],
+      ['Main aperture', (m) => m.aperture],
+      ['Zoom', (m) => m.zoom],
+      ['Front camera', (m) => m.front],
+      ['Battery (video)', (m) => m.battery],
+      ['Thermal', (m) => m.cooling],
+      ['Build', (m) => m.material],
+      ['Weight', (m) => m.weight],
+      ['Capacity', (m) => m.storage.map(storageLabel).join(' · ')],
+      ['Finishes', (m) => `<span class="flex flex-wrap gap-1.5">${m.colors.map((c) => `<span class="swatch swatch--sm inline-block" style="${swatchStyle(c)}" title="${c.name}"></span>`).join('')}</span>`],
+      ['Starting price', (m) => `<span class="text-base font-semibold text-white">${fmtPrice(m.price)}</span>`],
+    ];
+
+    $('#specsHead').innerHTML = `
+      <tr>
+        <th scope="col" class="sticky-col w-44 text-xs font-medium uppercase tracking-[0.15em] text-white/40">Model</th>
+        ${MODELS.map((m) => `
+          <th scope="col" class="${m.id === 'promax' ? 'col-hl' : ''}">
+            <span class="block text-base font-semibold text-white">${m.name}</span>
+            <button type="button" class="mt-2 text-xs font-medium hover:underline" style="color: var(--accent);" data-preorder data-model="${m.id}">Pre-order <i class="fa-solid fa-chevron-right text-[9px]" aria-hidden="true"></i></button>
+          </th>`).join('')}
+      </tr>`;
+    $('#specsBody').innerHTML = SPEC_ROWS.map(([label, get]) => `
+      <tr>
+        <th scope="row" class="sticky-col font-medium text-white/50">${label}</th>
+        ${MODELS.map((m) => `<td class="text-white/80 ${m.id === 'promax' ? 'col-hl' : ''}">${get(m)}</td>`).join('')}
+      </tr>`).join('');
+
+    /* ===================== Pre-order modal ===================== */
+    const modal = $('#orderModal');
+    const panel = $('.modal-panel', modal);
+    const stepConfigure = $('#stepConfigure');
+    const stepConfirm = $('#stepConfirm');
+    const modelOptions = $('#modelOptions');
+    const colorOptions = $('#colorOptions');
+    const storageOptions = $('#storageOptions');
+    const careToggle = $('#careToggle');
+    const qtyValue = $('#qtyValue');
+    const qtyMinus = $('#qtyMinus');
+    const qtyPlus = $('#qtyPlus');
+    const modalDevice = $('#modalDevice');
+    const totalEl = $('#totalPrice');
+    const placeBtn = $('#placeOrder');
+
+    const state = { model: 'promax', color: PRO_COLORS[0].name, storage: 256, care: false, qty: 1 };
+    let renderedTier = null;
+    let displayedTotal = 0;
+    let lastFocus = null;
+    let closeTimer = null;
+
+    modelOptions.innerHTML = MODELS.map((m) => `
+      <label class="opt">
+        <input type="radio" name="model" value="${m.id}">
+        <span class="opt__box">
+          <span>
+            <span class="block text-sm font-semibold">${m.name}</span>
+            <span class="block text-xs text-white/45">${m.display} · ${m.chip} · ${m.camera}</span>
+          </span>
+          <span class="text-right text-xs text-white/60">From<br><span class="text-sm text-white">${fmtPrice(m.price)}</span></span>
+        </span>
+      </label>`).join('');
+
+    modelOptions.addEventListener('change', (e) => {
+      if (e.target.name !== 'model') return;
+      const m = getModel(e.target.value);
+      state.model = m.id;
+      state.color = findColor(m, state.color).name;
+      if (!m.storage.includes(state.storage)) state.storage = m.storage[0];
+      renderModal();
+    });
+
+    wireRadioGroup(colorOptions, (btn) => {
+      state.color = btn.dataset.color;
+      renderModal();
+    });
+
+    storageOptions.addEventListener('change', (e) => {
+      if (e.target.name !== 'storage') return;
+      state.storage = Number(e.target.value);
+      renderModal();
+    });
+
+    careToggle.addEventListener('change', () => { state.care = careToggle.checked; renderModal(); });
+    qtyMinus.addEventListener('click', () => { state.qty = Math.max(1, state.qty - 1); renderModal(); });
+    qtyPlus.addEventListener('click', () => { state.qty = Math.min(MAX_QTY, state.qty + 1); renderModal(); });
+
+    function computePrice() {
+      const m = getModel(state.model);
+      const unit = m.price + STORAGE_DELTA[state.storage] - STORAGE_DELTA[m.storage[0]];
+      const care = state.care ? m.care : 0;
+      const total = (unit + care) * state.qty;
+      return { m, unit, care, total, monthly: total / 24 };
+    }
+
+    function animateTotal(to) {
+      const from = displayedTotal;
+      displayedTotal = to;
+      if (reduceMotion || from === to) { totalEl.textContent = fmtPrice(to); return; }
+      const start = performance.now();
+      const dur = 420;
+      const tick = (now) => {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        totalEl.textContent = usd0.format(Math.round(from + (to - from) * eased));
+        if (p < 1 && displayedTotal === to) requestAnimationFrame(tick);
+        else if (p >= 1) totalEl.textContent = fmtPrice(to);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    function renderModal() {
+      const { m, unit, care, total, monthly } = computePrice();
+      const color = findColor(m, state.color);
+
+      // model radios
+      $$('input[name="model"]', modelOptions).forEach((i) => { i.checked = i.value === m.id; });
+
+      // colours (rebuild only if palette changed)
+      if (colorOptions.dataset.tier !== m.tier) {
+        colorOptions.dataset.tier = m.tier;
+        colorOptions.innerHTML = m.colors.map((c) => `
+          <button type="button" role="radio" class="swatch" style="${swatchStyle(c)}" aria-label="${c.name}" title="${c.name}" data-color="${c.name}" aria-checked="false" tabindex="-1"></button>`).join('');
+      }
+      const activeSwatch = $(`[data-color="${CSS.escape(color.name)}"]`, colorOptions);
+      markChecked(colorOptions, activeSwatch);
+      $('#finishName').textContent = color.name;
+
+      // storage
+      if (storageOptions.dataset.model !== m.id) {
+      storageOptions.dataset.model = m.id;
+      storageOptions.innerHTML = m.storage.map((s) => {
+        const delta = STORAGE_DELTA[s] - STORAGE_DELTA[m.storage[0]];
+        return `
+          <label class="opt">
+            <input type="radio" name="storage" value="${s}" ${s === state.storage ? 'checked' : ''}>
+            <span class="opt__box opt__box--stack">
+              <span class="text-base font-semibold">${storageLabel(s)}</span>
+              <span class="text-xs text-white/45">${delta ? `+${fmtPrice(delta)}` : 'Included'}</span>
+            </span>
+          </label>`;
+      }).join('');
+      }
+      $$('input[name="storage"]', storageOptions).forEach((i) => { i.checked = Number(i.value) === state.storage; });
+
+      // extras
+      careToggle.checked = state.care;
+      $('#carePrice').textContent = `+${fmtPrice(m.care)}`;
+      qtyValue.textContent = state.qty;
+      qtyMinus.disabled = state.qty <= 1;
+      qtyPlus.disabled = state.qty >= MAX_QTY;
+
+      // preview
+      if (renderedTier !== m.tier) {
+        modalDevice.innerHTML = deviceMarkup(m.tier);
+        renderedTier = m.tier;
+      }
+      modalDevice.style.setProperty('--w', m.display === '6.9″' ? '92px' : '84px');
+      paintDevice(modalDevice, color);
+      $('#modalGlow').style.background = `radial-gradient(closest-side, ${color.glow}, transparent)`;
+      $('#modalHeadline').textContent = m.name;
+      $('#modalSubline').textContent = `${storageLabel(state.storage)} · ${color.name}`;
+
+      // summary
+      $('#summaryLines').innerHTML = `
+        <div class="flex justify-between gap-4"><dt class="text-white/60">${m.name}<span class="block text-xs text-white/40">${storageLabel(state.storage)} · ${color.name}</span></dt><dd class="text-right">${fmtPrice(unit)}</dd></div>
+        ${state.care ? `<div class="flex justify-between gap-4"><dt class="text-white/60">AppleCare+ (2 years)</dt><dd>${fmtPrice(care)}</dd></div>` : ''}
+        <div class="flex justify-between gap-4"><dt class="text-white/60">Quantity</dt><dd>× ${state.qty}</dd></div>
+        <div class="flex justify-between gap-4"><dt class="text-white/60">Delivery</dt><dd class="text-[#34c759]">Free</dd></div>`;
+      animateTotal(total);
+      $('#monthlyPrice').textContent = usd2.format(monthly);
+    }
+
+    function showStep(step) {
+      const confirm = step === 'confirm';
+      stepConfigure.classList.toggle('hidden', confirm);
+      stepConfigure.classList.toggle('grid', !confirm);
+      stepConfirm.classList.toggle('hidden', !confirm);
+      $('#orderTitle').textContent = confirm ? 'Order confirmed' : 'Pre-order';
+      panel.querySelector('.modal-scroll:not(.hidden)')?.scrollTo(0, 0);
+    }
+
+    function openModal({ model = 'promax', color } = {}) {
+      clearTimeout(closeTimer);
+      const m = getModel(model);
+      state.model = m.id;
+      state.color = findColor(m, color || state.color).name;
+      if (!m.storage.includes(state.storage)) state.storage = m.storage[0];
+      showStep('configure');
+      resetPlaceButton();
+      displayedTotal = computePrice().total;
+      renderModal();
+
+      lastFocus = document.activeElement;
+      modal.setAttribute('aria-hidden', 'false');
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      setMenu(false);
+      requestAnimationFrame(() => $(`input[name="model"][value="${m.id}"]`, modelOptions)?.focus({ preventScroll: true }));
+    }
+
+    function closeModal() {
+      if (!modal.classList.contains('is-open')) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus({ preventScroll: true });
+      closeTimer = setTimeout(() => showStep('configure'), 420);
+    }
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-preorder]');
+      if (trigger) {
+        e.preventDefault();
+        const fromHero = trigger.hasAttribute('data-from-hero') || (trigger.dataset.model === 'promax' && !trigger.dataset.color);
+        openModal({
+          model: trigger.dataset.model,
+          color: trigger.dataset.color || (fromHero ? heroColor.name : undefined),
+        });
+        return;
+      }
+      if (e.target.closest('[data-close]') && modal.contains(e.target)) closeModal();
+    });
+
+    // Focus trap + Escape
+    modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+      if (e.key !== 'Tab') return;
+      const focusables = $$('button:not([disabled]), input:not([disabled]), [href], [tabindex]:not([tabindex="-1"])', panel)
+        .filter((el) => el.tabIndex >= 0 && el.offsetParent !== null && !(el.type === 'radio' && !el.checked));
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    function resetPlaceButton() {
+      placeBtn.disabled = false;
+      placeBtn.innerHTML = '<span>Place pre-order</span>';
+    }
+
+    stepConfigure.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (placeBtn.disabled) return;
+      placeBtn.disabled = true;
+      placeBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span><span>Placing order…</span>';
+
+      setTimeout(() => {
+        const { m, total } = computePrice();
+        const color = findColor(m, state.color);
+        const orderNo = 'W' + String(Math.floor(1e9 + Math.random() * 9e9));
+        const from = new Date(); from.setDate(from.getDate() + 7);
+        const to = new Date(); to.setDate(to.getDate() + 10);
+        const dFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+
+        const confirmDevice = $('#confirmDevice');
+        confirmDevice.innerHTML = deviceMarkup(m.tier);
+        paintDevice(confirmDevice, color);
+        $('#orderNumber').textContent = orderNo;
+        $('#confirmTitle').textContent = m.name;
+        $('#confirmDetail').textContent = `${storageLabel(state.storage)} · ${color.name}`;
+        $('#confirmQty').textContent = state.qty;
+        $('#confirmCare').textContent = state.care ? `Included (${fmtPrice(m.care * state.qty)})` : 'Not included';
+        $('#confirmDelivery').textContent = `${dFmt.format(from)} – ${dFmt.format(to)}`;
+        $('#confirmTotal').textContent = fmtPrice(total);
+
+        // Restart the check-mark animation
+        const check = $('.check-draw', stepConfirm);
+        check.replaceWith(check.cloneNode(true));
+
+        showStep('confirm');
+        resetPlaceButton();
+        $('button[data-close]', stepConfirm).focus({ preventScroll: true });
+        showToast(`Pre-order placed · ${orderNo}`);
+      }, 1100);
+    });
+
+    $('#orderAnother').addEventListener('click', () => {
+      showStep('configure');
+      $(`input[name="model"][value="${state.model}"]`, modelOptions)?.focus({ preventScroll: true });
+    });
+
+    /* ===================== Toast ===================== */
+    const toast = $('#toast');
+    let toastTimer = null;
+    function showToast(text) {
+      $('#toastText').textContent = text;
+      toast.dataset.show = 'true';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { toast.dataset.show = 'false'; }, 3200);
+    }
+
+    /* ===================== Reveal + counters ===================== */
+    function animateCount(el) {
+      if (el.dataset.done) return;
+      el.dataset.done = '1';
+      const target = Number(el.dataset.count);
+      if (reduceMotion) { el.textContent = target; return; }
+      const start = performance.now();
+      const dur = 1400;
+      const tick = (now) => {
+        const p = Math.min(1, (now - start) / dur);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        if (entry.target.dataset.delay) setTimeout(() => entry.target.removeAttribute('data-delay'), 1300);
+        $$('[data-count]', entry.target).forEach(animateCount);
+        if (entry.target.matches('[data-count]')) animateCount(entry.target);
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    $$('.reveal').forEach((el) => revealObserver.observe(el));
+    // Counters that aren't inside a .reveal element
+    $$('[data-count]').filter((el) => !el.closest('.reveal')).forEach((el) => revealObserver.observe(el));
+
+    /* ===================== Spotlight hover ===================== */
+    document.addEventListener('pointermove', (e) => {
+      const card = e.target.closest?.('.spot');
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    }, { passive: true });
+
+    $('#year').textContent = new Date().getFullYear();
+  })();
+  </script>
+</body>
+</html>
