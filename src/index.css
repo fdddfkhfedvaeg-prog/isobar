@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  html {
+    background: #0b1220;
+  }
+
+  body {
+    @apply min-h-dvh font-sans text-white;
+    /* No background here: it would paint above the negative-z sky canvas. */
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgb(255 255 255 / 0.25);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(125 211 252 / 0.9);
+    outline-offset: 2px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
