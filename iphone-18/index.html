@@ -1,0 +1,3207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>iPhone 18 Lineup</title>
+<meta name="description" content="A private concept showcase of the 2026 iPhone 18 lineup: interactive 3D, chip, camera, display and haptics demos.">
+<meta name="theme-color" content="#040405">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: one long, dark keynote scroll. A tinted ambient glow (taken from the chosen
+   finish) is the single recurring colour; every demo is a glass card floating over it. */
+@property --frame    { syntax: '<color>'; inherits: true; initial-value: #3a3c42; }
+@property --frame-hi { syntax: '<color>'; inherits: true; initial-value: #8a8d96; }
+@property --frame-lo { syntax: '<color>'; inherits: true; initial-value: #17181b; }
+@property --back     { syntax: '<color>'; inherits: true; initial-value: #141518; }
+@property --back-hi  { syntax: '<color>'; inherits: true; initial-value: #2d2f36; }
+@property --glow     { syntax: '<color>'; inherits: true; initial-value: #5b7bff; }
+
+:root {
+  color-scheme: dark;
+  --bg: #040405;
+  --bg-2: #0a0a0e;
+  --fg: #f5f5f7;
+  --fg-2: rgba(245, 245, 247, 0.7);
+  --fg-3: rgba(245, 245, 247, 0.46);
+  --line: rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.17);
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-2: rgba(255, 255, 255, 0.1);
+  --ok: #30d158;
+  --warn: #ffb340;
+  --bad: #ff453a;
+  --f-display: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 16px/1.55 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+button { font: inherit; color: inherit; }
+h1, h2, h3, p, dl, dd, ul { margin: 0; padding: 0; }
+ul { list-style: none; }
+canvas { display: block; }
+:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 6px; }
+::selection { background: color-mix(in srgb, var(--glow) 55%, transparent); }
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: clip;
+  transition: --glow 0.9s ease;
+}
+.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+.progress {
+  position: fixed; left: 0; right: 0; top: 0; height: 2px; z-index: 80;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--glow), #fff);
+}
+
+/* ---------- type ---------- */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 500 12px/1.3 var(--f-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3);
+}
+.h1 {
+  display: flex; flex-direction: column;
+  font: 600 clamp(2.9rem, 7vw, 6.4rem)/0.94 var(--f-display);
+  letter-spacing: -0.048em; text-wrap: balance;
+}
+.h1-b {
+  background: linear-gradient(100deg, #fff 0%, color-mix(in srgb, var(--glow) 62%, #fff) 55%, var(--glow) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-bottom: 0.08em;
+}
+.h2 { font: 600 clamp(2.15rem, 5vw, 4.3rem)/1.03 var(--f-display); letter-spacing: -0.038em; text-wrap: balance; }
+.lead { font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.6; color: var(--fg-2); max-width: 36em; text-wrap: pretty; }
+.note { margin-top: 12px; font-size: 13.5px; color: var(--fg-2); }
+.note b { color: var(--fg); font-weight: 600; }
+.note-inline { margin: 0; display: inline-flex; align-items: center; gap: 8px; color: var(--fg-3); }
+
+.pulse-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--ok); flex: none;
+  box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.6); animation: ping 2.2s infinite;
+}
+@keyframes ping { 70% { box-shadow: 0 0 0 8px rgba(48, 209, 88, 0); } 100% { box-shadow: 0 0 0 0 rgba(48, 209, 88, 0); } }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: 999px;
+  border: 1px solid var(--line-2); background: var(--glass);
+  font: 500 11.5px/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-2); white-space: nowrap;
+}
+.pill-quiet { border-color: var(--line); color: var(--fg-3); }
+
+/* ---------- controls ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 9px; padding: 14px 24px; border-radius: 999px;
+  border: 1px solid transparent; font: 600 15px/1 var(--f-body); cursor: pointer; white-space: nowrap;
+}
+.btn-primary { background: #f5f5f7; color: #0a0a0c; box-shadow: 0 10px 40px color-mix(in srgb, var(--glow) 35%, transparent); }
+.btn-ghost { background: var(--glass); border-color: var(--line-2); color: var(--fg); backdrop-filter: blur(14px); }
+
+.chip-btn, .tab-chip {
+  display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border-radius: 999px;
+  border: 1px solid var(--line-2); background: var(--glass); color: var(--fg);
+  font: 600 13px/1.1 var(--f-body); cursor: pointer; white-space: nowrap;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.tab-chip em { font: 500 11px/1 var(--f-mono); font-style: normal; color: var(--fg-3); }
+.tab-chip.is-on { background: #f5f5f7; color: #0a0a0c; border-color: transparent; }
+.tab-chip.is-on em { color: rgba(0, 0, 0, 0.55); }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+.toggle {
+  display: inline-flex; align-items: center; gap: 10px; padding: 8px 10px 8px 14px; border-radius: 999px;
+  border: 1px solid var(--line-2); background: var(--glass); color: var(--fg); font: 600 13px/1 var(--f-body); cursor: pointer;
+}
+.toggle-knob { position: relative; width: 38px; height: 22px; border-radius: 12px; background: rgba(255, 255, 255, 0.2); transition: background 0.25s; flex: none; }
+.toggle-knob::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff;
+  transition: transform 0.4s cubic-bezier(0.34, 1.7, 0.64, 1);
+}
+.toggle.is-on .toggle-knob { background: var(--ok); }
+.toggle.is-on .toggle-knob::after { transform: translateX(16px); }
+
+.seg {
+  position: relative; display: inline-flex; gap: 2px; padding: 4px; max-width: 100%;
+  border-radius: 999px; background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(14px);
+  overflow-x: auto; scrollbar-width: none;
+}
+.seg::-webkit-scrollbar { display: none; }
+.seg-wrap { flex-wrap: wrap; border-radius: 24px; overflow: visible; }
+.seg-btn {
+  position: relative; border: 0; background: none; color: var(--fg-2); padding: 9px 16px; border-radius: 999px;
+  font: 600 13px/1.1 var(--f-body); cursor: pointer; white-space: nowrap; transition: color 0.25s;
+}
+.seg-btn.is-on { color: #0a0a0c; }
+.seg-btn.is-solid { background: #f5f5f7; }
+.seg-pill { position: absolute; inset: 0; border-radius: 999px; background: #f5f5f7; box-shadow: 0 4px 22px color-mix(in srgb, var(--glow) 40%, transparent); }
+.seg-label { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 7px; }
+
+.swatches { display: flex; gap: 10px; }
+.swatch { position: relative; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; }
+.swatch::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid transparent; transition: border-color 0.3s; }
+.swatch.is-on::before { border-color: #fff; }
+.swatch-orb { position: absolute; inset: 5px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28), 0 6px 14px rgba(0, 0, 0, 0.5); }
+.swatch-tip {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translate(-50%, 4px); padding: 5px 10px; border-radius: 8px;
+  background: rgba(20, 20, 24, 0.92); border: 1px solid var(--line-2); font: 500 11px/1 var(--f-mono); white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity 0.2s, transform 0.2s;
+}
+.swatch:hover .swatch-tip, .swatch:focus-visible .swatch-tip { opacity: 1; transform: translate(-50%, 0); }
+
+.status {
+  display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 999px; background: var(--glass-2); color: var(--fg-2);
+  font: 500 11px/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+}
+.status.is-live { color: #fff; background: color-mix(in srgb, var(--glow) 26%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--glow) 55%, transparent); }
+
+.card {
+  position: relative; padding: clamp(18px, 2.4vw, 28px); border-radius: 28px; overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.022));
+  border: 1px solid var(--line); backdrop-filter: blur(18px);
+}
+.card::before { content: ''; position: absolute; left: 12%; right: 12%; top: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.card-title { margin-top: 14px; font: 600 clamp(1.2rem, 2vw, 1.55rem)/1.2 var(--f-display); letter-spacing: -0.02em; text-wrap: balance; }
+
+input[type='range'] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; margin: 0; background: transparent; cursor: pointer; }
+input[type='range']::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--glow) var(--p, 0%), rgba(255, 255, 255, 0.16) var(--p, 0%)); }
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 24px; height: 24px; margin-top: -10px; border-radius: 50%; background: #fff; border: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 6px color-mix(in srgb, var(--glow) 28%, transparent);
+}
+input[type='range']::-moz-range-track { height: 4px; border-radius: 4px; background: rgba(255, 255, 255, 0.16); }
+input[type='range']::-moz-range-progress { height: 4px; border-radius: 4px; background: var(--glow); }
+input[type='range']::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 6px color-mix(in srgb, var(--glow) 28%, transparent); }
+
+/* ---------- nav ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 70;
+  background: rgba(5, 5, 7, 0.62); border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(22px) saturate(1.6); -webkit-backdrop-filter: blur(22px) saturate(1.6);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0; cursor: pointer; font: 500 15px/1 var(--f-display); letter-spacing: -0.01em; white-space: nowrap; }
+.brand b { font-weight: 700; background: linear-gradient(100deg, #fff, var(--glow)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand-mark { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: var(--glass-2); border: 1px solid var(--line-2); }
+.nav-links { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-link { border: 0; background: none; padding: 8px 12px; border-radius: 999px; color: var(--fg-3); font: 500 13px/1 var(--f-body); cursor: pointer; white-space: nowrap; transition: color 0.2s, background 0.2s; }
+.nav-link:hover { color: var(--fg); }
+.nav-link.is-on { color: var(--fg); background: var(--glass-2); }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; padding-block: clamp(36px, 6vw, 84px) clamp(48px, 8vw, 110px); }
+.ambient { position: absolute; inset: 0; pointer-events: none; }
+.ambient-blob { position: absolute; border-radius: 50%; background: var(--glow); filter: blur(100px); opacity: 0.4; }
+.ab-1 { width: 54vw; height: 54vw; max-width: 760px; max-height: 760px; right: -8%; top: -12%; animation: drift 16s ease-in-out infinite; }
+.ab-2 { width: 34vw; height: 34vw; max-width: 460px; max-height: 460px; left: -8%; bottom: -10%; opacity: 0.26; background: color-mix(in srgb, var(--glow) 40%, #7a3cff); animation: drift 21s ease-in-out infinite reverse; }
+.ab-3 { width: 22vw; height: 22vw; max-width: 300px; max-height: 300px; left: 38%; top: 48%; opacity: 0.18; animation: drift 13s ease-in-out infinite; }
+@keyframes drift { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-3%, 5%) scale(1.08); } }
+.ambient-grid {
+  position: absolute; inset: 0; opacity: 0.5;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(70% 60% at 65% 40%, #000, transparent 75%);
+  mask-image: radial-gradient(70% 60% at 65% 40%, #000, transparent 75%);
+}
+.hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+.hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; min-width: 0; }
+.hero-lead { min-height: 5.2em; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; width: 100%; padding-top: 22px; border-top: 1px solid var(--line); }
+.stat dt { font: 600 clamp(1.25rem, 2.3vw, 1.85rem)/1.1 var(--f-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stat dd { margin-top: 4px; font-size: 12.5px; color: var(--fg-3); line-height: 1.35; }
+.hero-visual { display: flex; flex-direction: column; align-items: center; gap: 18px; min-width: 0; }
+.hero-stage { width: 100%; }
+.hero-colors { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; width: 100%; max-width: 440px; }
+.finish-readout { display: flex; flex-direction: column; gap: 4px; min-width: 130px; }
+.finish-readout strong { font: 600 17px/1.2 var(--f-display); letter-spacing: -0.01em; }
+
+/* ---------- phone ---------- */
+.stage { width: 100%; }
+.stage-view { position: relative; perspective: 1900px; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+.stage-view:active { cursor: grabbing; }
+.stage-inner { position: absolute; left: 50%; top: 50%; transform-style: preserve-3d; }
+.float { transform-style: preserve-3d; animation: floaty 8s ease-in-out infinite; }
+@keyframes floaty { 0%, 100% { transform: translateY(-7px); } 50% { transform: translateY(9px); } }
+.floor {
+  position: absolute; left: 12%; right: 12%; bottom: 4px; height: 46px; opacity: 0.75; filter: blur(16px);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--glow) 55%, transparent), transparent);
+}
+.stage-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 6px; }
+.stage-hint { font: 500 12px/1.3 var(--f-mono); color: var(--fg-3); }
+
+.phone-rig {
+  position: relative; width: var(--w); height: var(--h); transform-style: preserve-3d;
+  transition: --frame 0.8s ease, --frame-hi 0.8s ease, --frame-lo 0.8s ease, --back 0.8s ease, --back-hi 0.8s ease, --glow 0.8s ease;
+}
+.phone { position: relative; width: var(--w); height: var(--h); transform-style: preserve-3d; }
+.slab {
+  position: absolute; inset: 0; border-radius: var(--r);
+  background: linear-gradient(120deg, var(--frame-hi) 0%, var(--frame) 24%, var(--frame-lo) 56%, var(--frame) 80%, var(--frame-hi) 100%);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.16);
+}
+.sbtn { position: absolute; width: 5px; background: linear-gradient(180deg, var(--frame-hi), var(--frame) 40%, var(--frame-lo)); }
+.sbtn-l { left: -3px; border-radius: 3px 0 0 3px; }
+.sbtn-r { right: -3px; border-radius: 0 3px 3px 0; }
+.face { position: absolute; inset: 0; border-radius: var(--r); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.face-front {
+  transform: translateZ(calc(var(--d) / 2 + 0.5px));
+  background: conic-gradient(from 200deg at 50% 50%, var(--frame-hi), var(--frame), var(--frame-lo), var(--frame), var(--frame-hi));
+}
+.face-front::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: soft-light;
+  background: radial-gradient(circle at var(--hx, 50%) var(--hy, 28%), rgba(255, 255, 255, 0.7), transparent 44%);
+}
+.bezel { position: absolute; inset: 5px; border-radius: calc(var(--r) - 5px); background: #000; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08); }
+.screen { position: absolute; inset: 6px; border-radius: calc(var(--r) - 11px); overflow: hidden; background: #000; }
+.island { position: absolute; top: 12px; left: 50%; width: 76px; height: 22px; margin-left: -38px; border-radius: 12px; background: #000; z-index: 3; }
+.island::after { content: ''; position: absolute; right: 12px; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: radial-gradient(circle, #1d2a52, #05060c 70%); }
+.glare {
+  position: absolute; inset: 0; pointer-events: none; z-index: 4;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.13) 0%, transparent 34%),
+    radial-gradient(circle at var(--hx, 50%) var(--hy, 28%), rgba(255, 255, 255, 0.2), transparent 46%);
+}
+.face-back {
+  transform: rotateY(180deg) translateZ(calc(var(--d) / 2 + 0.5px));
+  background: linear-gradient(135deg, var(--back-hi), var(--back) 62%);
+  box-shadow: inset 0 0 0 5px var(--frame);
+}
+.back-glare { position: absolute; inset: 5px; border-radius: calc(var(--r) - 5px); pointer-events: none; background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), transparent 40%); }
+.back-word { position: absolute; left: 0; right: 0; bottom: 44px; text-align: center; font: 500 13px/1 var(--f-display); letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255, 255, 255, 0.4); mix-blend-mode: overlay; }
+.plateau {
+  position: absolute; left: 22px; top: 22px; border-radius: 36px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.3));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 12px 26px rgba(0, 0, 0, 0.45);
+}
+.lens {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #2b2f3c, #06070a 60%);
+  box-shadow: 0 0 0 3px var(--frame), 0 0 0 4px rgba(255, 255, 255, 0.18), inset 0 0 0 5px rgba(255, 255, 255, 0.06), 0 5px 10px rgba(0, 0, 0, 0.55);
+}
+.lens i { position: absolute; inset: 24%; border-radius: 50%; background: radial-gradient(circle at 30% 28%, rgba(140, 170, 255, 0.95), rgba(74, 28, 140, 0.55) 42%, #000 72%); }
+.lens::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), transparent 42%); }
+.flash { position: absolute; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff6d8, #d8b56a 70%); box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35); }
+.lidar { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #2a2233, #050407 70%); box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15); }
+.bar-mic { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #06070a; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.14); }
+
+.wall { position: absolute; inset: 0; overflow: hidden; background: linear-gradient(180deg, #0c0d14, #040406); }
+.wall-blob { position: absolute; border-radius: 50%; filter: blur(34px); }
+.wall-blob-a { width: 130%; height: 56%; left: -22%; top: -12%; background: var(--glow); opacity: 0.85; animation: drift 14s ease-in-out infinite; }
+.wall-blob-b { width: 95%; height: 46%; right: -34%; bottom: 4%; background: color-mix(in srgb, var(--glow) 50%, #8a3cff); opacity: 0.7; animation: drift 18s ease-in-out infinite reverse; }
+.lock { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding-top: 74px; color: #fff; }
+.lock-date { font: 500 16px/1 var(--f-display); opacity: 0.85; }
+.lock-time { margin-top: 4px; font: 600 92px/1 var(--f-display); letter-spacing: -0.045em; font-variant-numeric: tabular-nums; text-shadow: 0 6px 30px rgba(0, 0, 0, 0.25); }
+.lock-widgets { display: flex; gap: 8px; margin-top: 22px; }
+.lock-widgets span { display: flex; flex-direction: column; align-items: center; min-width: 66px; padding: 10px 8px; border-radius: 18px; background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.16); font-size: 10.5px; opacity: 0.95; }
+.lock-widgets b { font: 600 18px/1.1 var(--f-display); }
+.lock-foot { position: absolute; left: 30px; right: 30px; bottom: 44px; display: flex; justify-content: space-between; }
+.lock-foot span { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.14); }
+.lock-bar { position: absolute; bottom: 12px; left: 50%; width: 118px; height: 5px; margin-left: -59px; border-radius: 3px; background: rgba(255, 255, 255, 0.8); }
+
+/* ---------- sections ---------- */
+.section { position: relative; padding-block: clamp(72px, 10vw, 140px); }
+.section::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(56% 38% at 82% 12%, color-mix(in srgb, var(--glow) 13%, transparent), transparent 72%); }
+.section > .wrap { position: relative; }
+.sec-head { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.sec-head.is-center { align-items: center; text-align: center; margin-inline: auto; max-width: 860px; }
+.sec-head.is-center .lead { margin-inline: auto; }
+
+.statement { padding-block: clamp(64px, 11vw, 160px); }
+.statement-text { max-width: 17em; font: 600 clamp(1.9rem, 5.2vw, 4.4rem)/1.12 var(--f-display); letter-spacing: -0.035em; text-wrap: balance; }
+
+/* chip */
+.chip-grid { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.chip-copy { display: flex; flex-direction: column; gap: 26px; min-width: 0; }
+.chip-copy .note { margin-top: 12px; }
+.readouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.readout { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; border-radius: 20px; background: var(--glass); border: 1px solid var(--line); }
+.readout svg { color: var(--glow); }
+.readout-label { font: 500 11px/1.2 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3); }
+.readout-val { font: 600 clamp(1.5rem, 2.6vw, 2rem)/1.05 var(--f-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.readout-val small { margin-left: 5px; font: 500 13px/1 var(--f-mono); color: var(--fg-3); letter-spacing: 0; }
+.deltas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding-top: 20px; border-top: 1px solid var(--line); }
+.deltas b { display: block; font: 600 1.5rem/1.1 var(--f-display); letter-spacing: -0.03em; }
+.deltas span { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.35; color: var(--fg-3); }
+.die-col { min-width: 0; }
+.die-card { position: relative; width: 100%; max-width: 600px; margin-inline: auto; aspect-ratio: 1 / 1; padding: 12px; border-radius: 32px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); box-shadow: 0 40px 100px -30px color-mix(in srgb, var(--glow) 40%, transparent); }
+.die-canvas { width: 100%; height: 100%; border-radius: 22px; }
+.block-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px auto 0; max-width: 600px; }
+.block-tabs .tab-chip { padding: 7px 12px; font-size: 12px; }
+.tab-chip.is-on { background: #f5f5f7; color: #0a0a0c; }
+.block-detail { display: flex; justify-content: space-between; gap: 22px; margin: 14px auto 0; max-width: 600px; padding: 18px 20px; border-radius: 22px; background: var(--glass); border: 1px solid var(--line); }
+.block-detail h3 { font: 600 17px/1.2 var(--f-display); }
+.block-detail p { margin-top: 6px; font-size: 14px; line-height: 1.55; color: var(--fg-2); }
+.block-stat { flex: none; text-align: right; display: flex; flex-direction: column; gap: 4px; }
+.block-stat span { font: 500 11px/1.2 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); }
+.block-stat b { font: 600 18px/1.1 var(--f-display); white-space: nowrap; }
+
+/* camera */
+.cam-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 24px; margin-top: clamp(32px, 5vw, 56px); align-items: start; }
+.cam-main { min-width: 0; }
+.cam-side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.vf { position: relative; aspect-ratio: 16 / 10; max-width: 100%; border-radius: 26px; overflow: hidden; isolation: isolate; background: #04040a; border: 1px solid var(--line-2); cursor: crosshair; touch-action: pan-y; box-shadow: 0 40px 100px -40px color-mix(in srgb, var(--glow) 45%, transparent); }
+.vf-scene { position: absolute; inset: 0; }
+.vf-layer { position: absolute; inset: 0; width: 100%; height: 100%; transition: filter 0.55s ease; }
+.vf-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.55)); }
+.vf-grain { position: absolute; inset: -20%; pointer-events: none; opacity: 0.12; mix-blend-mode: overlay; background-size: 128px 128px; animation: grain 0.7s steps(4) infinite; }
+@keyframes grain { 0% { transform: translate(0, 0); } 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -2%); } 100% { transform: translate(3%, 3%); } }
+.vf-bar { position: absolute; left: 0; right: 0; height: 0; background: #000; z-index: 2; transition: height 0.7s var(--ease); }
+.vf-bar-top { top: 0; }
+.vf-bar-bottom { bottom: 0; }
+.vf.is-studio .vf-bar { height: 14%; }
+.vf-hud { position: absolute; z-index: 3; display: flex; gap: 8px; align-items: center; pointer-events: none; font: 500 11px/1 var(--f-mono); letter-spacing: 0.08em; color: #fff; }
+.vf-hud-tl { top: 14px; left: 16px; }
+.vf-hud-tr { top: 12px; right: 16px; }
+.vf-hud-bl { bottom: 12px; left: 16px; flex-direction: column; align-items: flex-start; gap: 5px; }
+.rec { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(8px); }
+.rec i { width: 8px; height: 8px; border-radius: 50%; background: var(--bad); animation: blink 1.4s infinite; }
+@keyframes blink { 50% { opacity: 0.25; } }
+.zoom-badge { padding: 6px 12px; border-radius: 999px; background: rgba(0, 0, 0, 0.5); color: #ffd60a; font: 600 13px/1 var(--f-mono); backdrop-filter: blur(8px); font-variant-numeric: tabular-nums; }
+.focus-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(8px); }
+.vf-stops { position: absolute; z-index: 4; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; padding: 5px; border-radius: 999px; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(14px); }
+.vf-stop { width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.1); color: #fff; font: 600 12px/1 var(--f-mono); cursor: pointer; transition: background 0.25s, color 0.25s, transform 0.3s cubic-bezier(0.34, 1.7, 0.64, 1); }
+.vf-stop:active { transform: scale(0.88); }
+.vf-stop.is-on { background: #ffd60a; color: #000; transform: scale(1.1); }
+.vf-focus { position: absolute; z-index: 4; width: 80px; height: 80px; margin: -40px 0 0 -40px; border: 1.5px solid #ffd60a; border-radius: 6px; pointer-events: none; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35); }
+.zoom-control { margin-top: 18px; padding: 16px 20px 8px; border-radius: 22px; background: var(--glass); border: 1px solid var(--line); }
+.zoom-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.zoom-read { font: 600 17px/1.2 var(--f-display); font-variant-numeric: tabular-nums; }
+.zoom-read em { margin-left: 6px; font: 500 13px var(--f-mono); font-style: normal; color: var(--fg-3); }
+.zoom-track { position: relative; padding-bottom: 24px; }
+.zoom-ticks { position: absolute; left: 12px; right: 12px; bottom: 0; height: 16px; }
+.zoom-ticks span { position: absolute; transform: translateX(-50%); font: 500 11px/1 var(--f-mono); color: var(--fg-3); }
+.cam-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; }
+.cam-targets { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cam-targets .eyebrow { margin-right: 4px; }
+.prism-card .card-head { margin-bottom: 8px; }
+.prism { width: 100%; height: auto; display: block; overflow: visible; }
+.prism .rays line { stroke: var(--glow); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 5 7; opacity: 0.28; animation: dash 1.1s linear infinite; transition: opacity 0.4s; }
+.prism.is-active .rays line { opacity: 1; filter: drop-shadow(0 0 3px var(--glow)); }
+@keyframes dash { to { stroke-dashoffset: -24; } }
+.prism .glass { stroke: rgba(255, 255, 255, 0.4); stroke-width: 1; }
+.prism .mirror { stroke: #fff; stroke-width: 2; opacity: 0.75; }
+.prism .lens-track { stroke: rgba(255, 255, 255, 0.22); stroke-width: 2; stroke-dasharray: 2 5; }
+.prism .group ellipse { fill: color-mix(in srgb, var(--glow) 18%, transparent); stroke: rgba(255, 255, 255, 0.8); stroke-width: 1.5; }
+.prism .carriage { fill: rgba(255, 255, 255, 0.6); }
+.prism .sensor { fill: #fff; opacity: 0.9; }
+.prism .lbl { font: 500 8.5px var(--f-mono); letter-spacing: 0.08em; fill: var(--fg-3); }
+.lens-card { padding-block: 14px 20px; }
+.lens-row { display: flex; justify-content: space-between; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.lens-row span { color: var(--fg-3); }
+.lens-row b { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.lens-note { margin-top: 14px; font-size: 13.5px; line-height: 1.55; color: var(--fg-2); }
+
+/* display */
+.disp-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 18px; margin-top: clamp(32px, 5vw, 56px); align-items: stretch; }
+.disp-a, .disp-b > div { display: flex; }
+.disp-a > .card, .disp-b > div > .card { flex: 1; min-width: 0; }
+.disp-b { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.island-card { display: flex; flex-direction: column; }
+.mini-wrap { display: flex; flex: 1; justify-content: center; align-items: center; margin: 22px 0 6px; }
+.mini-screen { position: relative; width: min(100%, 360px); aspect-ratio: 330 / 410; border-radius: 46px; overflow: hidden; background: #000; box-shadow: 0 0 0 7px #0d0d10, 0 0 0 8px var(--line-2), 0 34px 70px rgba(0, 0, 0, 0.55); }
+.mini-status { position: absolute; z-index: 2; top: 17px; left: 28px; right: 28px; display: flex; justify-content: space-between; font: 600 13px/1 var(--f-body); pointer-events: none; }
+.mini-status-r { display: inline-flex; gap: 6px; align-items: center; }
+.mi-island { position: absolute; z-index: 6; top: 12px; left: 50%; transform: translateX(-50%); background: #000; overflow: hidden; }
+.mi-content { position: absolute; inset: 0; display: flex; align-items: center; padding: 0 14px; }
+.isl-row { display: flex; align-items: center; gap: 12px; width: 100%; color: #fff; white-space: nowrap; }
+.isl-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.isl-text b { font-size: 14px; font-weight: 600; }
+.isl-text small { font-size: 11px; color: rgba(255, 255, 255, 0.62); overflow: hidden; text-overflow: ellipsis; }
+.scan-ring { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #3d8bff; color: #6aa8ff; animation: scanPulse 0.9s ease-in-out infinite; flex: none; }
+@keyframes scanPulse { 50% { transform: scale(1.14); box-shadow: 0 0 16px rgba(61, 139, 255, 0.7); } }
+.ok-ring { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--ok); color: #041b0a; flex: none; }
+.avatar { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(145deg, #ff8a4c, #d6336c); font: 600 17px/1 var(--f-display); flex: none; }
+.call-btns { margin-left: auto; display: flex; gap: 8px; }
+.cb { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; }
+.cb-no { background: var(--bad); transform: rotate(135deg); }
+.cb-yes { background: var(--ok); }
+.timer-ico { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 179, 64, 0.2); color: var(--warn); flex: none; }
+.art { width: 56px; height: 56px; border-radius: 14px; flex: none; background: linear-gradient(145deg, #ff5d73, #5b3cff 70%, #1b1440); }
+.eq { display: inline-flex; align-items: flex-end; gap: 3px; height: 20px; margin-left: auto; }
+.eq i { width: 3px; height: 100%; border-radius: 2px; background: #ff5d73; transform-origin: bottom; animation: eq 0.9s ease-in-out infinite; }
+@keyframes eq { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
+.mini-lock { position: absolute; z-index: 3; left: 0; right: 0; top: 96px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #fff; }
+.mini-lock b { font: 600 76px/1 var(--f-display); letter-spacing: -0.045em; font-variant-numeric: tabular-nums; }
+.mini-lock span { font-size: 13px; opacity: 0.8; }
+.mini-home { position: absolute; z-index: 3; inset: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-content: start; gap: 18px 16px; padding: 100px 26px 0; }
+.mini-home i { display: block; aspect-ratio: 1; border-radius: 22%; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), 0 6px 14px rgba(0, 0, 0, 0.35); }
+.mini-glare { position: absolute; inset: 0; z-index: 8; pointer-events: none; background: linear-gradient(115deg, rgba(255, 255, 255, 0.1), transparent 35%); }
+.rail { position: relative; height: 56px; margin: 18px 0 8px; border-radius: 16px; overflow: hidden; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); }
+.ball { position: absolute; left: 12px; top: 12px; width: 30px; height: 30px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, var(--glow) 72%); box-shadow: 0 0 24px var(--glow); }
+.rail-label { margin: 0 0 4px; font: 500 11px/1.3 var(--f-mono); color: var(--fg-3); letter-spacing: 0.04em; }
+.hz-chart { width: 100%; height: 150px; }
+.bright-scene { position: relative; height: 216px; margin: 18px 0 14px; border-radius: 22px; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: background 0.5s; }
+.bright-scene.is-sun { background: linear-gradient(180deg, #7fc8ff, #dff3ff 60%, #f4e4bb); }
+.bright-scene.is-room { background: linear-gradient(180deg, #1b1b25, #0b0b10); }
+.sun-disc { position: absolute; top: -34px; right: -34px; width: 150px; height: 150px; border-radius: 50%; opacity: 0; transition: opacity 0.5s; background: radial-gradient(circle, #fff 0 28%, rgba(255, 244, 190, 0.9) 40%, rgba(255, 220, 120, 0) 70%); }
+.is-sun .sun-disc { opacity: 1; }
+.bright-phone { position: relative; width: 132px; height: 178px; border-radius: 26px; background: #000; box-shadow: 0 0 0 2px #2b2b31, 0 24px 44px rgba(0, 0, 0, 0.4); }
+.bright-screen { position: absolute; inset: 5px; border-radius: 21px; overflow: hidden; background: #101018; transition: filter 0.2s; }
+.bs-photo { position: absolute; inset: 0 0 42% 0; background: radial-gradient(circle at 72% 30%, #ffd28a, transparent 42%), linear-gradient(160deg, #1e4fd8, #7d3cf0 60%, #ff6a8a); }
+.bs-lines { position: absolute; left: 10px; right: 10px; bottom: 12px; display: grid; gap: 6px; }
+.bs-lines i { display: block; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, 0.88); }
+.bs-lines i:nth-child(2) { width: 70%; }
+.bs-lines i:nth-child(3) { width: 44%; opacity: 0.6; }
+.hdr { position: absolute; top: 9px; left: 9px; padding: 3px 6px; border-radius: 5px; background: rgba(0, 0, 0, 0.4); color: #fff; font: 700 9px/1 var(--f-mono); letter-spacing: 0.1em; opacity: 0.55; transition: all 0.2s; }
+.hdr.is-on { background: #fff; color: #000; opacity: 1; box-shadow: 0 0 14px #fff; }
+.bright-glare { position: absolute; inset: 5px; border-radius: 21px; pointer-events: none; background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(226, 238, 255, 0.72)); transition: opacity 0.2s; }
+.bright-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+.bright-slider { flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.meter { height: 6px; margin-top: 14px; border-radius: 6px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+.meter i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, #ff6a5c, #ffb340 40%, #30d158); transition: width 0.2s; }
+
+/* materials */
+.mat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: clamp(32px, 5vw, 56px); }
+.mat-grid > div { display: flex; }
+.mat { position: relative; flex: 1; padding: 28px; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; gap: 14px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)); border: 1px solid var(--line); }
+.mat-spot { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s; background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--glow) 28%, transparent), transparent 62%); }
+.mat:hover .mat-spot { opacity: 1; }
+.mat > * { position: relative; }
+.mat-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.mat-ico { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 15px; background: var(--glass-2); border: 1px solid var(--line-2); color: var(--glow); }
+.mat h3 { font: 600 1.4rem/1.15 var(--f-display); letter-spacing: -0.025em; margin-top: 10px; }
+.mat p { font-size: 15px; line-height: 1.6; color: var(--fg-2); }
+.mat-facts { margin-top: auto; padding-top: 14px; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.mat-facts div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.mat-facts div:last-child { border-bottom: 0; }
+.mat-facts dt { color: var(--fg-3); }
+.mat-facts dd { font-weight: 600; text-align: right; }
+
+/* compare */
+.cmp-tabs { display: flex; justify-content: center; margin-top: 32px; }
+.cmp-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; margin-top: 36px; }
+.cmp-visual { display: flex; flex-direction: column; align-items: center; gap: 18px; min-width: 0; }
+.cmp-visual > div:first-child { width: 100%; }
+.cmp-specs { min-width: 0; }
+.cmp-title { font: 600 clamp(1.6rem, 3vw, 2.4rem)/1.1 var(--f-display); letter-spacing: -0.035em; }
+.bars { display: grid; gap: 12px; margin: 22px 0 26px; }
+.bar-row { display: grid; grid-template-columns: 92px minmax(0, 1fr) 30px; gap: 12px; align-items: center; font: 500 13px/1 var(--f-body); color: var(--fg-2); }
+.bar-row b { font: 500 12px var(--f-mono); text-align: right; color: var(--fg); font-variant-numeric: tabular-nums; }
+.bar-track { height: 6px; border-radius: 6px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+.bar-track i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, color-mix(in srgb, var(--glow) 50%, #fff), var(--glow)); }
+.spec-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 26px; }
+.spec-list li { display: flex; gap: 12px; min-width: 0; }
+.spec-ico { display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: 12px; background: var(--glass-2); border: 1px solid var(--line); color: var(--glow); }
+.spec-list small { display: block; font: 500 11px/1.2 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3); }
+.spec-list p { margin-top: 3px; font-size: 14px; line-height: 1.45; color: var(--fg); }
+.matrix-wrap { margin-top: clamp(48px, 7vw, 88px); overflow-x: auto; border-radius: 24px; border: 1px solid var(--line); background: var(--glass); }
+.matrix { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; }
+.matrix th, .matrix td { padding: 14px 20px; text-align: left; border-bottom: 1px solid var(--line); transition: background 0.3s; white-space: nowrap; }
+.matrix tbody tr:last-child th, .matrix tbody tr:last-child td { border-bottom: 0; }
+.matrix tbody th { font-weight: 500; color: var(--fg-3); }
+.matrix thead th button { border: 0; background: none; padding: 0; font: 600 15px/1 var(--f-display); color: var(--fg-2); cursor: pointer; transition: color 0.2s; }
+.matrix thead th.is-on button { color: var(--fg); }
+.matrix .is-on { background: color-mix(in srgb, var(--glow) 13%, transparent); }
+.matrix td.is-on { font-weight: 600; }
+
+/* feel */
+.feel-tools { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 20px; margin-top: 30px; }
+.feel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+.feel-grid > div { display: flex; }
+.feel-grid > div > .card { flex: 1; min-width: 0; }
+.edge { display: flex; align-items: center; justify-content: center; gap: 30px; padding: 26px 0 10px; }
+.edge-body { position: relative; flex: none; width: 96px; height: 236px; margin-left: 20px; border-radius: 28px; background: linear-gradient(90deg, #131316, #2a2b30 30%, #55575f 50%, #2a2b30 70%, #131316); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14), 0 30px 60px rgba(0, 0, 0, 0.5); }
+.edge-key { position: absolute; left: -7px; width: 8px; border-radius: 4px 0 0 4px; background: linear-gradient(180deg, #666972, #2d2f34); }
+.edge-key-a { top: 96px; height: 46px; }
+.edge-key-b { top: 152px; height: 46px; }
+.edge-action { position: absolute; left: -15px; top: 26px; width: 20px; height: 48px; }
+.edge-action-btn { position: absolute; inset: 0; padding: 0; border: 0; cursor: pointer; border-radius: 7px 0 0 7px; transform-origin: right center; background: linear-gradient(180deg, #ffb46e, #ff7a1a); box-shadow: 0 0 24px rgba(255, 140, 40, 0.65); }
+.ripple { position: absolute; left: 0; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; border: 2px solid rgba(255, 150, 60, 0.9); pointer-events: none; animation: ripple 0.9s ease-out forwards; }
+@keyframes ripple { to { transform: scale(8); opacity: 0; } }
+.edge-side { position: relative; display: flex; flex-direction: column; gap: 14px; min-width: 0; min-height: 96px; align-self: flex-start; padding-top: 26px; }
+.edge-hint { font: 500 12px/1.3 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); }
+.edge-toast { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; padding: 10px 14px; border-radius: 16px; background: var(--glass-2); border: 1px solid var(--line-2); backdrop-filter: blur(10px); font: 600 13.5px/1 var(--f-body); }
+.edge-toast svg { color: var(--ok); }
+.sensor-stage { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 24px 0 6px; }
+.sensor-pad { position: relative; width: 190px; height: 190px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; }
+.sensor-ring { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(var(--glow) var(--p, 0%), rgba(255, 255, 255, 0.12) 0); -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px)); mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px)); }
+.sensor-core { position: absolute; inset: 14px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: radial-gradient(circle at 35% 25%, #3b3e4a, #0d0e13 70%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14), 0 16px 34px rgba(0, 0, 0, 0.5); }
+.rec-dot { width: 28px; height: 28px; border-radius: 50%; background: var(--bad); animation: blink 1s infinite; }
+.sensor-steps { display: flex; gap: 8px; }
+.sensor-steps span { padding: 6px 12px; border-radius: 999px; background: var(--glass); color: var(--fg-3); font: 500 11px/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.25s, color 0.25s; }
+.sensor-steps span.is-on { background: color-mix(in srgb, var(--glow) 30%, transparent); color: #fff; }
+.scope { position: relative; height: 160px; margin-top: 18px; border-radius: 24px; overflow: hidden; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); }
+.scope canvas { width: 100%; height: 100%; }
+.scope-label { position: absolute; top: 14px; left: 18px; font: 500 11px/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3); }
+
+/* footer */
+.footer { border-top: 1px solid var(--line); padding-block: 48px calc(48px + env(safe-area-inset-bottom, 0px)); }
+.footer-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 28px; align-items: start; }
+.footer-brand { font: 500 20px/1.1 var(--f-display); }
+.footer-brand b { font-weight: 700; }
+.footer-line { margin-top: 8px; font-size: 14px; color: var(--fg-3); }
+.footer-legal { font-size: 12.5px; line-height: 1.65; color: var(--fg-3); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1040px) {
+  .hero-grid, .chip-grid, .cam-grid, .disp-grid, .cmp-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-copy { align-items: flex-start; }
+  .hero-lead { min-height: 0; }
+  .mat-grid { grid-template-columns: minmax(0, 1fr); }
+  .feel-grid { grid-template-columns: minmax(0, 1fr); }
+  .footer-inner { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 820px) {
+  .nav-inner { flex-wrap: wrap; padding-block: 10px 8px; }
+  .nav-links { order: 3; width: 100%; }
+  .pill { display: none; }
+}
+@media (max-width: 640px) {
+  .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
+  .deltas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spec-list { grid-template-columns: minmax(0, 1fr); }
+  .vf-hud-bl { display: none; }
+  .vf { aspect-ratio: 4 / 3; }
+  .vf.is-studio .vf-bar { height: 10%; }
+  .block-detail { flex-direction: column; gap: 12px; }
+  .block-stat { text-align: left; }
+  .bar-row { grid-template-columns: 78px minmax(0, 1fr) 28px; }
+  .edge { flex-direction: column; gap: 14px; }
+  .edge-side { align-self: center; align-items: center; padding-top: 0; min-height: 84px; }
+  .edge-toast { align-self: center; }
+  .hero-colors { justify-content: center; }
+  .stage-bar { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<noscript>This preview needs JavaScript.</noscript>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script>window.react = window.React; /* lucide's UMD build looks for a lowercase global */</script>
+<script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
+<script src="https://unpkg.com/lucide-react@0.454.0/dist/umd/lucide-react.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
+<script>
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      var root = document.getElementById('root');
+      if (root && !root.children.length) {
+        root.innerHTML = '<p style="padding:32px;font:15px/1.5 system-ui;color:#f5f5f7">The preview could not start. It loads React, Framer Motion, Lucide and Babel from a CDN, so check the connection and reload.</p>';
+      }
+    }, 8000);
+  });
+</script>
+<script type="text/babel" data-presets="react">
+/* ==========================================================================
+   iPhone 18 Lineup — interactive launch showcase (private concept prototype)
+   React 18 · Framer Motion · Lucide · CSS 3D · Canvas · WebAudio
+   ========================================================================== */
+const { useState, useEffect, useLayoutEffect, useRef, useMemo, useCallback, memo } = React;
+const { motion, AnimatePresence, LayoutGroup, useMotionValue, useSpring, useTransform, useScroll, animate, useInView } = Motion;
+const {
+  ArrowRight, Cpu, Camera, Sun, Zap, Sparkles, Volume2, VolumeX, Vibrate, Aperture, Layers,
+  Gauge, BatteryFull, ScanFace, Focus, Flashlight, Languages, RotateCw, Film, Ruler, HardDrive,
+  Shield, Gem, Feather, Hand, Smartphone, Play, Music, Timer, Check, Phone: PhoneIcon, Lock, LockOpen,
+  Crosshair, Wind, Contrast, Activity, Thermometer, Waves,
+} = LucideReact;
+
+/* ---------- tiny helpers ---------- */
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const rgba = (c, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+const mixRgb = (a, b, t) => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)].map(Math.round);
+const fmt = (n, d = 0) => n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function mulberry32(seed) {
+  let a = seed | 0;
+  return function () {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function roundRectPath(ctx, x, y, w, h, r) {
+  const rr = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}
+
+/* ---------- hooks ---------- */
+function useElementSize(ref) {
+  const [size, setSize] = useState({ w: 0, h: 0 });
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const measure = () => setSize({ w: el.clientWidth, h: el.clientHeight });
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return size;
+}
+
+function useOnScreen(ref, rootMargin = '120px') {
+  const [on, setOn] = useState(true);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return undefined;
+    const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting), { rootMargin });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return on;
+}
+
+function useRaf(cb, active = true) {
+  const cbRef = useRef(cb);
+  cbRef.current = cb;
+  useEffect(() => {
+    if (!active) return undefined;
+    let id;
+    let last = performance.now();
+    const loop = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      cbRef.current(now / 1000, dt);
+      id = requestAnimationFrame(loop);
+    };
+    id = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(id);
+  }, [active]);
+}
+
+/* sizes a canvas backing store to its CSS box; returns { ctx, w, h, dpr } */
+function fitCanvas(canvas) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  const bw = Math.round(w * dpr);
+  const bh = Math.round(h * dpr);
+  if (canvas.width !== bw || canvas.height !== bh) {
+    canvas.width = bw;
+    canvas.height = bh;
+  }
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { ctx, w, h, dpr };
+}
+
+/* ---------- finishes ---------- */
+const PRO_FINISHES = [
+  { id: 'cosmic-black', name: 'Cosmic Black', frame: '#3a3c42', hi: '#8a8d96', lo: '#17181b', back: '#141518', backHi: '#2d2f36', glow: '#5b7bff', tint: [104, 136, 255] },
+  { id: 'liquid-silver', name: 'Liquid Silver', frame: '#c6c9cf', hi: '#f6f7f9', lo: '#858891', back: '#b4b7bd', backHi: '#e6e8ec', glow: '#9dbcff', tint: [160, 196, 255] },
+  { id: 'titanium-gold', name: 'Titanium Gold', frame: '#c5a374', hi: '#f3dcb2', lo: '#76603c', back: '#ad8b62', backHi: '#dfc394', glow: '#ffae55', tint: [255, 174, 85] },
+  { id: 'deep-emerald', name: 'Deep Emerald', frame: '#2b5d4c', hi: '#67ad92', lo: '#0f261d', back: '#15382d', backHi: '#2b6a55', glow: '#2fe0a0', tint: [47, 224, 160] },
+];
+
+const STD_FINISHES = [
+  { id: 'graphite', name: 'Graphite', frame: '#44464b', hi: '#8c8f97', lo: '#1e1f22', back: '#2a2b2f', backHi: '#4a4c53', glow: '#7f93ff', tint: [127, 147, 255] },
+  { id: 'cloud', name: 'Cloud White', frame: '#e3e4e8', hi: '#ffffff', lo: '#a6a9b0', back: '#d5d7dc', backHi: '#f5f6f8', glow: '#b8d0ff', tint: [184, 208, 255] },
+  { id: 'ultramarine', name: 'Ultramarine', frame: '#3452d6', hi: '#7f97ff', lo: '#142378', back: '#2740b8', backHi: '#5b78f5', glow: '#4d7bff', tint: [77, 123, 255] },
+  { id: 'rose', name: 'Rose Quartz', frame: '#d9a3b0', hi: '#f8d5dd', lo: '#8e5866', back: '#c68a99', backHi: '#efbfca', glow: '#ff7fa6', tint: [255, 127, 166] },
+];
+
+/* ---------- lineup data ---------- */
+const MODELS = [
+  {
+    id: 'promax', line: 'pro', short: 'Pro Max', name: 'iPhone 18 Pro Max',
+    dims: { w: 300, h: 620, r: 58, d: 24 }, camera: 'tri', finishes: PRO_FINISHES,
+    headline: ['Titanium.', 'Redefined.'],
+    sub: 'Forged Grade 5 titanium. A 2 nm A20 Pro. A Tetraprism zoom that reaches 10× optical. The largest canvas we have ever built for intelligence beyond dimensions.',
+    specs: [
+      ['Display', Smartphone, '6.9″ Quantum OLED, 1–144 Hz ProMotion, 3,500 nits peak outdoors'],
+      ['Chip', Cpu, 'A20 Pro, 2 nm, next-gen 32-core Neural Engine'],
+      ['Camera', Camera, '48 MP Fusion, Ultra Wide and Tetraprism, 10× optical zoom'],
+      ['Face ID', ScanFace, 'Invisible under-display Face ID with micro-island'],
+      ['Build', Gem, 'Polished forged Grade 5 titanium, Ceramic Shield 3.0'],
+      ['Battery', BatteryFull, 'Up to 42 hours of video playback'],
+      ['Size', Ruler, '163.0 × 77.6 × 8.3 mm, 231 g'],
+      ['Storage', HardDrive, '256 GB, 512 GB, 1 TB, 2 TB'],
+    ],
+    bars: { Performance: 98, Camera: 100, Battery: 100, Thinness: 40 },
+  },
+  {
+    id: 'pro', line: 'pro', short: 'Pro', name: 'iPhone 18 Pro',
+    dims: { w: 280, h: 580, r: 54, d: 22 }, camera: 'tri', finishes: PRO_FINISHES,
+    headline: ['Pro power.', 'Held closer.'],
+    sub: 'Everything in Pro Max, made for one hand. The same forged titanium, the same invisible Face ID, the same Tetraprism reach in a frame that disappears into a pocket.',
+    specs: [
+      ['Display', Smartphone, '6.3″ Quantum OLED, 1–144 Hz ProMotion, 3,500 nits peak outdoors'],
+      ['Chip', Cpu, 'A20 Pro, 2 nm, next-gen 32-core Neural Engine'],
+      ['Camera', Camera, '48 MP Fusion, Ultra Wide and Tetraprism, 10× optical zoom'],
+      ['Face ID', ScanFace, 'Invisible under-display Face ID with micro-island'],
+      ['Build', Gem, 'Polished forged Grade 5 titanium, Ceramic Shield 3.0'],
+      ['Battery', BatteryFull, 'Up to 34 hours of video playback'],
+      ['Size', Ruler, '149.6 × 71.5 × 8.0 mm, 199 g'],
+      ['Storage', HardDrive, '256 GB, 512 GB, 1 TB'],
+    ],
+    bars: { Performance: 98, Camera: 100, Battery: 82, Thinness: 46 },
+  },
+  {
+    id: 'std', line: 'std', short: '18', name: 'iPhone 18',
+    dims: { w: 280, h: 580, r: 54, d: 20 }, camera: 'dual', finishes: STD_FINISHES,
+    headline: ['Everything.', 'Effortlessly.'],
+    sub: 'An aerodynamic aluminum profile, Ceramic Shield 3.0 across the front, and an Action Button that finally listens to your fingertip. The one most people should buy.',
+    specs: [
+      ['Display', Smartphone, '6.1″ OLED, 1–120 Hz adaptive refresh, 2,000 nits peak'],
+      ['Chip', Cpu, 'A20, 2 nm, 16-core Neural Engine'],
+      ['Camera', Camera, '48 MP Fusion and Ultra Wide, 2× optical-quality zoom'],
+      ['Controls', Hand, 'Action Button and Haptic Smart Camera Sensor'],
+      ['Build', Gem, 'Aerospace aluminum, Ceramic Shield 3.0'],
+      ['Battery', BatteryFull, 'Up to 28 hours of video playback'],
+      ['Size', Ruler, '147.6 × 71.6 × 7.4 mm, 172 g'],
+      ['Storage', HardDrive, '128 GB, 256 GB, 512 GB'],
+    ],
+    bars: { Performance: 84, Camera: 72, Battery: 64, Thinness: 70 },
+  },
+  {
+    id: 'slim', line: 'std', short: '18 Slim', name: 'iPhone 18 Slim',
+    dims: { w: 280, h: 580, r: 54, d: 11 }, camera: 'single', finishes: STD_FINISHES,
+    headline: ['5.6 mm.', 'No compromise.'],
+    sub: 'The thinnest iPhone ever made, cut from a single block of aerospace aluminum and sealed under Ceramic Shield 3.0. It weighs almost nothing. It does not feel like a compromise.',
+    specs: [
+      ['Display', Smartphone, '6.6″ OLED, 1–120 Hz adaptive refresh, 2,000 nits peak'],
+      ['Chip', Cpu, 'A20, 2 nm, 16-core Neural Engine'],
+      ['Camera', Camera, 'Single 48 MP Fusion camera with 2× optical-quality zoom'],
+      ['Controls', Hand, 'Action Button and Haptic Smart Camera Sensor'],
+      ['Build', Gem, 'Aerospace aluminum, Ceramic Shield 3.0'],
+      ['Battery', BatteryFull, 'Up to 24 hours of video playback'],
+      ['Size', Ruler, '156.2 × 74.7 × 5.6 mm, 146 g'],
+      ['Storage', HardDrive, '256 GB, 512 GB, 1 TB'],
+    ],
+    bars: { Performance: 84, Camera: 52, Battery: 52, Thinness: 100 },
+  },
+];
+
+/* ---------- shared UI atoms ---------- */
+const springy = { type: 'spring', stiffness: 520, damping: 16, mass: 0.7 };
+
+const Tactile = ({ children, className = '', ...rest }) => (
+  <motion.button
+    type="button"
+    className={className}
+    whileHover={{ scale: 1.035 }}
+    whileTap={{ scale: 0.93 }}
+    transition={springy}
+    {...rest}
+  >
+    {children}
+  </motion.button>
+);
+
+const Reveal = ({ children, delay = 0, className = '', y = 28 }) => (
+  <motion.div
+    className={className}
+    initial={{ opacity: 0.2, y }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-8% 0px' }}
+    transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}
+  >
+    {children}
+  </motion.div>
+);
+
+const SectionHead = ({ eyebrow, title, lead, align = 'left' }) => (
+  <Reveal className={`sec-head ${align === 'center' ? 'is-center' : ''}`}>
+    <p className="eyebrow">{eyebrow}</p>
+    <h2 className="h2">{title}</h2>
+    {lead ? <p className="lead">{lead}</p> : null}
+  </Reveal>
+);
+
+function CountUp({ to, decimals = 0, suffix = '', prefix = '' }) {
+  const ref = useRef(null);
+  const seen = useInView(ref, { once: true });
+  const [v, setV] = useState(to);
+  useEffect(() => {
+    if (!seen || reducedMotion()) return undefined;
+    setV(0);
+    const c = animate(0, to, { duration: 1.8, ease: [0.16, 1, 0.3, 1], onUpdate: setV });
+    return () => c.stop();
+  }, [seen, to]);
+  return <span ref={ref}>{prefix}{fmt(v, decimals)}{suffix}</span>;
+}
+
+function ModelSwitch({ value, onChange, idPrefix }) {
+  return (
+    <LayoutGroup id={idPrefix}>
+      <div className="seg" role="tablist" aria-label="Choose a model">
+        {MODELS.map((m) => (
+          <button
+            key={m.id}
+            id={`${idPrefix}-${m.id}`}
+            role="tab"
+            aria-selected={value === m.id}
+            className={`seg-btn ${value === m.id ? 'is-on' : ''}`}
+            onClick={() => onChange(m.id)}
+            type="button"
+          >
+            {value === m.id ? (
+              <motion.span layoutId="seg-pill" className="seg-pill" transition={{ type: 'spring', stiffness: 420, damping: 32 }} />
+            ) : null}
+            <span className="seg-label">{m.short}</span>
+          </button>
+        ))}
+      </div>
+    </LayoutGroup>
+  );
+}
+
+function Swatches({ finishes, index, onChange, label }) {
+  return (
+    <div className="swatches" role="radiogroup" aria-label={label}>
+      {finishes.map((f, i) => (
+        <motion.button
+          key={f.id}
+          type="button"
+          role="radio"
+          aria-checked={i === index}
+          aria-label={f.name}
+          className={`swatch ${i === index ? 'is-on' : ''}`}
+          whileHover={{ scale: 1.14 }}
+          whileTap={{ scale: 0.86 }}
+          transition={springy}
+          onClick={() => onChange(i)}
+        >
+          <span className="swatch-orb" style={{ background: `radial-gradient(circle at 32% 28%, ${f.backHi}, ${f.back} 58%, ${f.lo})` }} />
+          <span className="swatch-tip">{f.name}</span>
+        </motion.button>
+      ))}
+    </div>
+  );
+}
+
+/* ==========================================================================
+   PHONE — true 3D built from stacked slabs (no WebGL required)
+   ========================================================================== */
+function CameraModule({ kind }) {
+  const Lens = ({ x, y, s = 48 }) => (
+    <span className="lens" style={{ left: x, top: y, width: s, height: s }}><i /></span>
+  );
+  if (kind === 'tri') {
+    return (
+      <div className="plateau" style={{ width: 128, height: 128 }}>
+        <Lens x={10} y={10} />
+        <Lens x={10} y={70} />
+        <Lens x={70} y={40} />
+        <span className="flash" style={{ left: 82, top: 12 }} />
+        <span className="lidar" style={{ left: 88, top: 100 }} />
+      </div>
+    );
+  }
+  if (kind === 'dual') {
+    return (
+      <div className="plateau" style={{ width: 84, height: 128, borderRadius: 30 }}>
+        <Lens x={18} y={10} />
+        <Lens x={18} y={70} />
+        <span className="flash" style={{ left: 60, top: 12, width: 14, height: 14 }} />
+      </div>
+    );
+  }
+  return (
+    <div className="plateau" style={{ width: 128, height: 68, borderRadius: 24 }}>
+      <Lens x={10} y={10} />
+      <span className="flash" style={{ left: 74, top: 18 }} />
+      <span className="bar-mic" style={{ left: 98, top: 28 }} />
+    </div>
+  );
+}
+
+const Phone = memo(function Phone({ model, finish, rotateX, rotateY, children }) {
+  const { w, h, r, d } = model.dims;
+  const n = Math.max(7, Math.round(d / 1.7));
+  const slabs = [];
+  for (let i = 0; i < n; i += 1) {
+    const z = (i - (n - 1) / 2) * (d / (n - 1));
+    slabs.push(<div key={i} className="slab" style={{ transform: `translateZ(${z.toFixed(2)}px)` }} />);
+  }
+  const vars = {
+    '--w': `${w}px`, '--h': `${h}px`, '--r': `${r}px`, '--d': `${d}px`,
+    '--frame': finish.frame, '--frame-hi': finish.hi, '--frame-lo': finish.lo,
+    '--back': finish.back, '--back-hi': finish.backHi, '--glow': finish.glow,
+  };
+  const btn = (side, top, height, key) => [-2, 0, 2].map((z) => (
+    <span
+      key={`${key}-${z}`}
+      className={`sbtn sbtn-${side}`}
+      style={{ top, height, transform: `translateZ(${z}px)` }}
+    />
+  ));
+  return (
+    <div className="phone-rig" style={vars}>
+      <motion.div className="phone" style={{ rotateX, rotateY }}>
+        {slabs}
+        {btn('l', 120, 30, 'act')}
+        {btn('l', 172, 54, 'vu')}
+        {btn('l', 236, 54, 'vd')}
+        {btn('r', 196, 88, 'pw')}
+        <div className="face face-front">
+          <div className="bezel">
+            <div className="screen">
+              {children}
+              <div className="island" />
+              <div className="glare" />
+            </div>
+          </div>
+        </div>
+        <div className="face face-back">
+          <CameraModule kind={model.camera} />
+          <span className="back-word">{model.name}</span>
+          <div className="back-glare" />
+        </div>
+      </motion.div>
+    </div>
+  );
+});
+
+function LockScreen() {
+  const now = useMemo(() => new Date(), []);
+  const day = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  return (
+    <div className="wall">
+      <div className="wall-blob wall-blob-a" />
+      <div className="wall-blob wall-blob-b" />
+      <div className="lock">
+        <span className="lock-date">{day}</span>
+        <span className="lock-time">9:41</span>
+        <div className="lock-widgets">
+          <span><b>72°</b>Clear</span>
+          <span><b>82%</b>Battery</span>
+          <span><b>144</b>Hz</span>
+        </div>
+        <div className="lock-foot">
+          <span><Flashlight size={18} /></span>
+          <span><Camera size={18} /></span>
+        </div>
+        <i className="lock-bar" />
+      </div>
+    </div>
+  );
+}
+
+/* interactive stage: cursor tilt, drag to spin, flip to the back */
+function PhoneStage({ model, finish, hint = 'Move your cursor. Drag to spin.' }) {
+  const viewRef = useRef(null);
+  const { w: boxW } = useElementSize(viewRef);
+  const scale = clamp((boxW || 360) / (model.dims.w + 150), 0.52, 1.12);
+  const stageH = Math.round(model.dims.h * scale + 70);
+
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const yawTarget = useMotionValue(0);
+  const smx = useSpring(mx, { stiffness: 110, damping: 15, mass: 0.7 });
+  const smy = useSpring(my, { stiffness: 110, damping: 15, mass: 0.7 });
+  const syaw = useSpring(yawTarget, { stiffness: 70, damping: 13, mass: 0.9 });
+  const rotateY = useTransform([syaw, smx], ([a, b]) => a + b * 22);
+  const rotateX = useTransform(smy, (v) => -4 - v * 15);
+  const [side, setSide] = useState('front');
+  const drag = useRef(null);
+
+  const setYaw = (v) => {
+    yawTarget.set(v);
+    setSide(Math.round(v / 180) % 2 === 0 ? 'front' : 'back');
+  };
+
+  const onMove = (e) => {
+    const el = viewRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const nx = clamp(((e.clientX - r.left) / r.width) * 2 - 1, -1, 1);
+    const ny = clamp(((e.clientY - r.top) / r.height) * 2 - 1, -1, 1);
+    if (drag.current) {
+      const dx = e.clientX - drag.current.x;
+      yawTarget.set(drag.current.yaw + dx * 0.55);
+    } else {
+      mx.set(nx);
+      my.set(ny);
+    }
+    el.style.setProperty('--hx', `${((nx + 1) / 2) * 100}%`);
+    el.style.setProperty('--hy', `${((ny + 1) / 2) * 100}%`);
+  };
+  const onDown = (e) => {
+    drag.current = { x: e.clientX, yaw: yawTarget.get() };
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
+    mx.set(0);
+    my.set(0);
+  };
+  const onUp = () => {
+    if (!drag.current) return;
+    drag.current = null;
+    setYaw(Math.round(yawTarget.get() / 180) * 180);
+  };
+  const onLeave = () => {
+    if (!drag.current) {
+      mx.set(0);
+      my.set(0);
+    }
+  };
+  const flip = () => setYaw(Math.round(yawTarget.get() / 180) * 180 + 180);
+
+  return (
+    <div className="stage">
+      <div
+        ref={viewRef}
+        className="stage-view"
+        style={{ height: stageH }}
+        onPointerMove={onMove}
+        onPointerDown={onDown}
+        onPointerUp={onUp}
+        onPointerCancel={onUp}
+        onPointerLeave={onLeave}
+      >
+        <div className="floor" style={{ '--glow': finish.glow }} />
+        <div className="stage-inner" style={{ transform: `translate(-50%, -50%) scale(${scale})` }}>
+          <div className="float">
+            <Phone model={model} finish={finish} rotateX={rotateX} rotateY={rotateY}>
+              <LockScreen />
+            </Phone>
+          </div>
+        </div>
+      </div>
+      <div className="stage-bar">
+        <span className="stage-hint">{hint}</span>
+        <Tactile className="chip-btn" onClick={flip} aria-label="Flip the phone">
+          <RotateCw size={15} />
+          <span>{side === 'front' ? 'See the back' : 'See the front'}</span>
+        </Tactile>
+      </div>
+    </div>
+  );
+}
+/* ==========================================================================
+   NAV · HERO · STATEMENT
+   ========================================================================== */
+const scrollToId = (id) => {
+  if (id === 'top') {
+    window.scrollTo({ top: 0, behavior: reducedMotion() ? 'auto' : 'smooth' });
+    return;
+  }
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' });
+};
+
+const NAV_LINKS = [
+  ['top', 'Overview'],
+  ['chip', 'A20 Pro'],
+  ['camera', 'Camera'],
+  ['display', 'Display'],
+  ['materials', 'Materials'],
+  ['compare', 'Compare'],
+  ['feel', 'Feel'],
+];
+
+function Nav({ active }) {
+  return (
+    <nav className="nav" aria-label="Primary">
+      <div className="nav-inner wrap">
+        <button type="button" className="brand" onClick={() => scrollToId('top')} aria-label="Back to top">
+          <span className="brand-mark"><Smartphone size={16} strokeWidth={2.2} /></span>
+          <span>iPhone <b>18</b></span>
+        </button>
+        <div className="nav-links">
+          {NAV_LINKS.map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              className={`nav-link ${active === id ? 'is-on' : ''}`}
+              onClick={() => scrollToId(id)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <span className="pill"><i className="pulse-dot" />Concept preview</span>
+      </div>
+    </nav>
+  );
+}
+
+function Hero({ model, setModelId, finishIdx, setFinishIdx }) {
+  const finish = model.finishes[finishIdx];
+  const isPro = model.line === 'pro';
+  const stats = isPro
+    ? [[2, 0, ' nm', 'A20 Pro process'], [10, 0, '×', 'Optical zoom'], [144, 0, ' Hz', 'Adaptive refresh'], [3500, 0, ' nits', 'Peak outdoors']]
+    : model.id === 'slim'
+      ? [[2, 0, ' nm', 'A20 process'], [5.6, 1, ' mm', 'Thickness'], [120, 0, ' Hz', 'Adaptive refresh'], [2000, 0, ' nits', 'Peak brightness']]
+      : [[2, 0, ' nm', 'A20 process'], [7.4, 1, ' mm', 'Thickness'], [120, 0, ' Hz', 'Adaptive refresh'], [2000, 0, ' nits', 'Peak brightness']];
+
+  return (
+    <header id="top" className="hero">
+      <div className="ambient" aria-hidden="true">
+        <span className="ambient-blob ab-1" />
+        <span className="ambient-blob ab-2" />
+        <span className="ambient-blob ab-3" />
+        <span className="ambient-grid" />
+      </div>
+      <div className="wrap hero-grid">
+        <div className="hero-copy">
+          <p className="eyebrow"><i className="pulse-dot" />{model.name} · 2026 lineup</p>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.h1
+              key={model.id}
+              className="h1"
+              initial={{ opacity: 0, y: 26, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -18, filter: 'blur(8px)' }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <span className="h1-a">{model.headline[0]}</span>
+              <span className="h1-b">{model.headline[1]}</span>
+            </motion.h1>
+          </AnimatePresence>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.p
+              key={model.id}
+              className="lead hero-lead"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {model.sub}
+            </motion.p>
+          </AnimatePresence>
+          <div className="hero-cta">
+            <Tactile className="btn btn-primary" onClick={() => scrollToId('compare')}>
+              Compare the lineup <ArrowRight size={17} />
+            </Tactile>
+            <Tactile className="btn btn-ghost" onClick={() => scrollToId('chip')}>
+              <Cpu size={17} /> Meet the A20 Pro
+            </Tactile>
+          </div>
+          <dl className="hero-stats">
+            {stats.map(([n, d, unit, label]) => (
+              <div key={label} className="stat">
+                <dt><CountUp to={n} decimals={d} suffix={unit} /></dt>
+                <dd>{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="hero-visual">
+          <ModelSwitch value={model.id} onChange={setModelId} idPrefix="hero" />
+          <motion.div
+            key={model.id}
+            className="hero-stage"
+            initial={{ opacity: 0, scale: 0.9, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+          >
+            <PhoneStage model={model} finish={finish} />
+          </motion.div>
+          <div className="hero-colors">
+            <div className="finish-readout">
+              <span className="eyebrow">Finish</span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.strong
+                  key={finish.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {finish.name}
+                </motion.strong>
+              </AnimatePresence>
+            </div>
+            <Swatches finishes={model.finishes} index={finishIdx} onChange={setFinishIdx} label={`${model.name} finishes`} />
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function Word({ word, progress, range }) {
+  const opacity = useTransform(progress, range, [0.16, 1]);
+  return <motion.span style={{ opacity }} className="word">{word}{' '}</motion.span>;
+}
+
+function Statement() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.55'] });
+  const text = 'Intelligence beyond dimensions. Every pixel, every photon and every neuron of silicon working as one.';
+  const words = text.split(' ');
+  return (
+    <section className="statement wrap" ref={ref} aria-label="Statement">
+      <p className="statement-text">
+        {words.map((w, i) => (
+          <Word key={`${w}-${i}`} word={w} progress={scrollYProgress} range={[i / words.length, Math.min(1, (i + 2.4) / words.length)]} />
+        ))}
+      </p>
+    </section>
+  );
+}
+/* ==========================================================================
+   A20 PRO — live die visualisation (canvas)
+   ========================================================================== */
+const CHIP_BLOCKS = [
+  { id: 'p', name: 'Performance cores', x: 0.05, y: 0.05, w: 0.4, h: 0.22, cols: 2, rows: 1, watt: 2.4, stat: ['Peak clock', '4.4 GHz'], desc: 'Two wide cores for bursts of single-thread work. Gate-all-around 2 nm transistors hold peak clocks longer inside the same thermal envelope.' },
+  { id: 'gpu', name: 'GPU', x: 0.55, y: 0.05, w: 0.4, h: 0.3, cols: 3, rows: 2, watt: 3.2, stat: ['Shader cores', '6, ray traced'], desc: 'Six shader cores with hardware ray tracing and mesh shading. Dynamic caching gives every core exactly the memory it needs, and nothing more.' },
+  { id: 'e', name: 'Efficiency cores', x: 0.05, y: 0.32, w: 0.4, h: 0.16, cols: 4, rows: 1, watt: 0.7, stat: ['Share of daily work', '80%'], desc: 'Four small cores that carry mail, messages, music and every background task. They do it at a fraction of the power of the big pair.' },
+  { id: 'npu', name: 'Neural Engine', x: 0.55, y: 0.4, w: 0.4, h: 0.3, cols: 8, rows: 4, watt: 2.2, stat: ['Throughput', '48 TOPS'], desc: 'Thirty-two cores tuned for transformer models. Language, vision and spatial video run on device, so private data never has to leave it.' },
+  { id: 'slc', name: 'System cache', x: 0.05, y: 0.53, w: 0.4, h: 0.14, cols: 8, rows: 1, watt: 0.5, stat: ['Capacity', '48 MB'], desc: 'A large shared cache that keeps the CPU, GPU and Neural Engine from waiting on memory. It is the reason all three can run flat out together.' },
+  { id: 'isp', name: 'Image signal processor', x: 0.05, y: 0.74, w: 0.26, h: 0.21, cols: 3, rows: 2, watt: 0.8, stat: ['Throughput', '2.4 Gpx/s'], desc: 'Every frame from the Tetraprism, Fusion and Ultra Wide sensors passes through here. It handles tone, noise and depth before you press the shutter.' },
+  { id: 'media', name: 'Media engine', x: 0.36, y: 0.74, w: 0.19, h: 0.21, cols: 2, rows: 2, watt: 0.5, stat: ['Capture', '4K, 120 fps'], desc: 'Hardware encode and decode for HEVC, AV1 and ProRes, including spatial and cinematic video at 120 frames per second.' },
+  { id: 'io', name: 'Memory and I/O', x: 0.6, y: 0.75, w: 0.35, h: 0.2, cols: 6, rows: 1, watt: 0.4, stat: ['Memory bandwidth', '120 GB/s'], desc: 'Unified memory controller, storage, display pipeline and wireless. One pool of memory that every block on the die can address.' },
+];
+
+const CHIP_TRACES = [
+  { from: 'p', pts: [[0.45, 0.16], [0.5, 0.16], [0.5, 0.5]] },
+  { from: 'gpu', pts: [[0.55, 0.2], [0.5, 0.2]] },
+  { from: 'e', pts: [[0.45, 0.4], [0.5, 0.4]] },
+  { from: 'npu', pts: [[0.55, 0.55], [0.5, 0.55], [0.5, 0.72]] },
+  { from: 'slc', pts: [[0.45, 0.6], [0.5, 0.6]] },
+  { from: 'isp', pts: [[0.5, 0.72], [0.18, 0.72], [0.18, 0.74]] },
+  { from: 'media', pts: [[0.5, 0.72], [0.455, 0.72], [0.455, 0.74]] },
+  { from: 'io', pts: [[0.5, 0.72], [0.7, 0.72], [0.7, 0.75]] },
+];
+
+const WORKLOADS = [
+  { id: 'idle', label: 'Idle', icon: Wind, note: 'Screen on, nothing running', act: { p: 0.06, gpu: 0.03, e: 0.16, npu: 0.02, slc: 0.12, isp: 0.02, media: 0.02, io: 0.1 } },
+  { id: 'photo', label: 'Photography', icon: Camera, note: 'Tetraprism capture with Deep Fusion', act: { p: 0.34, gpu: 0.3, e: 0.3, npu: 0.62, slc: 0.5, isp: 0.96, media: 0.4, io: 0.42 } },
+  { id: 'game', label: 'Gaming', icon: Zap, note: 'Ray traced game at 120 fps', act: { p: 0.86, gpu: 0.99, e: 0.4, npu: 0.24, slc: 0.72, isp: 0.02, media: 0.5, io: 0.62 } },
+  { id: 'ai', label: 'Intelligence', icon: Sparkles, note: 'On-device language model', act: { p: 0.42, gpu: 0.36, e: 0.34, npu: 1, slc: 0.82, isp: 0.1, media: 0.08, io: 0.5 } },
+];
+
+function drawDie(ctx, w, h, t, acts, hoverId, selId, tint, still) {
+  ctx.clearRect(0, 0, w, h);
+  const m = 10;
+  const dw = w - m * 2;
+  const dh = h - m * 2;
+  ctx.save();
+  ctx.translate(m, m);
+
+  /* substrate */
+  const bg = ctx.createLinearGradient(0, 0, dw, dh);
+  bg.addColorStop(0, '#12141b');
+  bg.addColorStop(1, '#08090d');
+  roundRectPath(ctx, 0, 0, dw, dh, 22);
+  ctx.fillStyle = bg;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  ctx.save();
+  roundRectPath(ctx, 0, 0, dw, dh, 22);
+  ctx.clip();
+  ctx.strokeStyle = 'rgba(255,255,255,0.028)';
+  const step = Math.max(10, dw / 40);
+  for (let x = step; x < dw; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, dh); ctx.stroke(); }
+  for (let y = step; y < dh; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(dw, y); ctx.stroke(); }
+  ctx.restore();
+
+  /* traces + data pulses */
+  CHIP_TRACES.forEach((tr, ti) => {
+    const a = acts[tr.from] || 0;
+    const pts = tr.pts.map(([x, y]) => [x * dw, y * dh]);
+    ctx.beginPath();
+    pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+    ctx.strokeStyle = rgba(tint, 0.08 + a * 0.2);
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+    let total = 0;
+    const seg = [];
+    for (let i = 1; i < pts.length; i += 1) {
+      const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      seg.push(l);
+      total += l;
+    }
+    const count = 1 + Math.round(a * 3);
+    for (let k = 0; k < count; k += 1) {
+      const phase = still ? k / count : (t * (0.15 + a * 0.9) + k / count + ti * 0.17) % 1;
+      let dist = phase * total;
+      let si = 0;
+      while (si < seg.length - 1 && dist > seg[si]) { dist -= seg[si]; si += 1; }
+      const f = clamp(dist / seg[si], 0, 1);
+      const px = lerp(pts[si][0], pts[si + 1][0], f);
+      const py = lerp(pts[si][1], pts[si + 1][1], f);
+      ctx.beginPath();
+      ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(mixRgb(tint, [255, 255, 255], 0.5), 0.35 + a * 0.65);
+      ctx.shadowColor = rgba(tint, 0.9);
+      ctx.shadowBlur = 6 + a * 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  });
+
+  /* blocks */
+  CHIP_BLOCKS.forEach((b) => {
+    const a = acts[b.id] || 0;
+    const bx = b.x * dw;
+    const by = b.y * dh;
+    const bw = b.w * dw;
+    const bh = b.h * dh;
+    const hot = hoverId === b.id || selId === b.id;
+    const fill = mixRgb([18, 20, 28], mixRgb(tint, [8, 10, 18], 0.66), a);
+    roundRectPath(ctx, bx, by, bw, bh, 10);
+    ctx.fillStyle = rgba(fill, 1);
+    if (a > 0.5) { ctx.shadowColor = rgba(tint, (a - 0.5) * 0.9); ctx.shadowBlur = 22 * a; }
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = hot ? 'rgba(255,255,255,0.85)' : rgba(tint, 0.2 + a * 0.5);
+    ctx.lineWidth = hot ? 1.8 : 1;
+    ctx.stroke();
+
+    const pad = 8;
+    const labelH = bw > 90 ? 15 : 0;
+    const gx = bx + pad;
+    const gy = by + pad + labelH;
+    const gw = bw - pad * 2;
+    const gh = bh - pad * 2 - labelH;
+    const gap = 3;
+    const cw = (gw - gap * (b.cols - 1)) / b.cols;
+    const ch = (gh - gap * (b.rows - 1)) / b.rows;
+    for (let r = 0; r < b.rows; r += 1) {
+      for (let c = 0; c < b.cols; c += 1) {
+        const i = r * b.cols + c;
+        const shimmer = still ? 0.7 : 0.55 + 0.45 * Math.sin(t * (2 + a * 5) + i * 1.9);
+        const lit = clamp(a * (0.35 + 0.65 * shimmer), 0, 1);
+        roundRectPath(ctx, gx + c * (cw + gap), gy + r * (ch + gap), Math.max(2, cw), Math.max(2, ch), Math.min(4, cw / 2));
+        ctx.fillStyle = rgba(mixRgb([30, 33, 44], mixRgb(tint, [255, 255, 255], 0.25), lit), 0.55 + lit * 0.45);
+        ctx.fill();
+      }
+    }
+    if (labelH) {
+      ctx.font = '500 9px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.fillStyle = hot ? '#ffffff' : 'rgba(235,238,250,0.62)';
+      ctx.textBaseline = 'top';
+      ctx.fillText(b.name.toUpperCase(), bx + pad, by + pad - 1);
+    }
+  });
+  ctx.restore();
+}
+
+function ChipSection({ tint }) {
+  const [workload, setWorkload] = useState('photo');
+  const [hover, setHover] = useState(null);
+  const [sel, setSel] = useState('npu');
+  const [read, setRead] = useState({ watts: 0, temp: 0, tops: 0, ghz: 0 });
+  const canvasRef = useRef(null);
+  const wrapRef = useRef(null);
+  const onScreen = useOnScreen(wrapRef);
+  const actRef = useRef(Object.fromEntries(CHIP_BLOCKS.map((b) => [b.id, 0.1])));
+  const targetRef = useRef(WORKLOADS[1].act);
+  const hoverRef = useRef(null);
+  const selRef = useRef('npu');
+  const tintRef = useRef(tint);
+  const lastRead = useRef(0);
+  const still = useMemo(reducedMotion, []);
+
+  targetRef.current = WORKLOADS.find((w) => w.id === workload).act;
+  hoverRef.current = hover;
+  selRef.current = sel;
+  tintRef.current = tint;
+
+  useRaf((t, dt) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const acts = actRef.current;
+    const target = targetRef.current;
+    CHIP_BLOCKS.forEach((b) => {
+      acts[b.id] += (target[b.id] - acts[b.id]) * Math.min(1, dt * 3.2);
+    });
+    const { ctx, w, h } = fitCanvas(canvas);
+    drawDie(ctx, w, h, t, acts, hoverRef.current, selRef.current, tintRef.current, still);
+    if (t - lastRead.current > 0.14) {
+      lastRead.current = t;
+      const watts = CHIP_BLOCKS.reduce((s, b) => s + b.watt * acts[b.id], 0) + 0.35;
+      setRead({
+        watts,
+        temp: 27 + watts * 1.55,
+        tops: 48 * acts.npu,
+        ghz: 1.2 + (0.6 * acts.p + 0.4 * Math.max(acts.gpu * 0.4, acts.p)) * 3.2,
+      });
+    }
+  }, onScreen);
+
+  const hit = (e) => {
+    const canvas = canvasRef.current;
+    const r = canvas.getBoundingClientRect();
+    const m = 10;
+    const nx = (e.clientX - r.left - m) / (r.width - m * 2);
+    const ny = (e.clientY - r.top - m) / (r.height - m * 2);
+    const b = CHIP_BLOCKS.find((k) => nx >= k.x && nx <= k.x + k.w && ny >= k.y && ny <= k.y + k.h);
+    return b ? b.id : null;
+  };
+
+  const block = CHIP_BLOCKS.find((b) => b.id === sel) || CHIP_BLOCKS[0];
+  const wl = WORKLOADS.find((w) => w.id === workload);
+  const readouts = [
+    [Zap, 'Package power', fmt(read.watts, 1), 'W'],
+    [Thermometer, 'Skin temperature', fmt(read.temp, 1), '°C'],
+    [Sparkles, 'Neural throughput', fmt(read.tops, 0), 'TOPS'],
+    [Gauge, 'CPU clock', fmt(read.ghz, 2), 'GHz'],
+  ];
+
+  return (
+    <section id="chip" className="section chip" data-section>
+      <div className="wrap chip-grid">
+        <div className="chip-copy">
+          <SectionHead
+            eyebrow="A20 Pro · 2 nm"
+            title={<>Two nanometers.<br />Every watt accounted for.</>}
+            lead="Gate-all-around transistors, a rebuilt Neural Engine and a cache big enough to keep all of it fed. Pick a workload and watch the die respond."
+          />
+          <Reveal delay={0.1}>
+            <div className="seg seg-wrap" role="tablist" aria-label="Workload">
+              {WORKLOADS.map((w) => {
+                const Ico = w.icon;
+                return (
+                  <button
+                    key={w.id}
+                    type="button"
+                    role="tab"
+                    id={`wl-${w.id}`}
+                    aria-selected={workload === w.id}
+                    className={`seg-btn ${workload === w.id ? 'is-on is-solid' : ''}`}
+                    onClick={() => setWorkload(w.id)}
+                  >
+                    <span className="seg-label"><Ico size={15} />{w.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="note">{wl.note}</p>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <div className="readouts">
+              {readouts.map(([Ico, label, val, unit]) => (
+                <div className="readout" key={label}>
+                  <Ico size={16} />
+                  <span className="readout-label">{label}</span>
+                  <span className="readout-val">{val}<small>{unit}</small></span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <ul className="deltas" aria-label="Generational gains">
+              <li><b>+18%</b><span>CPU over A19 Pro</span></li>
+              <li><b>+24%</b><span>GPU over A19 Pro</span></li>
+              <li><b>2×</b><span>Neural Engine</span></li>
+              <li><b>−25%</b><span>Power at equal speed</span></li>
+            </ul>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.08} className="die-col">
+          <div className="die-card" ref={wrapRef}>
+            <canvas
+              ref={canvasRef}
+              className="die-canvas"
+              aria-label="Interactive map of the A20 Pro die. Select a block for details."
+              onPointerMove={(e) => setHover(hit(e))}
+              onPointerLeave={() => setHover(null)}
+              onClick={(e) => { const id = hit(e); if (id) setSel(id); }}
+              style={{ cursor: hover ? 'pointer' : 'default' }}
+            />
+          </div>
+          <div className="block-tabs" role="tablist" aria-label="Die blocks">
+            {CHIP_BLOCKS.map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                role="tab"
+                aria-selected={sel === b.id}
+                className={`tab-chip ${sel === b.id ? 'is-on' : ''}`}
+                onClick={() => setSel(b.id)}
+                onMouseEnter={() => setHover(b.id)}
+                onMouseLeave={() => setHover(null)}
+              >
+                {b.name}
+              </button>
+            ))}
+          </div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={block.id}
+              className="block-detail"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.28 }}
+            >
+              <div>
+                <h3>{block.name}</h3>
+                <p>{block.desc}</p>
+              </div>
+              <div className="block-stat">
+                <span>{block.stat[0]}</span>
+                <b>{block.stat[1]}</b>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+/* ==========================================================================
+   TETRAPRISM CAMERA — procedural dusk scene, layered for real depth of field
+   ========================================================================== */
+const HORIZON = 0.6;
+const CAM_LAYERS = [
+  { id: 'sky', depth: 0.98 },
+  { id: 'far', depth: 0.92 },
+  { id: 'lake', depth: 0.6 },
+  { id: 'lights', depth: 0.6 },
+  { id: 'tower', depth: 0.6 },
+  { id: 'near', depth: 0.12 },
+];
+const FOCUS_DEPTH = { far: 0.95, mid: 0.6, near: 0.12 };
+const FOCUS_LABEL = { far: 'Distance', mid: 'Middle ground', near: 'Foreground' };
+
+const makeRidge = (seed, base, amp, freq) => {
+  const rnd = mulberry32(seed);
+  const waves = Array.from({ length: 6 }, (_, i) => ({
+    f: freq * (i + 1) * (0.7 + rnd() * 0.6),
+    a: amp / (1 + i * 0.9),
+    p: rnd() * Math.PI * 2,
+  }));
+  return (x) => base + waves.reduce((s, wv) => s + Math.sin(x * wv.f + wv.p) * wv.a, 0);
+};
+const RIDGE_BACK = makeRidge(11, 0.44, 0.07, 5.5);
+const RIDGE_FRONT = makeRidge(23, 0.51, 0.04, 8.5);
+const STARS = (() => {
+  const r = mulberry32(7);
+  return Array.from({ length: 340 }, () => ({ x: -1 + r() * 3, y: -1 + r() * 1.45, s: 0.35 + r() * 1.1, a: 0.25 + r() * 0.75 }));
+})();
+const SHORE = (() => {
+  const r = mulberry32(31);
+  return Array.from({ length: 130 }, () => ({ x: -0.3 + r() * 1.6, y: HORIZON + 0.004 + r() * 0.014, s: 0.7 + r() * 1.8, warm: r() > 0.35, a: 0.4 + r() * 0.6, ref: r() }));
+})();
+const GRASS = (() => {
+  const r = mulberry32(5);
+  return Array.from({ length: 280 }, () => ({ x: -0.3 + r() * 0.95, l: 0.018 + r() * 0.055, lean: (r() - 0.5) * 0.022, w: 0.7 + r() * 1.1 }));
+})();
+const CRATERS = (() => {
+  const r = mulberry32(19);
+  return Array.from({ length: 16 }, () => {
+    const a = r() * Math.PI * 2;
+    const d = Math.sqrt(r()) * 0.86;
+    return { x: Math.cos(a) * d, y: Math.sin(a) * d, s: 0.05 + r() * 0.11 };
+  });
+})();
+const cliffY = (x) => 0.74 + (x > 0 ? x * 0.36 : -x * 0.05) + 0.018 * Math.sin(x * 11);
+
+function ridgePath(ctx, fn, W, H, bottom) {
+  ctx.beginPath();
+  ctx.moveTo(-W, bottom);
+  for (let x = -1; x <= 2.0001; x += 0.004) ctx.lineTo(x * W, fn(x) * H);
+  ctx.lineTo(2 * W, bottom);
+  ctx.closePath();
+}
+
+const LAYER_DRAW = {
+  sky(ctx, W, H, z) {
+    const g = ctx.createLinearGradient(0, -H, 0, H * HORIZON);
+    g.addColorStop(0, '#03040f');
+    g.addColorStop(0.5, '#10103a');
+    g.addColorStop(0.78, '#3a1f63');
+    g.addColorStop(0.92, '#b1466f');
+    g.addColorStop(1, '#ffb679');
+    ctx.fillStyle = g;
+    ctx.fillRect(-W, -H, W * 3, H * (1 + HORIZON) + 2);
+    STARS.forEach((s) => {
+      const fade = clamp((0.45 - s.y) * 1.3, 0, 1);
+      if (fade <= 0) return;
+      ctx.fillStyle = `rgba(255,255,255,${(s.a * fade).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(s.x * W, s.y * H, s.s / Math.sqrt(z), 0, Math.PI * 2);
+      ctx.fill();
+    });
+    /* the moon */
+    const mx = 0.72 * W;
+    const my = 0.2 * H;
+    const R = H * 0.06;
+    const glow = ctx.createRadialGradient(mx, my, R * 0.8, mx, my, R * 6);
+    glow.addColorStop(0, 'rgba(255,240,215,0.34)');
+    glow.addColorStop(1, 'rgba(255,240,215,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(mx - R * 6, my - R * 6, R * 12, R * 12);
+    const disc = ctx.createRadialGradient(mx - R * 0.3, my - R * 0.3, R * 0.1, mx, my, R);
+    disc.addColorStop(0, '#fffaf0');
+    disc.addColorStop(1, '#e6d8b8');
+    ctx.fillStyle = disc;
+    ctx.beginPath();
+    ctx.arc(mx, my, R, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(mx, my, R, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.fillStyle = 'rgba(120,108,98,0.26)';
+    [[-0.3, -0.25, 0.42, 0.3], [0.25, 0.1, 0.36, 0.42], [-0.1, 0.4, 0.3, 0.22]].forEach(([cx, cy, rx, ry]) => {
+      ctx.beginPath();
+      ctx.ellipse(mx + cx * R, my + cy * R, rx * R, ry * R, 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    CRATERS.forEach((c) => {
+      ctx.beginPath();
+      ctx.arc(mx + c.x * R, my + c.y * R, c.s * R, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.07)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(110,98,90,0.32)';
+      ctx.lineWidth = Math.max(0.5, R * 0.012);
+      ctx.stroke();
+    });
+    const shade = ctx.createLinearGradient(mx - R, my - R, mx + R, my + R);
+    shade.addColorStop(0, 'rgba(0,0,0,0)');
+    shade.addColorStop(1, 'rgba(30,20,50,0.38)');
+    ctx.fillStyle = shade;
+    ctx.fillRect(mx - R, my - R, R * 2, R * 2);
+    ctx.restore();
+  },
+
+  far(ctx, W, H, z) {
+    const hz = H * HORIZON;
+    ridgePath(ctx, RIDGE_BACK, W, H, hz + 2);
+    const g1 = ctx.createLinearGradient(0, H * 0.3, 0, hz);
+    g1.addColorStop(0, '#4d4f9f');
+    g1.addColorStop(1, '#2a2456');
+    ctx.fillStyle = g1;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,196,210,0.4)';
+    ctx.lineWidth = 1.2 / Math.sqrt(z);
+    ctx.beginPath();
+    for (let x = -1; x <= 2.0001; x += 0.004) (x === -1 ? ctx.moveTo(x * W, RIDGE_BACK(x) * H) : ctx.lineTo(x * W, RIDGE_BACK(x) * H));
+    ctx.stroke();
+    ridgePath(ctx, RIDGE_FRONT, W, H, hz + 2);
+    const g2 = ctx.createLinearGradient(0, H * 0.4, 0, hz);
+    g2.addColorStop(0, '#1d1d4a');
+    g2.addColorStop(1, '#3a2452');
+    ctx.fillStyle = g2;
+    ctx.fill();
+    const haze = ctx.createLinearGradient(0, hz - H * 0.12, 0, hz);
+    haze.addColorStop(0, 'rgba(255,150,130,0)');
+    haze.addColorStop(1, 'rgba(255,160,130,0.28)');
+    ctx.fillStyle = haze;
+    ctx.fillRect(-W, hz - H * 0.12, 3 * W, H * 0.12 + 1);
+  },
+
+  lake(ctx, W, H) {
+    const hz = H * HORIZON;
+    const g = ctx.createLinearGradient(0, hz, 0, H * 1.5);
+    g.addColorStop(0, '#6a3b73');
+    g.addColorStop(0.1, '#28194f');
+    g.addColorStop(1, '#050612');
+    ctx.fillStyle = g;
+    ctx.fillRect(-W, hz, 3 * W, H * 1.5);
+    for (let i = 0; i < 28; i += 1) {
+      const y = hz + i * H * 0.0125;
+      const width = H * 0.1 * (1 - i / 42) * (0.55 + 0.45 * Math.sin(i * 1.7));
+      const cx = 0.72 * W + Math.sin(i * 2.1) * H * 0.006 * (i / 5);
+      ctx.fillStyle = `rgba(255,236,204,${(0.5 * (1 - i / 30)).toFixed(3)})`;
+      ctx.fillRect(cx - width / 2, y, width, H * 0.0045);
+    }
+    const line = ctx.createLinearGradient(-W, 0, 2 * W, 0);
+    line.addColorStop(0, 'rgba(255,190,150,0)');
+    line.addColorStop(0.5, 'rgba(255,190,150,0.55)');
+    line.addColorStop(1, 'rgba(255,190,150,0)');
+    ctx.fillStyle = line;
+    ctx.fillRect(-W, hz - 1, 3 * W, 2);
+  },
+
+  lights(ctx, W, H, z) {
+    SHORE.forEach((s) => {
+      const c = s.warm ? '255,206,140' : '170,200,255';
+      const px = s.x * W;
+      const py = s.y * H;
+      const r = s.s / Math.sqrt(z);
+      ctx.fillStyle = `rgba(${c},${(0.12 * s.a).toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(px, py, r * 3.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = `rgba(${c},${s.a.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.fill();
+      if (s.a > 0.6) {
+        ctx.fillStyle = `rgba(${c},0.16)`;
+        ctx.fillRect(px - r * 0.5, py + H * 0.006, r, H * (0.015 + s.ref * 0.03));
+      }
+    });
+  },
+
+  tower(ctx, W, H) {
+    const tx = 0.27 * W;
+    const base = H * (HORIZON + 0.006);
+    ctx.beginPath();
+    ctx.moveTo(tx - H * 0.15, H * (HORIZON + 0.014));
+    ctx.quadraticCurveTo(tx, H * (HORIZON - 0.05), tx + H * 0.15, H * (HORIZON + 0.014));
+    ctx.closePath();
+    ctx.fillStyle = '#0a0a1f';
+    ctx.fill();
+    const tw = H * 0.03;
+    const tt = H * 0.019;
+    const th = H * 0.16;
+    const body = ctx.createLinearGradient(tx - tw, 0, tx + tw, 0);
+    body.addColorStop(0, '#5b4a7e');
+    body.addColorStop(0.5, '#d7c6dc');
+    body.addColorStop(1, '#2e2550');
+    ctx.fillStyle = body;
+    ctx.beginPath();
+    ctx.moveTo(tx - tw / 2, base);
+    ctx.lineTo(tx + tw / 2, base);
+    ctx.lineTo(tx + tt / 2, base - th);
+    ctx.lineTo(tx - tt / 2, base - th);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = 'rgba(150,40,60,0.75)';
+    [0.22, 0.52].forEach((f) => {
+      const yy = base - th * (f + 0.14);
+      const hh = th * 0.14;
+      const wl = lerp(tw, tt, f + 0.14) / 2;
+      const wh = lerp(tw, tt, f) / 2;
+      ctx.beginPath();
+      ctx.moveTo(tx - wh, yy + hh);
+      ctx.lineTo(tx + wh, yy + hh);
+      ctx.lineTo(tx + wl, yy);
+      ctx.lineTo(tx - wl, yy);
+      ctx.closePath();
+      ctx.fill();
+    });
+    const ly = base - th - H * 0.016;
+    [1, -1].forEach((dir) => {
+      const beam = ctx.createLinearGradient(tx, 0, tx + dir * W * 0.55, 0);
+      beam.addColorStop(0, 'rgba(255,238,178,0.34)');
+      beam.addColorStop(1, 'rgba(255,238,178,0)');
+      ctx.fillStyle = beam;
+      ctx.beginPath();
+      ctx.moveTo(tx, ly + H * 0.008);
+      ctx.lineTo(tx + dir * W * 0.55, ly - H * 0.06);
+      ctx.lineTo(tx + dir * W * 0.55, ly + H * 0.07);
+      ctx.closePath();
+      ctx.fill();
+    });
+    const halo = ctx.createRadialGradient(tx, ly + H * 0.008, 0, tx, ly + H * 0.008, H * 0.09);
+    halo.addColorStop(0, 'rgba(255,240,190,0.75)');
+    halo.addColorStop(1, 'rgba(255,240,190,0)');
+    ctx.fillStyle = halo;
+    ctx.fillRect(tx - H * 0.1, ly - H * 0.09, H * 0.2, H * 0.2);
+    ctx.fillStyle = '#fff1b8';
+    ctx.fillRect(tx - tt * 0.5, ly, tt, H * 0.016);
+    ctx.fillStyle = '#1a1230';
+    ctx.beginPath();
+    ctx.moveTo(tx - tt * 0.75, ly);
+    ctx.lineTo(tx + tt * 0.75, ly);
+    ctx.lineTo(tx, ly - H * 0.02);
+    ctx.closePath();
+    ctx.fill();
+    const refl = ctx.createLinearGradient(0, base, 0, base + H * 0.14);
+    refl.addColorStop(0, 'rgba(255,230,170,0.45)');
+    refl.addColorStop(1, 'rgba(255,230,170,0)');
+    ctx.fillStyle = refl;
+    ctx.fillRect(tx - H * 0.005, base + H * 0.01, H * 0.01, H * 0.14);
+  },
+
+  near(ctx, W, H, z) {
+    ctx.beginPath();
+    ctx.moveTo(-W, 2 * H);
+    for (let x = -1; x <= 1.4; x += 0.01) ctx.lineTo(x * W, cliffY(x) * H);
+    ctx.lineTo(1.4 * W, 2 * H);
+    ctx.closePath();
+    ctx.fillStyle = '#03030a';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,150,140,0.28)';
+    ctx.lineWidth = 1.2 / Math.sqrt(z);
+    ctx.beginPath();
+    for (let x = -1; x <= 1.4; x += 0.01) (x === -1 ? ctx.moveTo(x * W, cliffY(x) * H) : ctx.lineTo(x * W, cliffY(x) * H));
+    ctx.stroke();
+    ctx.strokeStyle = '#04040b';
+    GRASS.forEach((g) => {
+      const y = cliffY(g.x) * H;
+      ctx.lineWidth = g.w;
+      ctx.beginPath();
+      ctx.moveTo(g.x * W, y + 2);
+      ctx.quadraticCurveTo(g.x * W + g.lean * W * 0.4, y - g.l * H * 0.6, g.x * W + g.lean * W, y - g.l * H);
+      ctx.stroke();
+    });
+    const tx = 0.1 * W;
+    const ty = cliffY(0.1) * H;
+    ctx.fillStyle = '#03030a';
+    ctx.fillRect(tx - H * 0.004, ty - H * 0.03, H * 0.008, H * 0.04);
+    [[0.11, 0.06], [0.085, 0.055], [0.06, 0.05], [0.036, 0.045]].forEach(([hw, hh], i) => {
+      const yy = ty - H * (0.03 + i * 0.038);
+      ctx.beginPath();
+      ctx.moveTo(tx - H * hw * 0.5, yy);
+      ctx.lineTo(tx + H * hw * 0.5, yy);
+      ctx.lineTo(tx, yy - H * hh);
+      ctx.closePath();
+      ctx.fill();
+    });
+    const fx = 0.33 * W;
+    const fy = cliffY(0.33) * H;
+    ctx.beginPath();
+    ctx.arc(fx, fy - H * 0.068, H * 0.0085, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(fx - H * 0.012, fy + 2);
+    ctx.lineTo(fx - H * 0.009, fy - H * 0.055);
+    ctx.lineTo(fx + H * 0.009, fy - H * 0.055);
+    ctx.lineTo(fx + H * 0.012, fy + 2);
+    ctx.closePath();
+    ctx.fill();
+  },
+};
+
+const CAM_TARGETS = [
+  { id: 'moon', label: 'Moon', ax: 0.72, ay: 0.2, focus: 'far', z: 10 },
+  { id: 'lighthouse', label: 'Lighthouse', ax: 0.27, ay: 0.5, focus: 'mid', z: 4 },
+  { id: 'shore', label: 'Shoreline', ax: 0.62, ay: 0.61, focus: 'mid', z: 4 },
+  { id: 'cliff', label: 'Cliff', ax: 0.22, ay: 0.82, focus: 'near', z: 2 },
+];
+const ZOOM_STOPS = [0.5, 1, 2, 4, 10];
+const zToSlider = (z) => Math.round((Math.log(z / 0.5) / Math.log(20)) * 1000);
+const sliderToZ = (s) => 0.5 * Math.pow(20, s / 1000);
+
+function lensInfo(z) {
+  const mm = Math.round(24 * z);
+  if (z < 0.95) return { name: 'Ultra Wide', sub: '48 MP · 0.5×', ap: 'ƒ/2.2', mm, kind: 'Optical' };
+  if (z < 1.95) return { name: 'Fusion', sub: '48 MP · main', ap: 'ƒ/1.6', mm, kind: 'Optical' };
+  if (z < 3.95) return { name: 'Fusion crop', sub: '48 MP · sensor crop', ap: 'ƒ/1.6', mm, kind: 'Optical quality' };
+  return { name: 'Tetraprism', sub: '48 MP · variable periscope', ap: `ƒ/${lerp(2.8, 3.4, clamp((z - 4) / 6, 0, 1)).toFixed(1)}`, mm, kind: 'Optical' };
+}
+
+const GRAIN_URL = (() => {
+  try {
+    const c = document.createElement('canvas');
+    c.width = 128;
+    c.height = 128;
+    const x = c.getContext('2d');
+    const d = x.createImageData(128, 128);
+    for (let i = 0; i < d.data.length; i += 4) {
+      const v = Math.random() * 255;
+      d.data[i] = v;
+      d.data[i + 1] = v;
+      d.data[i + 2] = v;
+      d.data[i + 3] = 255;
+    }
+    x.putImageData(d, 0, 0);
+    return c.toDataURL();
+  } catch (e) {
+    return '';
+  }
+})();
+
+function Tetraprism({ z }) {
+  const t = clamp((z - 4) / 6, 0, 1);
+  const active = z >= 3.95;
+  const lx = lerp(150, 246, t);
+  const ys = [154, 162, 170];
+  return (
+    <svg className={`prism ${active ? 'is-active' : ''}`} viewBox="0 0 360 214" role="img" aria-label="Light path through the Tetraprism periscope">
+      <defs>
+        <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#ffffff" stopOpacity="0.5" />
+          <stop offset="1" stopColor="#9db4ff" stopOpacity="0.14" />
+        </linearGradient>
+      </defs>
+      <g className="rays">
+        {[34, 42, 50].map((y) => <line key={`i${y}`} x1="8" y1={y} x2={y + 58} y2={y} />)}
+        {[92, 100, 108].map((x, i) => <line key={`d${x}`} x1={x} y1={x - 58} x2={x} y2={x + 62} />)}
+        {ys.map((y) => <line key={`h${y}`} x1={y - 62} y1={y} x2={lx} y2={y} />)}
+        {ys.map((y, i) => <line key={`c${y}`} x1={lx + 34} y1={y} x2="322" y2="162" />)}
+      </g>
+      <polygon className="glass" points="74,16 114,56 74,56" fill="url(#glass)" />
+      <polygon className="glass" points="74,136 118,136 118,180" fill="url(#glass)" />
+      <line className="mirror" x1="74" y1="16" x2="114" y2="56" />
+      <line className="mirror" x1="74" y1="136" x2="118" y2="180" />
+      <line className="lens-track" x1="132" y1="200" x2="300" y2="200" />
+      <g className="group" style={{ transform: `translateX(${lx - 150}px)` }}>
+        {[150, 164, 178].map((x, i) => <ellipse key={x} cx={x} cy="162" rx={i === 1 ? 5 : 4} ry="28" />)}
+        <rect x="146" y="194" width="40" height="10" rx="3" className="carriage" />
+      </g>
+      <rect className="sensor" x="322" y="140" width="10" height="44" rx="2" />
+      <text x="70" y="10" className="lbl">PRISM</text>
+      <text x="70" y="128" className="lbl">PRISM</text>
+      <text x="216" y="118" className="lbl" textAnchor="middle">LENS GROUP · {fmt(lerp(0, 22, t), 1)} mm travel</text>
+      <text x="322" y="204" className="lbl" textAnchor="middle">SENSOR</text>
+    </svg>
+  );
+}
+
+function CameraSection() {
+  const [target, setTarget] = useState({ z: 1, ax: 0.5, ay: 0.5 });
+  const [focus, setFocus] = useState('mid');
+  const [studio, setStudio] = useState(true);
+  const [zShown, setZShown] = useState(1);
+  const [ring, setRing] = useState(null);
+  const vfRef = useRef(null);
+  const layerRefs = useRef({});
+  const anim = useRef({ z: 1, ax: 0.5, ay: 0.5, dirty: true });
+  const zShownRef = useRef(1);
+  const targetRef = useRef(target);
+  const size = useElementSize(vfRef);
+  const onScreen = useOnScreen(vfRef);
+  targetRef.current = target;
+
+  useEffect(() => { anim.current.dirty = true; }, [size.w, size.h]);
+
+  const drawAll = () => {
+    const { z, ax, ay } = anim.current;
+    CAM_LAYERS.forEach((l) => {
+      const canvas = layerRefs.current[l.id];
+      if (!canvas || !canvas.clientWidth) return;
+      const { ctx, w, h, dpr } = fitCanvas(canvas);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.setTransform(dpr * z, 0, 0, dpr * z, dpr * ax * w * (1 - z), dpr * ay * h * (1 - z));
+      LAYER_DRAW[l.id](ctx, w, h, z);
+    });
+  };
+
+  useRaf(() => {
+    const a = anim.current;
+    const tg = targetRef.current;
+    const still = reducedMotion();
+    const k = still ? 1 : 0.13;
+    const nz = Math.abs(tg.z - a.z) < 0.002 ? tg.z : lerp(a.z, tg.z, k);
+    const nax = Math.abs(tg.ax - a.ax) < 0.0005 ? tg.ax : lerp(a.ax, tg.ax, k);
+    const nay = Math.abs(tg.ay - a.ay) < 0.0005 ? tg.ay : lerp(a.ay, tg.ay, k);
+    const moved = nz !== a.z || nax !== a.ax || nay !== a.ay;
+    a.z = nz;
+    a.ax = nax;
+    a.ay = nay;
+    if (moved || a.dirty) {
+      a.dirty = false;
+      drawAll();
+      if (Math.abs(nz - zShownRef.current) > 0.004) {
+        zShownRef.current = nz;
+        setZShown(nz);
+      }
+    }
+  }, onScreen);
+
+  const dof = 0.5 + Math.min(zShown, 10) * 0.12;
+  const info = lensInfo(zShown);
+  const activeStop = ZOOM_STOPS.reduce((acc, s) => (zShown >= s - 0.05 ? s : acc), ZOOM_STOPS[0]);
+
+  const setZoom = (z) => setTarget((t) => ({ ...t, z }));
+  const aimAt = (tg) => {
+    setTarget({ z: tg.z, ax: tg.ax, ay: tg.ay });
+    setFocus(tg.focus);
+  };
+  const onTap = (e) => {
+    const r = vfRef.current.getBoundingClientRect();
+    const nx = clamp((e.clientX - r.left) / r.width, 0, 1);
+    const ny = clamp((e.clientY - r.top) / r.height, 0, 1);
+    const f = ny > 0.8 ? 'near' : ny > 0.5 ? 'mid' : 'far';
+    setFocus(f);
+    setRing({ x: nx * 100, y: ny * 100, id: Date.now() });
+  };
+
+  const sliderVal = zToSlider(clamp(target.z, 0.5, 10));
+
+  return (
+    <section id="camera" className="section camera" data-section>
+      <div className="wrap">
+        <SectionHead
+          align="center"
+          eyebrow="Tetraprism · Spatial Cinematic Studio"
+          title={<>Ten times closer.<br />Nothing lost on the way.</>}
+          lead="A prism folds the light path, a four-element lens group glides along it, and the reach becomes continuous from 4× to 10× optical. Drag the zoom, aim at something, tap to pull focus."
+        />
+        <div className="cam-grid">
+          <Reveal className="cam-main">
+            <div
+              ref={vfRef}
+              className={`vf ${studio ? 'is-studio' : ''}`}
+              onPointerDown={onTap}
+              role="img"
+              aria-label="Camera viewfinder showing a lighthouse at dusk. Tap to focus."
+            >
+              <div className="vf-scene">
+                {CAM_LAYERS.map((l) => {
+                  const blur = studio ? clamp(Math.abs(l.depth - FOCUS_DEPTH[focus]) * 17 * dof, 0, 13) : 0;
+                  return (
+                    <canvas
+                      key={l.id}
+                      ref={(el) => { layerRefs.current[l.id] = el; }}
+                      className="vf-layer"
+                      style={{ filter: blur > 0.2 ? `blur(${blur.toFixed(1)}px)` : 'none' }}
+                    />
+                  );
+                })}
+              </div>
+              <div className="vf-vignette" />
+              <div className="vf-grain" style={{ backgroundImage: GRAIN_URL ? `url(${GRAIN_URL})` : 'none' }} />
+              <span className="vf-bar vf-bar-top" />
+              <span className="vf-bar vf-bar-bottom" />
+              <div className="vf-hud vf-hud-tl">
+                <span className="rec"><i />{studio ? 'CINEMATIC 4K 120 · SPATIAL' : 'PHOTO · 48 MP'}</span>
+              </div>
+              <div className="vf-hud vf-hud-tr">
+                <span className="zoom-badge">{fmt(zShown, zShown < 10 ? 1 : 0)}×</span>
+              </div>
+              <div className="vf-hud vf-hud-bl">
+                <span className="focus-tag"><Focus size={13} />{FOCUS_LABEL[focus]}</span>
+                <span className="focus-tag">{info.mm} mm · {info.ap}</span>
+              </div>
+              <div className="vf-stops" onPointerDown={(e) => e.stopPropagation()}>
+                {ZOOM_STOPS.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    className={`vf-stop ${activeStop === s ? 'is-on' : ''}`}
+                    onClick={() => setZoom(s)}
+                    aria-label={`Zoom ${s}×`}
+                  >
+                    {s === 0.5 ? '.5' : s}
+                  </button>
+                ))}
+              </div>
+              <AnimatePresence>
+                {ring ? (
+                  <motion.span
+                    key={ring.id}
+                    className="vf-focus"
+                    style={{ left: `${ring.x}%`, top: `${ring.y}%` }}
+                    initial={{ opacity: 0, scale: 1.7 }}
+                    animate={{ opacity: [0, 1, 1, 0], scale: [1.7, 1, 1, 0.94] }}
+                    transition={{ duration: 1.3, times: [0, 0.18, 0.78, 1] }}
+                    exit={{ opacity: 0 }}
+                  />
+                ) : null}
+              </AnimatePresence>
+            </div>
+
+            <div className="zoom-control">
+              <div className="zoom-head">
+                <label htmlFor="zoom-slider" className="eyebrow">Zoom</label>
+                <span className="zoom-read">{fmt(zShown, zShown < 10 ? 1 : 0)}× <em>{info.name}</em></span>
+              </div>
+              <div className="zoom-track">
+                <input
+                  id="zoom-slider"
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="1"
+                  value={sliderVal}
+                  style={{ '--p': `${sliderVal / 10}%` }}
+                  onChange={(e) => setZoom(sliderToZ(Number(e.target.value)))}
+                  aria-valuetext={`${fmt(target.z, 1)} times`}
+                />
+                <div className="zoom-ticks" aria-hidden="true">
+                  {ZOOM_STOPS.map((s) => (
+                    <span key={s} style={{ left: `${zToSlider(s) / 10}%` }}>{s === 0.5 ? '0.5×' : `${s}×`}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="cam-actions">
+              <div className="cam-targets" role="group" aria-label="Aim at">
+                <span className="eyebrow"><Crosshair size={13} /> Aim at</span>
+                {CAM_TARGETS.map((tg) => (
+                  <Tactile key={tg.id} className="tab-chip" onClick={() => aimAt(tg)}>{tg.label}</Tactile>
+                ))}
+                <Tactile className="tab-chip" onClick={() => setTarget({ z: 1, ax: 0.5, ay: 0.5 })}>Reset</Tactile>
+              </div>
+              <Tactile
+                className={`toggle ${studio ? 'is-on' : ''}`}
+                role="switch"
+                aria-checked={studio}
+                onClick={() => setStudio((s) => !s)}
+              >
+                <Film size={16} />
+                <span>Spatial Cinematic Studio</span>
+                <i className="toggle-knob" />
+              </Tactile>
+            </div>
+          </Reveal>
+
+          <Reveal className="cam-side" delay={0.1}>
+            <div className="card prism-card">
+              <div className="card-head">
+                <span className="eyebrow"><Aperture size={13} /> Light path</span>
+                <span className={`status ${zShown >= 3.95 ? 'is-live' : ''}`}>{zShown >= 3.95 ? 'Periscope active' : 'Idle below 4×'}</span>
+              </div>
+              <Tetraprism z={zShown} />
+            </div>
+            <div className="card lens-card">
+              <div className="lens-row"><span>Module</span><b>{info.name}</b></div>
+              <div className="lens-row"><span>Sensor</span><b>{info.sub}</b></div>
+              <div className="lens-row"><span>Equivalent</span><b>{info.mm} mm</b></div>
+              <div className="lens-row"><span>Aperture</span><b>{info.ap}</b></div>
+              <div className="lens-row"><span>Zoom type</span><b>{info.kind}</b></div>
+              <p className="lens-note">
+                {studio
+                  ? 'Studio is on. Depth from the LiDAR scanner and the Neural Engine separates foreground, middle ground and distance, so focus can move after you shoot.'
+                  : 'Studio is off. Everything is in focus, the way a small sensor sees the world. Turn it on for cinematic depth.'}
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+/* ==========================================================================
+   DISPLAY — micro-island, 1–144 Hz adaptive refresh, 3,500 nit brightness
+   ========================================================================== */
+const ISLAND_SIZE = {
+  idle: { w: 92, h: 28 },
+  scan: { w: 178, h: 48 },
+  ok: { w: 178, h: 48 },
+  call: { w: 288, h: 68 },
+  timer: { w: 212, h: 48 },
+  music: { w: 304, h: 90 },
+};
+
+const APP_ICONS = [
+  ['#5b7bff', '#2a3fb8'], ['#3ddc97', '#128a5c'], ['#ffb340', '#c26a00'], ['#ff5d73', '#a3162f'],
+  ['#8b6bff', '#4a2bb8'], ['#3fc8ff', '#0a6aa0'], ['#f5f5f7', '#8d8e96'], ['#ff8a4c', '#b83c00'],
+  ['#2fe0d0', '#0b7d74'], ['#ff7fa6', '#a02a55'], ['#c8d64a', '#6b7a0a'], ['#7f8cff', '#2d3690'],
+];
+
+function Bars({ n = 5 }) {
+  return (
+    <span className="eq" aria-hidden="true">
+      {Array.from({ length: n }, (_, i) => <i key={i} style={{ animationDelay: `${i * 0.14}s` }} />)}
+    </span>
+  );
+}
+
+function IslandDemo() {
+  const [mode, setMode] = useState('idle');
+  const [locked, setLocked] = useState(true);
+  const [sec, setSec] = useState(300);
+  const timers = useRef([]);
+  const later = (fn, ms) => { timers.current.push(setTimeout(fn, ms)); };
+  const clearAll = () => { timers.current.forEach(clearTimeout); timers.current = []; };
+  useEffect(() => clearAll, []);
+
+  useEffect(() => {
+    if (mode !== 'timer') return undefined;
+    const id = setInterval(() => setSec((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => clearInterval(id);
+  }, [mode]);
+
+  const go = (kind) => {
+    clearAll();
+    if (kind === 'unlock') {
+      setLocked(true);
+      setMode('scan');
+      later(() => { setMode('ok'); setLocked(false); }, 1200);
+      later(() => setMode('idle'), 2300);
+    } else if (kind === 'lock') {
+      setLocked(true);
+      setMode('idle');
+    } else {
+      if (kind === 'timer') setSec(300);
+      setMode(kind);
+    }
+  };
+
+  const size = ISLAND_SIZE[mode];
+  const mm = String(Math.floor(sec / 60)).padStart(1, '0');
+  const ss = String(sec % 60).padStart(2, '0');
+
+  const content = {
+    idle: null,
+    scan: (
+      <span className="isl-row">
+        <span className="scan-ring"><ScanFace size={22} /></span>
+        <span className="isl-text"><b>Face ID</b><small>Looking for you</small></span>
+      </span>
+    ),
+    ok: (
+      <span className="isl-row">
+        <span className="ok-ring"><Check size={20} strokeWidth={3} /></span>
+        <span className="isl-text"><b>Unlocked</b><small>Sensors sit under the pixels</small></span>
+      </span>
+    ),
+    call: (
+      <span className="isl-row isl-call">
+        <span className="avatar">M</span>
+        <span className="isl-text"><b>Maya Okafor</b><small>iPhone · incoming</small></span>
+        <span className="call-btns">
+          <span className="cb cb-no"><PhoneIcon size={15} /></span>
+          <span className="cb cb-yes"><PhoneIcon size={15} /></span>
+        </span>
+      </span>
+    ),
+    timer: (
+      <span className="isl-row">
+        <span className="timer-ico"><Timer size={20} /></span>
+        <span className="isl-text"><b className="mono">{mm}:{ss}</b><small>Pasta</small></span>
+      </span>
+    ),
+    music: (
+      <span className="isl-row isl-music">
+        <span className="art" />
+        <span className="isl-text"><b>Nightcall</b><small>Kavinsky</small></span>
+        <Bars n={5} />
+      </span>
+    ),
+  };
+
+  return (
+    <div className="card island-card">
+      <div className="card-head">
+        <span className="eyebrow"><ScanFace size={13} /> Micro-island</span>
+        <span className="status is-live">Face ID under the glass</span>
+      </div>
+      <h3 className="card-title">The camera is still there. You just cannot see it.</h3>
+      <div className="mini-wrap">
+        <div className="mini-screen">
+          <div className="wall wall-mini">
+            <div className="wall-blob wall-blob-a" />
+            <div className="wall-blob wall-blob-b" />
+          </div>
+          <div className="mini-status">
+            <span>9:41</span>
+            <span className="mini-status-r"><Activity size={12} /><BatteryFull size={14} /></span>
+          </div>
+          <motion.div
+            className="mi-island"
+            initial={false}
+            animate={{ width: size.w, height: size.h, borderRadius: size.h / 2 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 24, mass: 0.8 }}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={mode}
+                className="mi-content"
+                initial={{ opacity: 0, scale: 0.86 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.16 }}
+              >
+                {content[mode]}
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+          <AnimatePresence mode="wait" initial={false}>
+            {locked ? (
+              <motion.div
+                key="locked"
+                className="mini-lock"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Lock size={16} />
+                <b>9:41</b>
+                <span>Look at iPhone to unlock</span>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="home"
+                className="mini-home"
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.04 }}
+                transition={{ duration: 0.35 }}
+              >
+                {APP_ICONS.map(([a, b], i) => (
+                  <motion.i
+                    key={a}
+                    style={{ background: `linear-gradient(145deg, ${a}, ${b})` }}
+                    initial={{ scale: 0.4, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: 'spring', stiffness: 360, damping: 16, delay: 0.03 * i }}
+                  />
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <div className="mini-glare" />
+        </div>
+      </div>
+      <div className="chip-row">
+        <Tactile className="tab-chip" onClick={() => go('unlock')}><LockOpen size={14} /> Unlock</Tactile>
+        <Tactile className="tab-chip" onClick={() => go('lock')}><Lock size={14} /> Lock</Tactile>
+        <Tactile className="tab-chip" onClick={() => go('call')}><PhoneIcon size={14} /> Call</Tactile>
+        <Tactile className="tab-chip" onClick={() => go('timer')}><Timer size={14} /> Timer</Tactile>
+        <Tactile className="tab-chip" onClick={() => go('music')}><Music size={14} /> Music</Tactile>
+      </div>
+    </div>
+  );
+}
+
+const REFRESH_SCENES = [
+  { id: 'aod', label: 'Always-on', hz: 1, note: 'Lock screen at rest. The panel refreshes once a second.' },
+  { id: 'read', label: 'Reading', hz: 10, note: 'Slow text and a still page need very little.' },
+  { id: 'film', label: 'Film', hz: 24, note: 'Matches the cadence of the movie, so pans stay smooth.' },
+  { id: 'scroll', label: 'Scrolling', hz: 144, note: 'Full speed the instant a fingertip touches the glass.' },
+];
+
+function RefreshDemo({ tint }) {
+  const [scene, setScene] = useState('scroll');
+  const [stats, setStats] = useState({ hz: 144, frames: 0, mw: 0 });
+  const boxRef = useRef(null);
+  const chartRef = useRef(null);
+  const railRef = useRef(null);
+  const ballRef = useRef(null);
+  const onScreen = useOnScreen(boxRef);
+  const sim = useRef({ cur: 144, acc: 0, x: 0, frames: 0, hist: [], lastPush: 0, lastStat: 0 });
+  const sceneRef = useRef(scene);
+  const tintRef = useRef(tint);
+  sceneRef.current = scene;
+  tintRef.current = tint;
+
+  useRaf((t, dt) => {
+    const s = sim.current;
+    const target = REFRESH_SCENES.find((k) => k.id === sceneRef.current).hz;
+    s.cur += (target - s.cur) * Math.min(1, dt * 5);
+    if (Math.abs(target - s.cur) < 0.05) s.cur = target;
+    const interval = 1 / Math.max(1, s.cur);
+    s.acc += dt;
+    const n = Math.floor(s.acc / interval);
+    const rail = railRef.current;
+    if (n > 0 && rail) {
+      s.acc -= n * interval;
+      s.frames += n;
+      const span = Math.max(1, rail.clientWidth - 30);
+      s.x = (s.x + span * 0.6 * interval * n) % (span * 2);
+      const px = s.x < span ? s.x : span * 2 - s.x;
+      if (ballRef.current) ballRef.current.style.transform = `translate3d(${px.toFixed(1)}px,0,0)`;
+    }
+    if (t - s.lastPush > 0.05) {
+      s.lastPush = t;
+      s.hist.push({ t, hz: s.cur });
+      while (s.hist.length && t - s.hist[0].t > 8) s.hist.shift();
+    }
+    const canvas = chartRef.current;
+    if (canvas) {
+      const { ctx, w, h } = fitCanvas(canvas);
+      ctx.clearRect(0, 0, w, h);
+      const padL = 34;
+      const padB = 16;
+      const cw = w - padL - 6;
+      const ch = h - padB - 6;
+      const yOf = (hz) => 6 + ch - (hz / 144) * ch;
+      ctx.font = '500 10px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textBaseline = 'middle';
+      [1, 24, 60, 120, 144].forEach((g) => {
+        ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(padL, yOf(g));
+        ctx.lineTo(padL + cw, yOf(g));
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(235,238,250,0.5)';
+        ctx.textAlign = 'right';
+        ctx.fillText(String(g), padL - 6, yOf(g));
+      });
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = 'rgba(235,238,250,0.4)';
+      ctx.fillText('−8 s', padL, h - 3);
+      ctx.textAlign = 'right';
+      ctx.fillText('now', padL + cw, h - 3);
+      if (s.hist.length > 1) {
+        const tc = tintRef.current;
+        const pts = s.hist.map((p) => [padL + ((p.t - (t - 8)) / 8) * cw, yOf(p.hz)]);
+        ctx.beginPath();
+        pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+        ctx.lineTo(pts[pts.length - 1][0], 6 + ch);
+        ctx.lineTo(pts[0][0], 6 + ch);
+        ctx.closePath();
+        const fillG = ctx.createLinearGradient(0, 6, 0, 6 + ch);
+        fillG.addColorStop(0, rgba(tc, 0.35));
+        fillG.addColorStop(1, rgba(tc, 0));
+        ctx.fillStyle = fillG;
+        ctx.fill();
+        ctx.beginPath();
+        pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+        ctx.strokeStyle = rgba(mixRgb(tc, [255, 255, 255], 0.35), 1);
+        ctx.lineWidth = 2;
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        const [ex, ey] = pts[pts.length - 1];
+        ctx.beginPath();
+        ctx.arc(ex, ey, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff';
+        ctx.shadowColor = rgba(tc, 1);
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+    if (t - s.lastStat > 0.2) {
+      s.lastStat = t;
+      setStats({ hz: s.cur, frames: s.frames, mw: 42 + s.cur * 3.1 });
+    }
+  }, onScreen);
+
+  const sc = REFRESH_SCENES.find((k) => k.id === scene);
+
+  return (
+    <div className="card refresh-card" ref={boxRef}>
+      <div className="card-head">
+        <span className="eyebrow"><Gauge size={13} /> ProMotion · 1–144 Hz</span>
+        <span className="status is-live">{fmt(stats.hz, stats.hz < 10 ? 1 : 0)} Hz</span>
+      </div>
+      <h3 className="card-title">Exactly as fast as the moment needs.</h3>
+      <div className="rail" ref={railRef}>
+        <span className="ball" ref={ballRef} />
+      </div>
+      <p className="rail-label">A ball crossing the panel at {fmt(stats.hz, stats.hz < 10 ? 1 : 0)} frames per second</p>
+      <canvas ref={chartRef} className="hz-chart" aria-label="Refresh rate over the last eight seconds" />
+      <div className="chip-row">
+        {REFRESH_SCENES.map((k) => (
+          <Tactile
+            key={k.id}
+            className={`tab-chip ${scene === k.id ? 'is-on' : ''}`}
+            onClick={() => setScene(k.id)}
+            aria-pressed={scene === k.id}
+          >
+            {k.label} <em>{k.hz} Hz</em>
+          </Tactile>
+        ))}
+      </div>
+      <p className="note">{sc.note} Panel draw: <b className="mono">{fmt(stats.mw, 0)} mW</b>.</p>
+    </div>
+  );
+}
+
+function BrightnessDemo() {
+  const [v, setV] = useState(86);
+  const [sun, setSun] = useState(true);
+  const nits = Math.round(2 * Math.pow(1750, v / 100));
+  const ambient = sun ? 2600 : 60;
+  const glare = clamp((ambient / (ambient + nits * 1.15)) * 0.94, 0, 0.94);
+  const legible = Math.round((1 - glare) * 100);
+  const label = legible > 66 ? 'Crisp' : legible > 38 ? 'Readable' : 'Washed out';
+  const level = clamp(0.28 + (nits / 3500) * 0.9, 0.28, 1.18);
+
+  return (
+    <div className="card bright-card">
+      <div className="card-head">
+        <span className="eyebrow"><Sun size={13} /> Quantum OLED · 3,500 nits</span>
+        <span className="status is-live">{fmt(nits)} nits</span>
+      </div>
+      <h3 className="card-title">Legible in direct sun.</h3>
+      <div className={`bright-scene ${sun ? 'is-sun' : 'is-room'}`}>
+        <span className="sun-disc" />
+        <div className="bright-phone">
+          <div className="bright-screen" style={{ filter: `brightness(${level})` }}>
+            <div className="bs-photo" />
+            <div className="bs-lines"><i /><i /><i /></div>
+            <span className={`hdr ${nits > 2400 ? 'is-on' : ''}`}>HDR</span>
+          </div>
+          <div className="bright-glare" style={{ opacity: glare }} />
+        </div>
+      </div>
+      <div className="bright-controls">
+        <div className="bright-slider">
+          <label htmlFor="nits-slider" className="eyebrow">Brightness</label>
+          <input
+            id="nits-slider"
+            type="range"
+            min="0"
+            max="100"
+            value={v}
+            style={{ '--p': `${v}%` }}
+            onChange={(e) => setV(Number(e.target.value))}
+          />
+        </div>
+        <Tactile className={`toggle ${sun ? 'is-on' : ''}`} role="switch" aria-checked={sun} onClick={() => setSun((s) => !s)}>
+          <Sun size={16} /><span>Direct sunlight</span><i className="toggle-knob" />
+        </Tactile>
+      </div>
+      <div className="meter" aria-hidden="true"><i style={{ width: `${legible}%` }} /></div>
+      <p className="note">Legibility <b>{label}</b> · {legible}%. {sun ? 'Outdoors the glass reflects about 2,600 nits of sky.' : 'Indoors, most people never need more than 500.'}</p>
+    </div>
+  );
+}
+
+function DisplaySection({ tint }) {
+  return (
+    <section id="display" className="section display" data-section>
+      <div className="wrap">
+        <SectionHead
+          eyebrow="Quantum OLED · micro-island"
+          title={<>Alive from 1 to 144 Hz.<br />Bright to 3,500 nits.</>}
+          lead="The panel adapts to what you are doing, second by second. The sensors that used to sit in a cutout now live underneath it."
+        />
+        <div className="disp-grid">
+          <Reveal className="disp-a"><IslandDemo /></Reveal>
+          <div className="disp-b">
+            <Reveal delay={0.08}><RefreshDemo tint={tint} /></Reveal>
+            <Reveal delay={0.14}><BrightnessDemo /></Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+/* ==========================================================================
+   MATERIALS · COMPARE
+   ========================================================================== */
+const MATERIALS = [
+  {
+    icon: Gem,
+    title: 'Grade 5 forged titanium',
+    tag: 'Pro and Pro Max',
+    body: 'Ti-6Al-4V, hot-forged and polished to a mirror edge. The strongest alloy ever used in an iPhone, at roughly half the weight of steel.',
+    facts: [['Alloy', 'Ti-6Al-4V'], ['Process', 'Hot forged'], ['Finish', 'Mirror polish']],
+  },
+  {
+    icon: Shield,
+    title: 'Ceramic Shield 3.0',
+    tag: 'Every model',
+    body: 'Nano-ceramic crystals grown inside the glass itself, on the front and the back. Tougher against drops and scratches than any smartphone glass we have made.',
+    facts: [['Drop resistance', 'Up to 4×'], ['Coverage', 'Front and back'], ['Coating', 'Anti-reflective']],
+  },
+  {
+    icon: Feather,
+    title: 'Aerospace aluminum',
+    tag: 'iPhone 18 and 18 Slim',
+    body: 'Series 7000 alloy, machined from a single block into a profile that slips through air and pockets alike. Just 5.6 mm where it is slimmest.',
+    facts: [['Alloy', 'Series 7000'], ['Process', 'Single block'], ['Slim depth', '5.6 mm']],
+  },
+];
+
+function MaterialCard({ m, i }) {
+  const Ico = m.icon;
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
+  return (
+    <Reveal delay={i * 0.08}>
+      <motion.article
+        className="mat"
+        onPointerMove={onMove}
+        whileHover={{ y: -6 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      >
+        <span className="mat-spot" aria-hidden="true" />
+        <div className="mat-top">
+          <span className="mat-ico"><Ico size={22} /></span>
+          <span className="pill pill-quiet">{m.tag}</span>
+        </div>
+        <h3>{m.title}</h3>
+        <p>{m.body}</p>
+        <dl className="mat-facts">
+          {m.facts.map(([k, v]) => (
+            <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+          ))}
+        </dl>
+      </motion.article>
+    </Reveal>
+  );
+}
+
+function MaterialsSection() {
+  return (
+    <section id="materials" className="section materials" data-section>
+      <div className="wrap">
+        <SectionHead
+          eyebrow="Materials"
+          title={<>Made from things<br />that last.</>}
+          lead="Three materials, each chosen for what it does best. Hover a card and the light follows you."
+        />
+        <div className="mat-grid">
+          {MATERIALS.map((m, i) => <MaterialCard key={m.title} m={m} i={i} />)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const MATRIX = [
+  ['Display', ['6.9″', '6.3″', '6.1″', '6.6″']],
+  ['Refresh rate', ['1–144 Hz', '1–144 Hz', '1–120 Hz', '1–120 Hz']],
+  ['Peak brightness', ['3,500 nits', '3,500 nits', '2,000 nits', '2,000 nits']],
+  ['Chip', ['A20 Pro', 'A20 Pro', 'A20', 'A20']],
+  ['Optical zoom', ['10×', '10×', '2×', '2×']],
+  ['Rear cameras', ['3', '3', '2', '1']],
+  ['Face ID', ['Under display', 'Under display', 'Micro-island', 'Micro-island']],
+  ['Body', ['Titanium', 'Titanium', 'Aluminum', 'Aluminum']],
+  ['Thickness', ['8.3 mm', '8.0 mm', '7.4 mm', '5.6 mm']],
+  ['Weight', ['231 g', '199 g', '172 g', '146 g']],
+];
+
+function CompareSection({ model, setModelId, finishIdx, setFinishIdx }) {
+  const finish = model.finishes[finishIdx];
+  const col = MODELS.findIndex((m) => m.id === model.id);
+  return (
+    <section id="compare" className="section compare" data-section>
+      <div className="wrap">
+        <SectionHead
+          align="center"
+          eyebrow="The lineup"
+          title={<>Four ways to hold<br />the future.</>}
+          lead="Switch models and everything on this page follows: the phone, the finishes, the glow, the numbers."
+        />
+        <Reveal className="cmp-tabs">
+          <ModelSwitch value={model.id} onChange={setModelId} idPrefix="cmp" />
+        </Reveal>
+
+        <div className="cmp-grid">
+          <div className="cmp-visual">
+            <motion.div
+              key={model.id}
+              initial={{ opacity: 0, scale: 0.92, y: 18 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 130, damping: 18 }}
+            >
+              <PhoneStage model={model} finish={finish} hint="Drag to spin. Built to scale." />
+            </motion.div>
+            <div className="hero-colors">
+              <div className="finish-readout">
+                <span className="eyebrow">Finish</span>
+                <strong>{finish.name}</strong>
+              </div>
+              <Swatches finishes={model.finishes} index={finishIdx} onChange={setFinishIdx} label={`${model.name} finishes`} />
+            </div>
+          </div>
+
+          <div className="cmp-specs">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={model.id}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <h3 className="cmp-title">{model.name}</h3>
+                <div className="bars">
+                  {Object.entries(model.bars).map(([k, v]) => (
+                    <div className="bar-row" key={k}>
+                      <span>{k}</span>
+                      <div className="bar-track">
+                        <motion.i
+                          initial={{ width: 0 }}
+                          animate={{ width: `${v}%` }}
+                          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                        />
+                      </div>
+                      <b>{v}</b>
+                    </div>
+                  ))}
+                </div>
+                <ul className="spec-list">
+                  {model.specs.map(([label, Ico, text]) => (
+                    <li key={label}>
+                      <span className="spec-ico"><Ico size={18} /></span>
+                      <div><small>{label}</small><p>{text}</p></div>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <Reveal className="matrix-wrap">
+          <table className="matrix">
+            <thead>
+              <tr>
+                <th scope="col"><span className="sr">Feature</span></th>
+                {MODELS.map((m, i) => (
+                  <th key={m.id} scope="col" className={i === col ? 'is-on' : ''}>
+                    <button type="button" onClick={() => setModelId(m.id)}>{m.name.replace('iPhone ', '')}</button>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {MATRIX.map(([label, vals]) => (
+                <tr key={label}>
+                  <th scope="row">{label}</th>
+                  {vals.map((v, i) => <td key={i} className={i === col ? 'is-on' : ''}>{v}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+/* ==========================================================================
+   FEEL — Action Button, Haptic Smart Camera Sensor, sound and haptics
+   ========================================================================== */
+function useFeel() {
+  const [soundOn, setSoundOn] = useState(false);
+  const soundRef = useRef(false);
+  const acRef = useRef(null);
+  const events = useRef([]);
+
+  const ensureAudio = () => {
+    if (!acRef.current) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try { acRef.current = new AC(); } catch (e) { return null; }
+    }
+    const ac = acRef.current;
+    if (ac.state === 'suspended') ac.resume();
+    return ac;
+  };
+
+  const play = (kind, delay = 0, pitch = 1) => {
+    if (!soundRef.current) return;
+    const ac = ensureAudio();
+    if (!ac) return;
+    const t0 = ac.currentTime + delay;
+    const g = ac.createGain();
+    g.connect(ac.destination);
+    if (kind === 'click') {
+      const len = Math.floor(ac.sampleRate * 0.035);
+      const buf = ac.createBuffer(1, len, ac.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i += 1) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+      const src = ac.createBufferSource();
+      src.buffer = buf;
+      const hp = ac.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = 1800;
+      src.connect(hp);
+      hp.connect(g);
+      g.gain.setValueAtTime(0.55, t0);
+      src.start(t0);
+      return;
+    }
+    const o = ac.createOscillator();
+    o.type = 'sine';
+    o.connect(g);
+    let peak = 0.3;
+    let dur = 0.06;
+    if (kind === 'thump') {
+      o.frequency.setValueAtTime(150 * pitch, t0);
+      o.frequency.exponentialRampToValueAtTime(46, t0 + 0.15);
+      peak = 0.85;
+      dur = 0.18;
+    } else if (kind === 'rise') {
+      o.frequency.setValueAtTime(220, t0);
+      o.frequency.exponentialRampToValueAtTime(900, t0 + 0.3);
+      peak = 0.16;
+      dur = 0.34;
+    } else {
+      o.frequency.setValueAtTime(1300 * pitch, t0);
+      peak = 0.22;
+      dur = 0.05;
+    }
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(peak, t0 + 0.004);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.start(t0);
+    o.stop(t0 + dur + 0.02);
+  };
+
+  const fire = (evs, vib) => {
+    const now = performance.now() / 1000;
+    evs.forEach((e) => events.current.push({ t0: now + e.d, a: e.a, f: e.f, tau: e.tau }));
+    if (events.current.length > 60) events.current.splice(0, events.current.length - 60);
+    try { if (vib && navigator.vibrate) navigator.vibrate(vib); } catch (e) { /* unsupported */ }
+  };
+
+  const toggleSound = () => {
+    const next = !soundRef.current;
+    soundRef.current = next;
+    setSoundOn(next);
+    if (next) {
+      ensureAudio();
+      play('tick');
+    }
+  };
+
+  return { soundOn, toggleSound, play, fire, events };
+}
+
+const ACTION_MODES = [
+  {
+    id: 'camera', label: 'Camera', icon: Camera, msg: 'Camera launched',
+    haptic: [{ d: 0, a: 1, f: 36, tau: 0.05 }], vib: [18],
+    sound: (f) => { f.play('click'); f.play('thump'); },
+  },
+  {
+    id: 'focus', label: 'Focus', icon: Focus, msg: 'Focus mode on',
+    haptic: [{ d: 0, a: 0.7, f: 48, tau: 0.035 }, { d: 0.12, a: 0.7, f: 48, tau: 0.035 }], vib: [10, 60, 10],
+    sound: (f) => { f.play('tick', 0, 1); f.play('tick', 0.12, 1.25); },
+  },
+  {
+    id: 'torch', label: 'Torch', icon: Flashlight, msg: 'Torch on',
+    haptic: [0, 0.05, 0.1, 0.15, 0.2].map((d, i) => ({ d, a: 0.3 + i * 0.17, f: 72, tau: 0.04 })), vib: [6, 20, 10, 20, 14, 20, 18],
+    sound: (f) => f.play('rise'),
+  },
+  {
+    id: 'translate', label: 'Translate', icon: Languages, msg: 'Translating',
+    haptic: [0, 0.09, 0.18].map((d, i) => ({ d, a: 0.55 - i * 0.12, f: 56, tau: 0.03 })), vib: [8, 50, 8, 50, 8],
+    sound: (f) => { f.play('tick', 0, 1.1); f.play('tick', 0.09, 0.95); f.play('tick', 0.18, 0.8); },
+  },
+];
+
+function HapticScope({ eventsRef, tint }) {
+  const canvasRef = useRef(null);
+  const wrapRef = useRef(null);
+  const onScreen = useOnScreen(wrapRef);
+  const tintRef = useRef(tint);
+  tintRef.current = tint;
+
+  useRaf(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const { ctx, w, h } = fitCanvas(canvas);
+    const now = performance.now() / 1000;
+    const evs = eventsRef.current;
+    while (evs.length && now - evs[0].t0 > 5) evs.shift();
+    ctx.clearRect(0, 0, w, h);
+    const mid = h / 2;
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    for (let i = 1; i < 4; i += 1) {
+      ctx.beginPath();
+      ctx.moveTo(0, (h / 4) * i);
+      ctx.lineTo(w, (h / 4) * i);
+      ctx.stroke();
+    }
+    const pxPerSec = 240;
+    const tc = tintRef.current;
+    ctx.beginPath();
+    for (let x = 0; x <= w; x += 1) {
+      const tau = now - (w - x) / pxPerSec;
+      let s = 0;
+      for (let i = 0; i < evs.length; i += 1) {
+        const e = evs[i];
+        const dt = tau - e.t0;
+        if (dt >= 0) s += e.a * Math.exp(-dt / e.tau) * Math.sin(2 * Math.PI * e.f * dt);
+      }
+      const y = mid - clamp(s, -1.1, 1.1) * mid * 0.86;
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    const lg = ctx.createLinearGradient(0, 0, w, 0);
+    lg.addColorStop(0, rgba(tc, 0));
+    lg.addColorStop(0.6, rgba(tc, 0.9));
+    lg.addColorStop(1, rgba(mixRgb(tc, [255, 255, 255], 0.6), 1));
+    ctx.strokeStyle = lg;
+    ctx.lineWidth = 2.2;
+    ctx.lineJoin = 'round';
+    ctx.shadowColor = rgba(tc, 0.9);
+    ctx.shadowBlur = 10;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(w - 2, mid, 3, 0, Math.PI * 2);
+    ctx.fill();
+  }, onScreen);
+
+  return (
+    <div className="scope" ref={wrapRef}>
+      <canvas ref={canvasRef} aria-label="Live haptic waveform" />
+      <span className="scope-label">Taptic waveform</span>
+    </div>
+  );
+}
+
+function ActionCard({ feel }) {
+  const [mode, setMode] = useState('camera');
+  const [ripples, setRipples] = useState([]);
+  const [toast, setToast] = useState('');
+  const toastTimer = useRef(null);
+  const m = ACTION_MODES.find((k) => k.id === mode);
+
+  const press = () => {
+    feel.fire(m.haptic, m.vib);
+    m.sound(feel);
+    const id = Date.now() + Math.random();
+    setRipples((r) => [...r, id]);
+    setTimeout(() => setRipples((r) => r.filter((k) => k !== id)), 900);
+    setToast(m.msg);
+    clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(''), 1400);
+  };
+  useEffect(() => () => clearTimeout(toastTimer.current), []);
+
+  return (
+    <div className="card feel-card">
+      <div className="card-head">
+        <span className="eyebrow"><Hand size={13} /> Action Button</span>
+        <span className="status is-live">{m.label}</span>
+      </div>
+      <h3 className="card-title">One press. Whatever you need next.</h3>
+      <div className="edge">
+        <div className="edge-body">
+          <span className="edge-key edge-key-a" />
+          <span className="edge-key edge-key-b" />
+          <div className="edge-action">
+            {ripples.map((id) => <span key={id} className="ripple" />)}
+            <motion.button
+              type="button"
+              className="edge-action-btn"
+              aria-label={`Press the Action Button. It runs ${m.label}.`}
+              whileHover={{ scaleX: 1.08 }}
+              whileTap={{ scaleX: 0.7, x: 5 }}
+              transition={{ type: 'spring', stiffness: 700, damping: 14, mass: 0.6 }}
+              onPointerDown={press}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); press(); } }}
+            />
+          </div>
+        </div>
+        <div className="edge-side">
+          <span className="edge-hint">Press the orange key</span>
+          <AnimatePresence>
+            {toast ? (
+              <motion.div
+                key={toast + ripples.length}
+                className="edge-toast"
+                initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.9 }}
+                transition={{ type: 'spring', stiffness: 420, damping: 22 }}
+              >
+                <Check size={15} /> {toast}
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+        </div>
+      </div>
+      <div className="chip-row">
+        {ACTION_MODES.map((k) => {
+          const Ico = k.icon;
+          return (
+            <Tactile
+              key={k.id}
+              className={`tab-chip ${mode === k.id ? 'is-on' : ''}`}
+              aria-pressed={mode === k.id}
+              onClick={() => { setMode(k.id); feel.play('tick'); }}
+            >
+              <Ico size={14} /> {k.label}
+            </Tactile>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function SensorCard({ feel }) {
+  const [stage, setStage] = useState(0);
+  const [prog, setProg] = useState(0);
+  const [result, setResult] = useState('Press and hold');
+  const st = useRef(null);
+  const resultTimer = useRef(null);
+
+  const labels = ['Hold to focus', 'Focus locked', 'Shutter', 'Recording'];
+
+  const stop = () => {
+    const p = st.current;
+    if (!p) return;
+    cancelAnimationFrame(p.raf);
+    clearInterval(p.vid);
+    const s = p.stage;
+    st.current = null;
+    setStage(0);
+    setProg(0);
+    setResult(s >= 3 ? 'Video saved' : s === 2 ? 'Photo captured' : s === 1 ? 'Focus locked. Release to cancel.' : 'Press and hold');
+    clearTimeout(resultTimer.current);
+    resultTimer.current = setTimeout(() => setResult('Press and hold'), 1800);
+  };
+
+  const start = (e) => {
+    if (st.current) return;
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
+    const t0 = performance.now();
+    const p = { stage: 0, raf: 0, vid: 0 };
+    st.current = p;
+    setStage(0);
+    const tick = () => {
+      if (st.current !== p) return;
+      const el = performance.now() - t0;
+      setProg(clamp(el / 1300, 0, 1));
+      if (p.stage < 1 && el >= 280) {
+        p.stage = 1;
+        setStage(1);
+        feel.fire([{ d: 0, a: 0.35, f: 70, tau: 0.03 }], [8]);
+        feel.play('tick');
+      }
+      if (p.stage < 2 && el >= 700) {
+        p.stage = 2;
+        setStage(2);
+        feel.fire([{ d: 0, a: 1, f: 34, tau: 0.06 }], [24]);
+        feel.play('click');
+        feel.play('thump');
+      }
+      if (p.stage < 3 && el >= 1300) {
+        p.stage = 3;
+        setStage(3);
+        p.vid = setInterval(() => {
+          feel.fire([{ d: 0, a: 0.45, f: 60, tau: 0.04 }], [10]);
+          feel.play('tick', 0, 0.8);
+        }, 420);
+      }
+      p.raf = requestAnimationFrame(tick);
+    };
+    p.raf = requestAnimationFrame(tick);
+  };
+
+  useEffect(() => () => { stop(); clearTimeout(resultTimer.current); }, []);
+
+  return (
+    <div className="card feel-card">
+      <div className="card-head">
+        <span className="eyebrow"><Aperture size={13} /> Haptic Smart Camera Sensor</span>
+        <span className={`status ${stage ? 'is-live' : ''}`}>{labels[stage]}</span>
+      </div>
+      <h3 className="card-title">A shutter you can feel half-pressed.</h3>
+      <div className="sensor-stage">
+        <motion.button
+          type="button"
+          className="sensor-pad"
+          aria-label="Press and hold the camera sensor. Light press focuses, firm press shoots, hold to record."
+          style={{ '--p': `${prog * 100}%` }}
+          animate={{ scale: stage ? 0.93 : 1 }}
+          whileHover={{ scale: stage ? 0.93 : 1.03 }}
+          transition={{ type: 'spring', stiffness: 520, damping: 15 }}
+          onPointerDown={start}
+          onPointerUp={stop}
+          onPointerCancel={stop}
+          onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); start({ currentTarget: e.currentTarget, pointerId: 0 }); } }}
+          onKeyUp={(e) => { if (e.key === 'Enter' || e.key === ' ') stop(); }}
+        >
+          <span className="sensor-ring" />
+          <span className="sensor-core">
+            {stage >= 3 ? <i className="rec-dot" /> : <Camera size={30} />}
+          </span>
+        </motion.button>
+        <div className="sensor-steps" aria-hidden="true">
+          {['Focus', 'Shoot', 'Record'].map((s, i) => (
+            <span key={s} className={stage > i ? 'is-on' : ''}>{s}</span>
+          ))}
+        </div>
+      </div>
+      <p className="note" aria-live="polite">{result}</p>
+    </div>
+  );
+}
+
+function FeelSection({ tint }) {
+  const feel = useFeel();
+  return (
+    <section id="feel" className="section feel" data-section>
+      <div className="wrap">
+        <SectionHead
+          align="center"
+          eyebrow="Action Button · Haptic Smart Camera Sensor"
+          title={<>Built to be touched.</>}
+          lead="Every press answers back with a tuned pulse of motion and, if you want it, a matching sound. Turn sound on, then press."
+        />
+        <Reveal className="feel-tools">
+          <Tactile
+            className={`toggle ${feel.soundOn ? 'is-on' : ''}`}
+            role="switch"
+            aria-checked={feel.soundOn}
+            onClick={feel.toggleSound}
+          >
+            {feel.soundOn ? <Volume2 size={16} /> : <VolumeX size={16} />}
+            <span>Sound cues</span>
+            <i className="toggle-knob" />
+          </Tactile>
+          <span className="note note-inline"><Vibrate size={14} /> Phones that support vibration will buzz along.</span>
+        </Reveal>
+        <div className="feel-grid">
+          <Reveal><ActionCard feel={feel} /></Reveal>
+          <Reveal delay={0.08}><SensorCard feel={feel} /></Reveal>
+        </div>
+        <Reveal delay={0.12}>
+          <HapticScope eventsRef={feel.events} tint={tint} />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+/* ==========================================================================
+   FOOTER · APP
+   ========================================================================== */
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="wrap footer-inner">
+        <div>
+          <p className="footer-brand">iPhone <b>18</b></p>
+          <p className="footer-line">Titanium. Redefined. Intelligence beyond dimensions.</p>
+        </div>
+        <p className="footer-legal">
+          A private concept prototype for internal preview. Names, specifications and figures are illustrative and do not describe a shipping product or an announcement. iPhone is a trademark of Apple Inc. This page is not affiliated with or endorsed by Apple Inc.
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+function App() {
+  const [modelId, setModelId] = useState('promax');
+  const [finishes, setFinishes] = useState({ promax: 0, pro: 0, std: 0, slim: 0 });
+  const [active, setActive] = useState('top');
+  const model = MODELS.find((m) => m.id === modelId);
+  const finishIdx = finishes[modelId];
+  const finish = model.finishes[finishIdx];
+  const setFinishIdx = (i) => setFinishes((f) => ({ ...f, [modelId]: i }));
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.4 });
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return undefined;
+    const els = NAV_LINKS.map(([id]) => document.getElementById(id)).filter(Boolean);
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); }),
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <div className="app" style={{ '--glow': finish.glow }}>
+      <motion.div className="progress" style={{ scaleX }} aria-hidden="true" />
+      <Nav active={active} />
+      <main>
+        <Hero model={model} setModelId={setModelId} finishIdx={finishIdx} setFinishIdx={setFinishIdx} />
+        <Statement />
+        <ChipSection tint={finish.tint} />
+        <CameraSection />
+        <DisplaySection tint={finish.tint} />
+        <MaterialsSection />
+        <CompareSection model={model} setModelId={setModelId} finishIdx={finishIdx} setFinishIdx={setFinishIdx} />
+        <FeelSection tint={finish.tint} />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
