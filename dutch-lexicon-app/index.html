@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0A0C0E">
+  <title>Lexicon NL — Dutch Lexicon</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0C0E'/%3E%3Crect x='1' y='1' width='30' height='30' rx='6' fill='none' stroke='%23ffffff' stroke-opacity='.18'/%3E%3Cpath d='M9 22V10h3.2l6.6 8.4V10H22v12h-3.1l-6.7-8.5V22z' fill='%2338BDF8'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#detail">Skip to entry</a>
+
+  <div class="app" id="app">
+    <aside class="pane pane--list" aria-label="Lexicon navigation">
+      <header class="brand">
+        <div class="brand__mark" aria-hidden="true">nl</div>
+        <div class="brand__text">
+          <span class="brand__name">Lexicon</span>
+          <span class="brand__sub">Nederlands · woordenboek</span>
+        </div>
+      </header>
+
+      <button class="search-trigger" id="searchTrigger" type="button" aria-haspopup="dialog" aria-controls="palette">
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg>
+        <span class="search-trigger__label">Search lemma, translation, form…</span>
+        <span class="kbd-group"><kbd id="modKey">Ctrl</kbd><kbd>K</kbd></span>
+      </button>
+
+      <section class="filters" id="filters" aria-label="Filters"></section>
+
+      <div class="list-meta">
+        <span class="list-meta__count mono" id="listCount"></span>
+        <button class="link-btn" id="clearFilters" type="button" hidden>Clear filters</button>
+      </div>
+
+      <ul class="entry-list" id="entryList" role="listbox" aria-label="Entries"></ul>
+
+      <footer class="pane-foot">
+        <span class="kbd-group"><kbd>J</kbd><kbd>K</kbd></span><span>navigate</span>
+        <span class="kbd-group"><kbd>P</kbd></span><span>play</span>
+        <span class="kbd-group"><kbd>S</kbd></span><span>speed</span>
+      </footer>
+    </aside>
+
+    <main class="pane pane--detail" id="detail" tabindex="-1" aria-live="polite">
+      <div class="loading" id="loading">
+        <span class="loading__dot"></span><span class="loading__dot"></span><span class="loading__dot"></span>
+      </div>
+    </main>
+  </div>
+
+  <div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
+    <div class="palette__backdrop" data-close></div>
+    <div class="palette__panel">
+      <div class="palette__input-row">
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg>
+        <input class="palette__input" id="paletteInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+               placeholder="Search Dutch lemmas, English translations, categories…" aria-label="Search" aria-controls="paletteList" aria-autocomplete="list">
+        <kbd>Esc</kbd>
+      </div>
+      <ul class="palette__list" id="paletteList" role="listbox"></ul>
+      <div class="palette__foot">
+        <span class="kbd-group"><kbd>↑</kbd><kbd>↓</kbd></span><span>move</span>
+        <span class="kbd-group"><kbd>↵</kbd></span><span>open</span>
+        <span class="kbd-group"><kbd>Esc</kbd></span><span>close</span>
+        <span class="palette__hint mono" id="paletteHint"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <noscript><p class="noscript">This lexicon needs JavaScript.</p></noscript>
+  <script src="app.js"></script>
+</body>
+</html>
