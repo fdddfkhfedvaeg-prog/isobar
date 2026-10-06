@@ -1,0 +1,20 @@
+# Read by both Netlify and Cloudflare Pages.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://rsms.me; font-src 'self' https://rsms.me; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://www.gstatic.com; worker-src 'self' blob:; frame-ancestors 'none'
+
+# Hashed bundles never change: cache for a year, skip revalidation.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 3D models are versioned by filename (phone.v3.glb). Same policy, explicit type for compression at the edge.
+/models/*
+  Cache-Control: public, max-age=31536000, immutable
+  Content-Type: model/gltf-binary
+  Access-Control-Allow-Origin: *
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
